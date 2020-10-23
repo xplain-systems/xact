@@ -1,10 +1,11 @@
 [build-system]
-requires      = ["poetry>=1.0.0"]
+requires      = ["poetry>=1.0.0",
+                 "wheel"]
 build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name          = "xact"
-version       = "0.0.1dev"
+version       = "0.0.2dev"
 description   = "Model based design for developers"
 keywords      = ["modelling",
                  "simulation",
