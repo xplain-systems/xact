@@ -1,0 +1,81 @@
+[build-system]
+requires      = ["poetry>=1.0.0"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry]
+name          = "xact"
+version       = "0.0.1dev"
+description   = "Model based design for developers"
+keywords      = ["modelling",
+                 "simulation",
+                 "message",
+                 "actor",
+                 "framework"]
+homepage      = "http://xplain.systems"
+repository    = "https://github.com/xplain-systems/xact"
+documentation = "https://github.com/xplain-systems/xact/wiki"
+license       = "AGPL-1.0-only"
+authors       = ["William Payne <will@xplain.systems>"]
+maintainers   = ["William Payne <will@xplain.systems>"]
+readme        = "README.rst"
+classifiers   = ["Development Status :: 1 - Planning",
+                 "License :: OSI Approved :: Apache Software License",
+                 "Natural Language :: English",
+                 "Environment :: Console",
+                 "Operating System :: POSIX :: Linux",
+                 "Intended Audience :: Developers",
+                 "Intended Audience :: Information Technology",
+                 "Intended Audience :: Science/Research",
+                 "Topic :: Scientific/Engineering",
+                 "Topic :: Scientific/Engineering :: Artificial Intelligence",
+                 "Topic :: Software Development :: Embedded Systems",
+                 "Topic :: Software Development :: Libraries :: Application Frameworks",
+                 "Topic :: System :: Distributed Computing"]
+packages      = [{include = "xact", from = "src"}]
+include       = ["README.rst"]
+exclude       = ["*/_spec/**/*"]
+
+[tool.poetry.dependencies]
+ansible      = "==2.9.13"
+click        = "*"
+cryptography = "*"
+Jinja2       = ">=2.1"
+jsonschema   = "*"
+loguru       = "*"
+numpy        = "*"
+paramiko     = "*"
+psutil       = ">=5.0"
+python       = ">=3.6.1"
+pyyaml       = "*"
+pyzmq        = "*"
+setproctitle = "*"
+toml         = "*"
+xmltodict    = "*"
+dill         = "*"
+pytest       = ">=5.2"
+
+[tool.poetry.dev-dependencies]
+pytest = ">=5.2"
+tox    = ">=3.4"
+
+[tool.poetry.scripts]
+xact = "xact.cli.command:grp_main"
+
+[tool.poetry.plugins]
+
+[tool.poetry.urls]
+Documentation = "https://github.com/xplain-systems/xact/wiki"
+Releases      = "https://github.com/xplain-systems/xact/releases"
+Issues        = "https://github.com/xplain-systems/xact/issues"
+Source        = "https://github.com/xplain-systems/xact"
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist        = py36, py37, py38
+isolated_build = True
+
+[testenv]
+deps     = pytest
+commands = python3 -m pytest .
+"""

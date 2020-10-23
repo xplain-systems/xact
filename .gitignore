@@ -1,0 +1,31 @@
+# Git ignore file
+#
+
+*
+!*/
+
+# -----------------------------------------------------------------------------
+# Whitelist
+
+!*.cfg.json
+!*.cfg.xml
+!*.cfg.yaml
+!*.md
+!*.py
+!*.rst
+!*.txt
+!.gitignore
+!poetry.lock
+!pyproject.toml
+!pytest.ini
+
+# -----------------------------------------------------------------------------
+# Blacklist
+
+*.pyc
+*.pytest_cache*
+*__pycache__*
+*host*.cfg.yaml
+.tox/
+dist/
+*.egg-info/
