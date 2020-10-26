@@ -20,7 +20,7 @@ import xact.log
 import xact.sys.exception
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def start(cfg, id_process, id_process_host, map_queues):
     """
     Start the main loop in the local process and process host.
@@ -34,7 +34,7 @@ def start(cfg, id_process, id_process_host, map_queues):
     raise RuntimeError('Termination condition not recognized.')
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _configure(cfg, id_process, id_process_host, map_queues):
     """
     Configure the process and return the list of nodes to be executed.
@@ -50,7 +50,7 @@ def _configure(cfg, id_process, id_process_host, map_queues):
     return list_node
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _set_process_title():
     """
     Set the title of the current process from its name, where possible.
@@ -70,7 +70,7 @@ def _set_process_title():
     return name_process
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def processes_on_host(cfg, id_host):
     """
     Return the set of all processes on the specified host.
@@ -84,7 +84,7 @@ def processes_on_host(cfg, id_host):
     return set_id_process
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _instantiate_nodes(cfg, id_process):
     """
     Return a map from id_node to an instantiated node object.
@@ -102,7 +102,7 @@ def _instantiate_nodes(cfg, id_process):
     return map_node
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _config_edges(cfg, id_process, id_process_host, map_node, map_queues):
     """
     Configure the edges in the data flow graph.
@@ -143,7 +143,7 @@ def _config_edges(cfg, id_process, id_process_host, map_node, map_queues):
 
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _point(node, path, memory):
     """
     Make the specified node and path point to the specified memory.
@@ -155,7 +155,7 @@ def _point(node, path, memory):
     ref[path[-1]] = memory
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _get_list_node_in_runorder(cfg, id_process, map_node):
     """
     Return a list of node objects sorted by order of execution.
@@ -169,7 +169,7 @@ def _get_list_node_in_runorder(cfg, id_process, map_node):
     return list_node
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _get_list_id_node_in_runorder(cfg, id_process):
     """
     Return a list of node ids sorted by order of execution.
@@ -184,7 +184,7 @@ def _get_list_id_node_in_runorder(cfg, id_process):
     return list_id_node
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _local_data_flow(iter_cfg_edge, id_process):
     """
     Return the data flow graph for the specified process.
@@ -210,7 +210,7 @@ def _local_data_flow(iter_cfg_edge, id_process):
     return (map_forward, map_backward)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _sort_into_execution_tranches(map_forward, map_backward):
     """
     Return data flow graph nodes as a list of tranches in execution order.
@@ -264,7 +264,7 @@ def _sort_into_execution_tranches(map_forward, map_backward):
     return list_tranches
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _nodes_at_count_zero(map_count_in):
     """
     Return the set of id_node with input degree zero.
@@ -273,7 +273,7 @@ def _nodes_at_count_zero(map_count_in):
     return set(key for (key, count) in map_count_in.items() if count == 0)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _del_items(map_data, set_keys):
     """
     Delete the specified items from the dict.
@@ -283,7 +283,7 @@ def _del_items(map_data, set_keys):
         del map_data[key]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _list_downstream_neighbors(set_id_node, map_forward):
     """
     Return the list of source nodes from the specified graph.
@@ -300,7 +300,7 @@ def _list_downstream_neighbors(set_id_node, map_forward):
     return list_neighbors
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _specify_detailed_execution_order(list_tranches):
     """
     Yield each node in final execution order.
@@ -316,7 +316,7 @@ def _specify_detailed_execution_order(list_tranches):
             yield(id_node)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _get_list_id_node_unscheduled(cfg, list_id_node, id_process):
     """
     Retirm a list of unscheduled node ids in the specified process.
@@ -332,7 +332,7 @@ def _get_list_id_node_unscheduled(cfg, list_id_node, id_process):
     return list_id_node_unscheduled
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _run_main_loop_with_retry(list_node, id_process):
     """
     Repeatedly step the specified nodes in order, resetting upon exception.
@@ -357,7 +357,7 @@ def _run_main_loop_with_retry(list_node, id_process):
             continue
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def reset(list_node):
     """
     Reset all of the nodes in the list.
@@ -367,7 +367,7 @@ def reset(list_node):
         node.reset()
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _run_main_loop(list_node):
     """
     Repeatedly step the specified nodes in order.
@@ -377,7 +377,7 @@ def _run_main_loop(list_node):
         step(list_node)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def step(list_node):
     """
     Run a single simulation step.

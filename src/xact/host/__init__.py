@@ -30,7 +30,7 @@ FIFO_HOST_CONTROL = "xact_host_control"
 xact.log.setup()
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @xact.log.logger.catch
 def start(cfg):
     """
@@ -42,7 +42,7 @@ def start(cfg):
     return _start_all_hosted_processes(cfg, id_host)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @xact.log.logger.catch
 def stop(cfg):
     """
@@ -55,7 +55,7 @@ def stop(cfg):
     xact.host.util.kill_process_by_prefix(kill_prefix)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @xact.log.logger.catch
 def pause(cfg):
     """
@@ -66,7 +66,7 @@ def pause(cfg):
     xact.log.logger.info('Host pause')
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @xact.log.logger.catch
 def step(cfg):
     """
@@ -77,7 +77,7 @@ def step(cfg):
     xact.log.logger.info('Host step')
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _setup_host(cfg):
     """
     Perform common setup actions and return id_host
@@ -88,7 +88,7 @@ def _setup_host(cfg):
     return id_host
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _start_all_hosted_processes(cfg, id_host):
     """
     Start all processes on the local host.
@@ -117,7 +117,7 @@ def _start_all_hosted_processes(cfg, id_host):
         proc.join()
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def connect_queues(cfg, id_host_local):
     """
     Return a map of (id_node, path) to queues.
@@ -160,7 +160,7 @@ def connect_queues(cfg, id_host_local):
     return map_queues
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _start_one_child_process(cfg, id_process, map_queues):
     """
     Start a single specified child process.
@@ -186,7 +186,7 @@ def _start_one_child_process(cfg, id_process, map_queues):
     return proc
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _process_name(cfg, id_process):
     """
     Return the name of the specified process

@@ -13,7 +13,7 @@ import xact.cfg.util
 from xact.cfg.exception import CfgError
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def from_path(path_cfg):
     """
     Return configuration loaded from the specified path.
@@ -31,7 +31,7 @@ def from_path(path_cfg):
     raise CfgError('The specified configuration path does not exist.')
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def from_dirpath(dirpath_cfg):
     """
     Return configuration loaded from the specified directory path.
@@ -79,7 +79,7 @@ def from_dirpath(dirpath_cfg):
     return cfg
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def from_filepath(filepath_cfg):
     """
     Return confiuguration data loaded from the specified file path.
@@ -98,7 +98,7 @@ def from_filepath(filepath_cfg):
     raise CfgError('Did not recognize filename extension.')
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _from_xml_file(filepath_cfg, file_cfg):
     """
     Return confiuguration data loaded from the specified XML file path.
@@ -111,7 +111,7 @@ def _from_xml_file(filepath_cfg, file_cfg):
     return cfg
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _from_json_file(filepath_cfg, file_cfg):
     """
     Return confiuguration data loaded from the specified JSON file path.
@@ -127,7 +127,7 @@ def _from_json_file(filepath_cfg, file_cfg):
     return json.loads(''.join(list_str_line))
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _from_yaml_file(filepath_cfg, file_cfg):
     """
     Return confiuguration data loaded from the specified YAML file path.
@@ -156,7 +156,7 @@ def _from_yaml_file(filepath_cfg, file_cfg):
                                                         msg  = str(err)))
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _from_toml_file(filepath_cfg, file_cfg):
     """
     Return confiuguration data loaded from the specified TOML file path.

@@ -11,7 +11,7 @@ import inspect
 import pytest
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def nodea_reset(runtime, cfg, inputs, state, outputs):
     """
     Reset function for node A.
@@ -20,7 +20,7 @@ def nodea_reset(runtime, cfg, inputs, state, outputs):
     state['counter'] = 0
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def nodea_step(inputs, state, outputs):
     """
     Step function for node A.
@@ -30,7 +30,7 @@ def nodea_step(inputs, state, outputs):
     outputs['test_output']['counter'] = state['counter']
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def nodeb_reset(runtime, cfg, inputs, state, outputs):
     """
     Reset function for node B.
@@ -39,7 +39,7 @@ def nodeb_reset(runtime, cfg, inputs, state, outputs):
     pass
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def nodeb_step(inputs, state, outputs):
     """
     Step function for node B.
@@ -51,7 +51,7 @@ def nodeb_step(inputs, state, outputs):
         raise xact.sys.exception.RunComplete(0)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def simple_test_config():
     """

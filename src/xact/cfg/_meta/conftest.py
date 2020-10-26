@@ -17,7 +17,7 @@ import xmltodict
 import xact.util
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def dict_of_strings():
     """
@@ -37,7 +37,7 @@ def dict_of_strings():
              'textual':   'data' }
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def invalid_config():
     """
@@ -48,7 +48,7 @@ def invalid_config():
              'of':     'invalid',
              'config': 100 }
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def valid_normalized_config():
     """
@@ -115,7 +115,7 @@ def valid_normalized_config():
     }
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def filepath_cfg_yaml(tmp_path, dict_of_strings):
     """
@@ -128,7 +128,7 @@ def filepath_cfg_yaml(tmp_path, dict_of_strings):
                             dumper       = _dump_as_yaml)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def filepath_cfg_json(tmp_path, dict_of_strings):
     """
@@ -141,7 +141,7 @@ def filepath_cfg_json(tmp_path, dict_of_strings):
                             dumper       = _dump_as_json)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def filepath_cfg_xml(tmp_path, dict_of_strings):
     """
@@ -154,7 +154,7 @@ def filepath_cfg_xml(tmp_path, dict_of_strings):
                             dumper       = _dump_as_xml)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def dirpath_cfg_yaml(tmp_path, dict_of_strings):
     """
@@ -167,7 +167,7 @@ def dirpath_cfg_yaml(tmp_path, dict_of_strings):
                            dumper       = _dump_as_yaml)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def dirpath_cfg_json(tmp_path, dict_of_strings):
     """
@@ -180,7 +180,7 @@ def dirpath_cfg_json(tmp_path, dict_of_strings):
                            dumper       = _dump_as_json)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def dirpath_cfg_xml(tmp_path, dict_of_strings):
     """
@@ -193,7 +193,7 @@ def dirpath_cfg_xml(tmp_path, dict_of_strings):
                            dumper       = _dump_as_xml)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _create_cfg_file(dirpath_root, cfg_data, ext, dumper):
     """
     Create sample configuration as a single config file.
@@ -207,7 +207,7 @@ def _create_cfg_file(dirpath_root, cfg_data, ext, dumper):
     return filepath_cfg.as_posix()
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _create_cfg_dir(dirpath_root, cfg_data, ext, dumper):
     """
     Create sample configuration as a directory of separate config files.
@@ -222,7 +222,7 @@ def _create_cfg_dir(dirpath_root, cfg_data, ext, dumper):
     return dirpath_cfg.as_posix()
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _dump_as_json(data):
     """
     Serialize the specified data structure to a JSON format string.
@@ -231,7 +231,7 @@ def _dump_as_json(data):
     return json.dumps(data)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _dump_as_yaml(data):
     """
     Serialize the specified data structure to a YAML format string.
@@ -243,7 +243,7 @@ def _dump_as_yaml(data):
     return stream_cfg.read()
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _dump_as_xml(data):
     """
     Serialize the specified data structure to a XML format string.

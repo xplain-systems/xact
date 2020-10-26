@@ -5,7 +5,7 @@ Module of configuration related utility functions.
 """
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def apply(data, address, value, delim_cfg_addr = '.'):
     """
     Apply a single configuration field override on the specified path.

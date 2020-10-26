@@ -256,7 +256,7 @@ def iter_format_string_fields(fmt_string):
                                                         if tup[1] is not None)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def topological_sort(map_edge):
     """
     Return graph nodes as a list of sets of equivalent rank in topological order.
@@ -316,7 +316,7 @@ def topological_sort(map_edge):
     return list_ranks
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _nodes_at_count_zero(map_count_in):
     """
     Return the set of id_node with input degree zero.
@@ -325,7 +325,7 @@ def _nodes_at_count_zero(map_count_in):
     return set(key for (key, count) in map_count_in.items() if count == 0)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _del_items(map_data, set_keys):
     """
     Delete the specified items from the dict.
@@ -335,7 +335,7 @@ def _del_items(map_data, set_keys):
         del map_data[key]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _downstream_neighbors(set_id_node, map_forward):
     """
     Return the set of source nodes from the specified graph.

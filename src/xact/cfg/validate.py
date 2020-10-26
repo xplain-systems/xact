@@ -12,7 +12,7 @@ import xact.cfg.exception
 import xact.log
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def normalized(cfg):
     """
     Validate normalized config data.
@@ -24,7 +24,7 @@ def normalized(cfg):
     return _validate_with_schema(cfg, _normalized_cfg_schema())
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def denormalized(cfg):
     """
     Validate denormalized config data.
@@ -36,7 +36,7 @@ def denormalized(cfg):
     return _validate_with_schema(cfg, _denormalized_cfg_schema())
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _validate_with_schema(cfg, schema):
     """
     Validate config using the specified schema.
@@ -51,7 +51,7 @@ def _validate_with_schema(cfg, schema):
     return cfg
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _normalized_cfg_schema():
     """
     Return a schema for normalized config data.
@@ -239,7 +239,7 @@ def _normalized_cfg_schema():
     return schema
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _denormalized_cfg_schema():
     """
     Return a schema for denormalized config data.
@@ -277,7 +277,7 @@ def _denormalized_cfg_schema():
     return schema
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _check_consistency(cfg):
     """
     Raise an exception if cfg is inconsistent.

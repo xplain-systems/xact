@@ -12,7 +12,7 @@ import zlib
 import yaml
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def hexdigest(data):
     """
     Return a string hash of the specified data.
@@ -24,7 +24,7 @@ def hexdigest(data):
     return str_digest
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def serialize(data):
     """
     Return a string representation of the specified config data.
@@ -42,7 +42,7 @@ def serialize(data):
     return string_b64_encoded
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def deserialize(codestring):
     """
     Return config data from the specified string.

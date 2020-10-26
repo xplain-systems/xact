@@ -8,7 +8,7 @@ Test fixtures for xact.cfg.data package functional requirements tests.
 import pytest
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def valid_partly_denormalized_config():
     """

@@ -13,7 +13,7 @@ import xact.sys.exception
 import xact.util
 
 
-#==============================================================================
+# =============================================================================
 class Node():
     """
     Class representing a node in the data flow graph.
@@ -94,7 +94,7 @@ class Node():
             queue.non_blocking_write(item)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _get_ref(ref, path):
     """
     Get a reference to the value that path refers to.
@@ -105,7 +105,7 @@ def _get_ref(ref, path):
     return ref
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _put_ref(ref, path, item):
     """
     Make the specified node and path point to the specified memory.

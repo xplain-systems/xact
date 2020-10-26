@@ -8,7 +8,7 @@ Module for configuration override logic.
 import xact.cfg.util
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def apply(cfg, tup_overrides = None, delim_cfg_addr = '.'):
     """
     Apply all specified configuration field overrides.

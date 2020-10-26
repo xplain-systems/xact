@@ -24,7 +24,7 @@ import xact.util.serialization
 from xact.cfg.exception import CfgError
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @loguru.logger.catch(exclude = CfgError)
 def prepare(path_cfg       = None,
             string_cfg     = None,
@@ -82,7 +82,7 @@ def prepare(path_cfg       = None,
     return cfg
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def denormalize(cfg):
     """
     Add redundant information to cfg to make it more convenient to use.

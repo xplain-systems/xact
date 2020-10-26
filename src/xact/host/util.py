@@ -16,7 +16,7 @@ except ModuleNotFoundError:
     psutil = None
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def kill_process_by_prefix(prefix):
     """
     Kill process with the specified name (or iterable of names).
@@ -35,7 +35,7 @@ def kill_process_by_prefix(prefix):
                       kill_signal = signal.SIGKILL)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _pid_from_prefix(prefix):
     """
     Return a list of process ids that correspond to the specified names
@@ -50,7 +50,7 @@ def _pid_from_prefix(prefix):
     return set_pids
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def kill_process_tree(iter_pid, kill_signal):
     """
     Kill a process tree (including grandchildren).

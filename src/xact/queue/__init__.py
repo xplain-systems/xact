@@ -10,7 +10,7 @@ import multiprocessing
 import zmq
 
 
-#==============================================================================
+# =============================================================================
 class LocalQueue:
     """
     Local queue.
@@ -18,19 +18,19 @@ class LocalQueue:
 
     """
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def __init__(self):
         """
         """
         self._queue = multiprocessing.Queue()
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def blocking_read(self):
         """
         """
         return self._queue.get(block = True)
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def non_blocking_write(self, msg):
         """
         """
@@ -38,14 +38,14 @@ class LocalQueue:
 
 
 
-#==============================================================================
+# =============================================================================
 class RemoteQueueServer:
     """
     Control server for an xact host.
 
     """
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def __init__(self, cfg, cfg_edge, id_host):
         """
         Return an instance of a RemoteQueueServer object.
@@ -59,7 +59,7 @@ class RemoteQueueServer:
         self._socket  = self._context.socket(socket_type)
         self._socket.bind(address)
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def blocking_read(self):
         """
         Synchronize the client with the server.
@@ -67,7 +67,7 @@ class RemoteQueueServer:
         """
         return self._socket.recv_pyobj()
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def non_blocking_write(self, item):
         """
         Synchronize the client with the server.
@@ -76,14 +76,14 @@ class RemoteQueueServer:
         self._socket.send_pyobj(item)
 
 
-#==============================================================================
+# =============================================================================
 class RemoteQueueClient:
     """
     Client used to control an xact host.
 
     """
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def __init__(self, cfg, cfg_edge, id_host):
         """
         Return an instance of a RemoteQueueClient object.
@@ -99,7 +99,7 @@ class RemoteQueueClient:
         self._socket  = self._context.socket(socket_type)
         self._socket.connect(address)
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def blocking_read(self):
         """
         Synchronize the client with the server.
@@ -107,7 +107,7 @@ class RemoteQueueClient:
         """
         return self._socket.recv_pyobj()
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def non_blocking_write(self, item):
         """
         Synchronize the client with the server.
@@ -116,7 +116,7 @@ class RemoteQueueClient:
         self._socket.send_pyobj(item)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _port_number(cfg_host, cfg_edge):
     """
     Return the port number for the specified edge.

@@ -9,7 +9,7 @@ import paramiko
 import xact.sys.orchestration.ansible
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def ensure_ready_to_run(cfg):
     """
     Ensure that hosts are ready to run their allocated functionality.
@@ -19,7 +19,7 @@ def ensure_ready_to_run(cfg):
     ensure_deployed(cfg)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def ensure_provisioned(cfg):
     """
     Ensure that hosts are provisioned for the components that they will run.
@@ -28,7 +28,7 @@ def ensure_provisioned(cfg):
     return xact.sys.orchestration.ansible.ensure_provisioned(cfg)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def ensure_deployed(cfg):
     """
     Ensure that application components are deployed to hosts as per cfg.

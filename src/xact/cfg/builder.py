@@ -5,7 +5,7 @@ Package of functions that mutate configuration data.
 """
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def get_skeleton_config():
     """
     Return a skeleton configuration structure.
@@ -22,7 +22,7 @@ def get_skeleton_config():
     }
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def set_system_id(cfg, id_system):
     """
     Mutate the config structure with a modified system_id.
@@ -31,7 +31,7 @@ def set_system_id(cfg, id_system):
     cfg['system']['id_system'] = id_system
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def add_host(cfg, id_host, **kwargs):
     """
     Mutate the config structure to add a new process host.
@@ -40,7 +40,7 @@ def add_host(cfg, id_host, **kwargs):
     cfg['host'][id_host] = dict(kwargs.items())
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def remove_host(cfg, id_host):
     """
     Mutate the config structure to remove the specified process host.
@@ -62,7 +62,7 @@ def remove_host(cfg, id_host):
     del cfg['host'][id_host]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def add_process(cfg, id_process, id_host = None, **kwargs):
     """
     Mutate the config structure to add a new process.
@@ -79,7 +79,7 @@ def add_process(cfg, id_process, id_host = None, **kwargs):
     cfg['process'][id_process]['host'] = id_host
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def remove_process(cfg, id_process):
     """
     Mutate the config structure to remove the specified process.
@@ -100,7 +100,7 @@ def remove_process(cfg, id_process):
     del cfg['process'][id_process]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def add_node(cfg,
              id_node,
              id_process    = None,
@@ -140,7 +140,7 @@ def add_node(cfg,
     cfg['node'][id_node] = cfg_node
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def remove_node(cfg, id_node):
     """
     Mutate the config structure to remove the specified node.
@@ -163,7 +163,7 @@ def remove_node(cfg, id_node):
     del cfg['node'][id_node]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def add_edge(cfg, id_src, src_ref, id_dst, dst_ref, data):
     """
     Mutate the config structure to add a new edge.
@@ -177,7 +177,7 @@ def add_edge(cfg, id_src, src_ref, id_dst, dst_ref, data):
     })
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def remove_edge(cfg, src, dst):
     """
     Mutate the config structure to remove the specified edge.
@@ -193,7 +193,7 @@ def remove_edge(cfg, src, dst):
         cfg['edge'].remove(cfg_edge)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def add_data(cfg, id_data, spec_data):
     """
     Mutate the config structure to add a new data type.
@@ -202,7 +202,7 @@ def add_data(cfg, id_data, spec_data):
     cfg['data'][id_data] = spec_data
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def remove_data(cfg, id_data):
     """
     Mutate the config structure to remove the specified data type.
@@ -211,7 +211,7 @@ def remove_data(cfg, id_data):
     del cfg['data'][id_data]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def add_pipeline(cfg,
                  iter_id_node,
                  spec_id_process,

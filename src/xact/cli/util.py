@@ -14,7 +14,7 @@ import xact.cfg.validate
 import xact.cli.command
 
 
-#==============================================================================
+# =============================================================================
 class OrderedGroup(click.Group):
     """
     A click command group enabling control over the ordering of commands.
@@ -30,7 +30,7 @@ class OrderedGroup(click.Group):
 
     """
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def __init__(self, name = None, commands = None, **attrs):
         """
         Return an OrderedGroup instance.
@@ -44,7 +44,7 @@ class OrderedGroup(click.Group):
         #
         self.commands = commands or dict()
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def list_commands(self, ctx):
         """
         Return an ordered list of the commands in the group.
@@ -53,7 +53,7 @@ class OrderedGroup(click.Group):
         return self.commands
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def run_test(cfg,
              expected_exit_code    = 0,
              do_expect_stdout      = False,
@@ -82,7 +82,7 @@ def run_test(cfg,
         pytest.fail(msg = msg, pytrace = False)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _isok(response,
           expected_exit_code    = 0,
           do_expect_stdout      = False,

@@ -8,7 +8,7 @@ Test fixtures for xact.cli package functional requirements tests.
 import pytest
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def skeleton_config():
     """

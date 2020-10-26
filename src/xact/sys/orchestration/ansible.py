@@ -25,7 +25,7 @@ import xact.cfg
 import xact.host
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def ensure_deployed(cfg):
     """
     Ensure that application components are deployed to hosts as per cfg.
@@ -34,7 +34,7 @@ def ensure_deployed(cfg):
     pass
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def ensure_provisioned(cfg):
     """
     Ensure that hosts are provisioned for the components that they will run.
@@ -70,7 +70,7 @@ def ensure_provisioned(cfg):
                         check = False)
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _list_tasks(cfg, id_host):
     """
     Return the list of tasks for the specified host.
@@ -105,7 +105,7 @@ def _list_tasks(cfg, id_host):
     return list_tasks_for_host
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def _call_ansible(hostname, list_tasks):
     """
     Call ansible for a specific host
@@ -201,7 +201,7 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
     # plugin or writing your own custom
     # callback plugin.
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def __init__(self, *args, **kwargs):
         """
         """
@@ -210,14 +210,14 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
         self.host_unreachable = {}
         self.host_failed = {}
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def v2_runner_on_unreachable(self, result):
         """
         """
         host = result._host
         self.host_unreachable[host.get_name()] = result
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def v2_runner_on_ok(self, result, *args, **kwargs):
         """
         Print a json representation of the result.
@@ -229,7 +229,7 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
         self.host_ok[host.get_name()] = result
         print(json.dumps({host.name: result._result}, indent=4))
 
-    #--------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def v2_runner_on_failed(self, result, *args, **kwargs):
         """
         """

@@ -8,7 +8,7 @@ Module of functions that support the configuration of data flow graph edges.
 import collections
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def denormalize(cfg):
     """
     Add redundant information to each edge to make it more convenient to use.

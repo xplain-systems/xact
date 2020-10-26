@@ -13,7 +13,7 @@ import sys
 logger = loguru.logger
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def setup(cfg = None, id_host = 'localhost', id_process = 'main_process'):
     """
     Setup logging.
