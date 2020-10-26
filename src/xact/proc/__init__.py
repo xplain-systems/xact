@@ -250,7 +250,7 @@ def _sort_into_execution_tranches(map_forward, map_backward):
 
     for idx in itertools.count():
         set_prev = list_tranches[-1]
-        for id_node in _downstream_neighbors(set_prev, map_forward):
+        for id_node in _list_downstream_neighbors(set_prev, map_forward):
             map_count_in[id_node] -= 1
         set_next = _nodes_at_count_zero(map_count_in)
         _del_items(map_count_in, set_next)
@@ -284,19 +284,20 @@ def _del_items(map_data, set_keys):
 
 
 #------------------------------------------------------------------------------
-def _downstream_neighbors(set_id_node, map_forward):
+def _list_downstream_neighbors(set_id_node, map_forward):
     """
-    Return the set of source nodes from the specified graph.
+    Return the list of source nodes from the specified graph.
 
     The graph should be provided as a dict mapping
     from upstream nodes to downstream nodes.
 
     """
-    set_neighbors = set()
+    list_neighbors = list()
     for id_node in set_id_node:
         if id_node in map_forward:
-            set_neighbors |= map_forward[id_node]
-    return set_neighbors
+            for id_node_downstream in map_forward[id_node]:
+                list_neighbors.append(id_node_downstream)
+    return list_neighbors
 
 
 #------------------------------------------------------------------------------
