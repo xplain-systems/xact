@@ -135,7 +135,13 @@ def _from_yaml_file(filepath_cfg, file_cfg):
     """
     try:
         import yaml
-        return yaml.load(file_cfg.read(), Loader = yaml.FullLoader)
+        loader = yaml.SafeLoader
+
+        yaml.add_constructor('!regex',
+                             lambda l, n: str(n.value),
+                             Loader = loader)
+
+        return yaml.load(file_cfg.read(), Loader = loader)
     except yaml.YAMLError as err:
         if hasattr(err, 'problem_mark'):
             mark = err.problem_mark
