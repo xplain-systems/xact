@@ -259,7 +259,7 @@ def iter_format_string_fields(fmt_string):
 # -----------------------------------------------------------------------------
 def topological_sort(map_edge):
     """
-    Return graph nodes as a list of sets of equivalent rank in topological order.
+    Return graph nodes as list of sets of equivalent rank in topological order.
 
     Execution order is not fully specified by
     a breadth-first forwards traversal of the data

@@ -54,7 +54,8 @@ class SpecifyDenormalized:
         import xact.cfg
         import xact.cfg.validate
 
-        valid_denormalized_config = xact.cfg.denormalize(valid_normalized_config)
+        valid_denormalized_config = xact.cfg.denormalize(
+                                                    valid_normalized_config)
         xact.cfg.validate.denormalized(valid_denormalized_config)
 
     # -------------------------------------------------------------------------

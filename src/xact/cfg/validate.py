@@ -73,29 +73,29 @@ def _normalized_cfg_schema():
                                      'pattern': '^[A-Za-z0-9_.:]*$' },
             'id_edge':             { 'type':    'string',
                                      'pattern': '^[a-z0-9_./-]*$' },
-            'id_system':           { '$ref': '#/definitions/lowercase_name' },
-            'id_host':             { '$ref': '#/definitions/lowercase_name' },
-            'id_run':              { '$ref': '#/definitions/hex_string'     },
-            'ts_run':              { '$ref': '#/definitions/numeric_string' },
-            'id_cfg':              { '$ref': '#/definitions/hex_string'     },
-            'id_state':            { '$ref': '#/definitions/lowercase_name' },
-            'id_process':          { '$ref': '#/definitions/lowercase_name' },
-            'id_node':             { '$ref': '#/definitions/lowercase_name' },
-            'id_req_host_cfg' :    { '$ref': '#/definitions/lowercase_name' },
-            'id_data_type':        { '$ref': '#/definitions/lowercase_name' },
-            'ipc_type':            { '$ref': '#/definitions/lowercase_name' },
-            'path_part':           { '$ref': '#/definitions/lowercase_dot_path' },
-            'py_src':              { 'type': 'string' },
+            'id_system':       { '$ref': '#/definitions/lowercase_name' },
+            'id_host':         { '$ref': '#/definitions/lowercase_name' },
+            'id_run':          { '$ref': '#/definitions/hex_string'     },
+            'ts_run':          { '$ref': '#/definitions/numeric_string' },
+            'id_cfg':          { '$ref': '#/definitions/hex_string'     },
+            'id_state':        { '$ref': '#/definitions/lowercase_name' },
+            'id_process':      { '$ref': '#/definitions/lowercase_name' },
+            'id_node':         { '$ref': '#/definitions/lowercase_name' },
+            'id_req_host_cfg': { '$ref': '#/definitions/lowercase_name' },
+            'id_data_type':    { '$ref': '#/definitions/lowercase_name' },
+            'ipc_type':        { '$ref': '#/definitions/lowercase_name' },
+            'path_part':       { '$ref': '#/definitions/lowercase_dot_path' },
+            'py_src':          { 'type': 'string' },
             'spec_functionality': {
                 'type': 'object',
                 'properties': {
-                    'py_module':     {
+                    'py_module': {
                         '$ref': '#/definitions/entry_point_obj_ref'
                     },
                     'py_src_reset': {
                         '$ref': '#/definitions/py_src'
                     },
-                    'py_src_step':  {
+                    'py_src_step': {
                         '$ref': '#/definitions/py_src'
                     }
                 },
@@ -150,11 +150,11 @@ def _normalized_cfg_schema():
                 'additionalProperties': {
                     'type': 'object',
                     'properties': {
-                        'process':       { '$ref': '#/definitions/id_process'         },
-                        'req_host_cfg':  { '$ref': '#/definitions/id_req_host_cfg'    },
-                        'functionality': { '$ref': '#/definitions/spec_functionality' },
-                        'state_type':    { '$ref': '#/definitions/id_data_type'       },
-                        'config':        { 'type': 'object'                           }
+                        'process':       { '$ref': '#/definitions/id_process'         },  # pylint: disable=C0301
+                        'req_host_cfg':  { '$ref': '#/definitions/id_req_host_cfg'    },  # pylint: disable=C0301
+                        'functionality': { '$ref': '#/definitions/spec_functionality' },  # pylint: disable=C0301
+                        'state_type':    { '$ref': '#/definitions/id_data_type'       },  # pylint: disable=C0301
+                        'config':        { 'type': 'object'                           }   # pylint: disable=C0301
                     },
                     'required': [ 'process', 'functionality' ],
                     'additionalProperties': False
@@ -205,13 +205,13 @@ def _normalized_cfg_schema():
                     'id':  {
                         'type': 'object',
                         'properties': {
-                            'id_system':  { '$ref': '#/definitions/id_system'  },
-                            'id_cfg':     { '$ref': '#/definitions/id_cfg'     },
-                            'id_host':    { '$ref': '#/definitions/id_host'    },
-                            'id_process': { '$ref': '#/definitions/id_process' },
-                            'id_node':    { '$ref': '#/definitions/id_node'    },
-                            'ts_run':     { '$ref': '#/definitions/ts_run'     },
-                            'id_run':     { '$ref': '#/definitions/id_run'     }
+                            'id_system':  { '$ref': '#/definitions/id_system'  },  # pylint: disable=C0301
+                            'id_cfg':     { '$ref': '#/definitions/id_cfg'     },  # pylint: disable=C0301
+                            'id_host':    { '$ref': '#/definitions/id_host'    },  # pylint: disable=C0301
+                            'id_process': { '$ref': '#/definitions/id_process' },  # pylint: disable=C0301
+                            'id_node':    { '$ref': '#/definitions/id_node'    },  # pylint: disable=C0301
+                            'ts_run':     { '$ref': '#/definitions/ts_run'     },  # pylint: disable=C0301
+                            'id_run':     { '$ref': '#/definitions/id_run'     }   # pylint: disable=C0301
                         },
                         'required': [
                             'id_host',

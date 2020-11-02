@@ -16,7 +16,8 @@ class SpecifyApply:
     """
 
     # -------------------------------------------------------------------------
-    def it_changes_nothing_when_no_override_is_given(self, valid_normalized_config):
+    def it_changes_nothing_when_no_override_is_given(
+                                                self, valid_normalized_config):
         """
         The apply function makes no changes when the override is None.
 

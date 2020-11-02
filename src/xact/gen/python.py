@@ -235,6 +235,6 @@ def _validator(id_type, list_node):
     #                    lambda ndarray, dtype = dtype: ndarray.dtype == dtype,
     #                    message  = 'Numpy ndarray of wrong type.',
     #                    expected = 'numpy.dtype({type})'.format(
-    #                                                        type = dtype.name)))
+    #                                                   type = dtype.name)))
     # return good.Schema(path_dict._data)
     return None

@@ -36,7 +36,8 @@ class SpecifySerialize:
 
         original = {'a': 1, 'b': 2, 'c': 3}
         encoded = xact.util.serialization.serialize(original)
-        assert re.match(pattern='^[-A-Za-z0-9+/]*={0,3}$', string=encoded) is not None
+        assert re.match(pattern = '^[-A-Za-z0-9+/]*={0,3}$',
+                        string  = encoded) is not None
 
     # -------------------------------------------------------------------------
     def it_returns_a_compressed_string_when_the_input_has_redundant_info(self):

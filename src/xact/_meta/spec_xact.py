@@ -66,7 +66,8 @@ class SpecifyGrpMain:
     """
 
     # -------------------------------------------------------------------------
-    def it_displays_help_text_when_called_with_no_args(self, expected_help_text_main):
+    def it_displays_help_text_when_called_with_no_args(
+                                                self, expected_help_text_main):
         """
         xact.cli.command.grp_main prints help text when called with no args.
 
@@ -88,7 +89,8 @@ class SpecifyGrpMain:
         assert response_text.startswith(expected_text)
 
     # -------------------------------------------------------------------------
-    def it_displays_help_text_when_called_with_help_arg(self, expected_help_text_main):
+    def it_displays_help_text_when_called_with_help_arg(
+                                                self, expected_help_text_main):
         """
         xact.cli.command.grp_main prints help text when called with a help arg.
 

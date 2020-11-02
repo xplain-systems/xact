@@ -58,7 +58,8 @@ class SpecifyFromPath:
         check_match(xact.cfg.load.from_path(filepath_cfg_xml), dict_of_strings)
 
     # -------------------------------------------------------------------------
-    def it_loads_a_directory_of_yaml_files(self, dict_of_strings, dirpath_cfg_yaml):
+    def it_loads_a_directory_of_yaml_files(
+                                    self, dict_of_strings, dirpath_cfg_yaml):
         """
         Xact.cfg.from_path can load configuration from a single YAML file.
 
@@ -69,7 +70,8 @@ class SpecifyFromPath:
         check_match(xact.cfg.load.from_path(dirpath_cfg_yaml), dict_of_strings)
 
     # -------------------------------------------------------------------------
-    def it_loads_a_directory_of_json_files(self, dict_of_strings, dirpath_cfg_json):
+    def it_loads_a_directory_of_json_files(
+                                    self, dict_of_strings, dirpath_cfg_json):
         """
         Xact.cfg.from_path can load configuration from a single JSON file.
 
@@ -79,7 +81,8 @@ class SpecifyFromPath:
         check_match(xact.cfg.load.from_path(dirpath_cfg_json), dict_of_strings)
 
     # -------------------------------------------------------------------------
-    def it_loads_a_directory_of_xml_files(self, dict_of_strings, dirpath_cfg_xml):
+    def it_loads_a_directory_of_xml_files(
+                                    self, dict_of_strings, dirpath_cfg_xml):
         """
         Xact.cfg.from_path can load configuration from a single XML file.
 
@@ -114,7 +117,8 @@ class SpecifyFromFilePath:
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_filepath(filepath_cfg_yaml), dict_of_strings)
+        check_match(xact.cfg.load.from_filepath(filepath_cfg_yaml),
+                    dict_of_strings)
 
     # -------------------------------------------------------------------------
     def it_loads_a_single_json_file(self, dict_of_strings, filepath_cfg_json):
@@ -124,7 +128,8 @@ class SpecifyFromFilePath:
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_filepath(filepath_cfg_json), dict_of_strings)
+        check_match(xact.cfg.load.from_filepath(filepath_cfg_json),
+                    dict_of_strings)
 
     # -------------------------------------------------------------------------
     def it_loads_a_single_xml_file(self, dict_of_strings, filepath_cfg_xml):
@@ -134,7 +139,8 @@ class SpecifyFromFilePath:
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_filepath(filepath_cfg_xml), dict_of_strings)
+        check_match(xact.cfg.load.from_filepath(filepath_cfg_xml),
+                    dict_of_strings)
 
 
 # =============================================================================
@@ -155,34 +161,40 @@ class SpecifyLoad:
         assert isinstance(xact.cfg.load.from_dirpath(dirpath_cfg_yaml), dict)
 
     # -------------------------------------------------------------------------
-    def it_loads_a_directory_of_yaml_files(self, dict_of_strings, dirpath_cfg_yaml):
+    def it_loads_a_directory_of_yaml_files(
+                                    self, dict_of_strings, dirpath_cfg_yaml):
         """
         Xact.cfg.load loads a directory of yaml files.
 
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_dirpath(dirpath_cfg_yaml), dict_of_strings)
+        check_match(xact.cfg.load.from_dirpath(dirpath_cfg_yaml),
+                    dict_of_strings)
 
     # -------------------------------------------------------------------------
-    def it_loads_a_directory_of_json_files(self, dict_of_strings, dirpath_cfg_json):
+    def it_loads_a_directory_of_json_files(
+                                    self, dict_of_strings, dirpath_cfg_json):
         """
         Xact.cfg.load loads a directory of json files.
 
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_dirpath(dirpath_cfg_json), dict_of_strings)
+        check_match(xact.cfg.load.from_dirpath(dirpath_cfg_json),
+                    dict_of_strings)
 
     # -------------------------------------------------------------------------
-    def it_loads_a_directory_of_xml_files(self, dict_of_strings, dirpath_cfg_xml):
+    def it_loads_a_directory_of_xml_files(
+                                    self, dict_of_strings, dirpath_cfg_xml):
         """
         Xact.cfg.load loads a directory of xml files.
 
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_dirpath(dirpath_cfg_xml), dict_of_strings)
+        check_match(xact.cfg.load.from_dirpath(dirpath_cfg_xml),
+                    dict_of_strings)
 
 
 # ------------------------------------------------------------------------------
