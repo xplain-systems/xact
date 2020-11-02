@@ -5,7 +5,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name          = "xact"
-version       = "0.0.2dev"
+version       = "0.0.3dev"
 description   = "Model based design for developers"
 keywords      = ["modelling",
                  "simulation",
@@ -15,12 +15,11 @@ keywords      = ["modelling",
 homepage      = "http://xplain.systems"
 repository    = "https://github.com/xplain-systems/xact"
 documentation = "https://github.com/xplain-systems/xact/wiki"
-license       = "AGPL-1.0-only"
+license       = "AGPL-3.0-only"
 authors       = ["William Payne <will@xplain.systems>"]
 maintainers   = ["William Payne <will@xplain.systems>"]
 readme        = "README.rst"
 classifiers   = ["Development Status :: 1 - Planning",
-                 "License :: OSI Approved :: Apache Software License",
                  "Natural Language :: English",
                  "Environment :: Console",
                  "Operating System :: POSIX :: Linux",
