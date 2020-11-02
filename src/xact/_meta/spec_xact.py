@@ -20,6 +20,8 @@ class SpecifyXact:
     """
     def it_runs_a_simple_system(self, simple_test_config):
         """
+        xact.cli.command.grp_main runs a simple xact system.
+
         """
         import xact.cli.command
         import xact.util.serialization
@@ -43,11 +45,13 @@ def expected_help_text_main():
     return (
         'Usage: main [OPTIONS] COMMAND [ARGS]...\n\n'
         '  Xact command line interface.\n\n'
-        '  The xact command line interface provides the user with the ability to start,\n'
-        '  stop, pause and step an xact system.\n\n'
-        '  An xact system is composed of one or more process-hosts, each of which\n'
-        '  contains one or more processes, each of which contains one or more compute\n'
-        '  nodes.\n\n'
+        '  The xact command line interface provides the\n'
+        '  user with the ability to start, stop, pause\n'
+        '  and step an xact system.\n\n'
+        '  An xact system is composed of one or more\n'
+        '  process-hosts, each of which contains one or\n'
+        '  more processes, each of which contains one or\n'
+        '  more compute nodes.\n\n'
         'Options:\n'
         '  --help  Show this message and exit.\n\n'
         'Commands:\n'
@@ -73,11 +77,15 @@ class SpecifyGrpMain:
 
         import xact.cli.command
 
-        runner = click.testing.CliRunner()
-        response = runner.invoke(xact.cli.command.grp_main)
+        runner        = click.testing.CliRunner()
+        response      = runner.invoke(xact.cli.command.grp_main)
+        response_text = ' '.join(line.strip() for line in
+                                        response.output.splitlines())
+        expected_text = ' '.join(line.strip() for  line in
+                                        expected_help_text_main.splitlines())
 
         assert response.exit_code == 0
-        assert response.output.startswith(expected_help_text_main)
+        assert response_text.startswith(expected_text)
 
     # -------------------------------------------------------------------------
     def it_displays_help_text_when_called_with_help_arg(self, expected_help_text_main):
@@ -91,8 +99,12 @@ class SpecifyGrpMain:
 
         import xact.cli.command
 
-        runner = click.testing.CliRunner()
-        response = runner.invoke(xact.cli.command.grp_main, ['--help'])
+        runner        = click.testing.CliRunner()
+        response      = runner.invoke(xact.cli.command.grp_main, ['--help'])
+        response_text = ' '.join(line.strip() for line in
+                                        response.output.splitlines())
+        expected_text = ' '.join(line.strip() for  line in
+                                        expected_help_text_main.splitlines())
 
         assert response.exit_code == 0
-        assert response.output.startswith(expected_help_text_main)
+        assert response_text.startswith(expected_text)

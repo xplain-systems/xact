@@ -72,8 +72,9 @@ def _envvar(name):
 
 
 # -----------------------------------------------------------------------------
-@click.group(name = 'main',
-             cls  = xact.cli.util.OrderedGroup)
+@click.group(name             = 'main',
+             cls              = xact.cli.util.OrderedGroup,
+             context_settings = { 'max_content_width': 50})
 def grp_main():
     """
     Xact command line interface.
@@ -94,7 +95,7 @@ def grp_main():
                 cls  = xact.cli.util.OrderedGroup)
 def grp_system():
     """
-    Commands to control the system as a whole.
+    Control the system as a whole.
 
     """
     pass
@@ -105,7 +106,7 @@ def grp_system():
                 cls  = xact.cli.util.OrderedGroup)
 def grp_host():
     """
-    Commands to control a single process host.
+    Control a single process host.
 
     """
     pass
