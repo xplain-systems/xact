@@ -74,7 +74,7 @@ def _envvar(name):
 # -----------------------------------------------------------------------------
 @click.group(name             = 'main',
              cls              = xact.cli.util.OrderedGroup,
-             context_settings = { 'max_content_width': 50})
+             context_settings = { 'max_content_width': 50 })
 def grp_main():
     """
     Xact command line interface.
