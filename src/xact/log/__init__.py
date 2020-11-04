@@ -5,9 +5,10 @@ Module of utilities to support various logging operations.
 """
 
 
-import loguru
 import os
 import sys
+
+import loguru
 
 
 logger = loguru.logger
