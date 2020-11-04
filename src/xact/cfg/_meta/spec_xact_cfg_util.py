@@ -15,7 +15,7 @@ class SpecifyApply:
     # -------------------------------------------------------------------------
     def it_modifies_nested_struct_field_values_by_path(self):
         """
-        The apply function can be used to modify nested struct fields.
+        Check apply can be used to modify nested struct fields.
 
         """
         import xact.cfg.util
@@ -27,7 +27,7 @@ class SpecifyApply:
     # -------------------------------------------------------------------------
     def it_can_use_different_delimiters(self):
         """
-        The apply function can be used to modify nested struct fields.
+        Check apply can be used to modify nested struct fields.
 
         """
         import xact.cfg.util

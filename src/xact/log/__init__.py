@@ -17,7 +17,7 @@ logger = loguru.logger
 # -----------------------------------------------------------------------------
 def setup(cfg = None, id_host = 'localhost', id_process = 'main_process'):
     """
-    Setup logging.
+    Configure the module level logger object.
 
     """
     log_level   = 'WARNING'

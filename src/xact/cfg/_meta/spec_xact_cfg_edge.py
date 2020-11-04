@@ -18,7 +18,7 @@ class SpecifyDenormalize:
     # -------------------------------------------------------------------------
     def it_adds_fields(self, valid_normalized_config):
         """
-        The edge.denormalize function adds fields to the config structure.
+        Check edge.denormalize adds fields to the config structure.
 
         """
         import xact.cfg.edge

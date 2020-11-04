@@ -18,7 +18,7 @@ class SpecifyDenormalize:
     # -------------------------------------------------------------------------
     def it_returns_valid_data(self, valid_partly_denormalized_config):
         """
-        The denormalize function returns a valid denormalized config structure.
+        Check denormalize returns a valid denormalized config structure.
 
         """
         import xact.cfg.data
@@ -38,7 +38,7 @@ class Specify_ExpandNode:
     # -------------------------------------------------------------------------
     def it_returns_an_expanded_node(self):
         """
-        The denormalize function returns a valid denormalized config structure.
+        Check denormalize returns a valid denormalized config structure.
 
         """
         import xact.cfg.data

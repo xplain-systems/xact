@@ -41,7 +41,7 @@ class SpecifyXact:
 @pytest.fixture
 def expected_help_text_main():
     """
-    Expected help text for xact.cli.command.grp_main.
+    Return the expected help text for xact.cli.command.grp_main.
 
     """
     return (

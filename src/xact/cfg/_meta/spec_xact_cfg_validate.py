@@ -18,7 +18,7 @@ class SpecifyNormalized:
     # -------------------------------------------------------------------------
     def it_accepts_valid_data(self, valid_normalized_config):
         """
-        The normalized function does not throw when given valid data.
+        Check normalized does not throw when given valid data.
 
         """
         import xact.cfg.validate
@@ -28,7 +28,7 @@ class SpecifyNormalized:
     # -------------------------------------------------------------------------
     def it_rejects_invalid_data(self, invalid_config):
         """
-        The normalized function raises an exception when given invalid data.
+        Check normalized raises an exception when given invalid data.
 
         """
         import xact.cfg.exception
@@ -48,7 +48,7 @@ class SpecifyDenormalized:
     # -------------------------------------------------------------------------
     def it_accepts_valid_data(self, valid_normalized_config):
         """
-        The normalized function does not throw when given valid data.
+        Check normalized does not throw when given valid data.
 
         """
         import xact.cfg
@@ -61,7 +61,7 @@ class SpecifyDenormalized:
     # -------------------------------------------------------------------------
     def it_rejects_invalid_data(self, invalid_config):
         """
-        The normalized function raises an exception when given invalid data.
+        Check normalized raises an exception when given invalid data.
 
         """
         import xact.cfg.exception

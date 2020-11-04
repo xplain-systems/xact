@@ -18,7 +18,7 @@ class SpecifySetSystemId:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.set_system_id function returns valid configuration.
+        Check builder.set_system_id returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -38,7 +38,7 @@ class SpecifyAddHost:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.add_host function returns valid configuration.
+        Check builder.add_host returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -58,7 +58,7 @@ class SpecifyRemoveHost:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.remove_host function returns valid configuration.
+        Check builder.remove_host returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -80,7 +80,7 @@ class SpecifyAddProcess:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.add_process function returns valid configuration.
+        Check builder.add_process returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -101,7 +101,7 @@ class SpecifyRemoveProcess:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.remove_process function returns valid configuration.
+        Check builder.remove_process returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -124,7 +124,7 @@ class SpecifyAddNode:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.add_node function returns valid configuration.
+        Check builder.add_node returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -149,7 +149,7 @@ class SpecifyRemoveNode:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.remove_node function returns valid configuration.
+        Check builder.remove_node returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -174,7 +174,7 @@ class SpecifyAddEdge:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.add_edge function returns valid configuration.
+        Check builder.add_edge returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -198,7 +198,7 @@ class SpecifyRemoveEdge:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.remove_edge function returns valid configuration.
+        Check builder.remove_edge returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -225,7 +225,7 @@ class SpecifyAddData:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.add_data function returns valid configuration.
+        Check builder.add_data returns valid configuration.
 
         """
         import xact.cfg.builder
@@ -246,7 +246,7 @@ class SpecifyRemoveData:
     # -------------------------------------------------------------------------
     def it_returns_valid_configuration(self, valid_normalized_config):
         """
-        The builder.remove_data function returns valid configuration.
+        Check builder.remove_data returns valid configuration.
 
         """
         import xact.cfg.builder

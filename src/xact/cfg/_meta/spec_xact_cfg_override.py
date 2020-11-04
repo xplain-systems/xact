@@ -19,7 +19,7 @@ class SpecifyApply:
     def it_changes_nothing_when_no_override_is_given(
                                                 self, valid_normalized_config):
         """
-        The apply function makes no changes when the override is None.
+        Check apply makes no changes when the override is None.
 
         """
         import xact.cfg.override
@@ -32,7 +32,7 @@ class SpecifyApply:
     # -------------------------------------------------------------------------
     def it_can_override_a_single_field(self, valid_normalized_config):
         """
-        The apply function makes no changes when the override is None.
+        Check apply makes no changes when the override is None.
 
         """
         import xact.cfg.override
@@ -49,7 +49,7 @@ class SpecifyApply:
     # -------------------------------------------------------------------------
     def it_can_override_multiple_fields(self, valid_normalized_config):
         """
-        The apply function makes no changes when the override is None.
+        Check apply makes no changes when the override is None.
 
         """
         import xact.cfg.override
