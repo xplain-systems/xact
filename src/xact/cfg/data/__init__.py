@@ -270,4 +270,3 @@ def _iter_expanded(expanded_def):
             child_path  = path + [key]
             stack_frame = (child_node, child_path)
             stack.append(stack_frame)
-

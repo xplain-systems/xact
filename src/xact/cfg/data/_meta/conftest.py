@@ -87,5 +87,3 @@ def valid_partly_denormalized_config():
             'some_type_alias': 'py_dict'
         }
     }
-
-

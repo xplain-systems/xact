@@ -43,5 +43,3 @@ class NonRecoverableError(ControlException):
 
     """
     pass
-
-

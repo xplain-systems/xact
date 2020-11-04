@@ -35,4 +35,3 @@ def ensure_deployed(cfg):
 
     """
     return xact.sys.orchestration.ansible.ensure_deployed(cfg)
-

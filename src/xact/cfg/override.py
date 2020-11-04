@@ -28,4 +28,3 @@ def apply(cfg, tup_overrides = None, delim_cfg_addr = '.'):
                     'Could not find "{path}" in cfg'.format(path = address))
 
     return cfg
-

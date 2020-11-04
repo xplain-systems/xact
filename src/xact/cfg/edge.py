@@ -85,5 +85,3 @@ def denormalize(cfg):
             cfg_host['is_inter_host_edge_owner'] = False
 
     return cfg
-
-
