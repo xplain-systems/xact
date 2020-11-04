@@ -313,7 +313,7 @@ def _specify_detailed_execution_order(list_tranches):
     """
     for tranche in list_tranches:
         for id_node in sorted(tranche):
-            yield(id_node)
+            yield id_node
 
 
 # -----------------------------------------------------------------------------
