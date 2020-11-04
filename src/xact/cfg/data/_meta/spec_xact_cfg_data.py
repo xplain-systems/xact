@@ -52,8 +52,8 @@ class Specify_ExpandNode:
                                                       name     = 'name',
                                                       spec     = 'my_param',
                                                       category = named_type),
-                            subs = SubsTab({'my_param': 'some_float_type'}), 
-                            typeinfo = {'some_float_type': {'py': float}}, 
+                            subs = SubsTab({'my_param': 'some_float_type'}),
+                            typeinfo = {'some_float_type': {'py': float}},
                             idx = 4)
 
         expected_output = {
