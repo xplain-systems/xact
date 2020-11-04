@@ -166,7 +166,6 @@ def _call_ansible(hostname, list_tasks):
                                         loader           = loader)
 
     try:
-        import pudb; pu.db
         result = tqm.run(play)
     finally:
         tqm.cleanup()
