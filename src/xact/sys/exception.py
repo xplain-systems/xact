@@ -11,7 +11,9 @@ class ControlException(Exception):
     Base class for custom exceptions used for xact system flow control.
 
     """
+
     pass
+
 
 # =============================================================================
 class RunComplete(ControlException):
@@ -28,13 +30,16 @@ class RunComplete(ControlException):
         """
         self.return_code = return_code
 
+
 # =============================================================================
 class RecoverableError(ControlException):
     """
     Thrown to trigger a reset-and-retry.
 
     """
+
     pass
+
 
 # =============================================================================
 class NonRecoverableError(ControlException):
@@ -42,4 +47,5 @@ class NonRecoverableError(ControlException):
     Thrown to trigger an error condition system halt.
 
     """
+
     pass

@@ -11,4 +11,5 @@ class CfgError(Exception):
     Base class for custom exceptions used for xact configuration errors.
 
     """
+
     pass

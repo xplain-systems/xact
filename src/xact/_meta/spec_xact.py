@@ -18,6 +18,8 @@ class SpecifyXact:
     Spec for xact at a system level.
 
     """
+
+    # -------------------------------------------------------------------------
     def it_runs_a_simple_system(self, simple_test_config):
         """
         xact.cli.command.grp_main runs a simple xact system.

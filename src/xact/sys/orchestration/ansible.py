@@ -193,6 +193,7 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
     A sample callback plugin used for performing an action as results come in.
 
     """
+
     # If you want to collect all results
     # into a single object for processing
     # at the end of the execution, look

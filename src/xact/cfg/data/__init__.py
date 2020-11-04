@@ -86,6 +86,7 @@ class FieldCategory(enum.IntEnum):
     Enumeration for data structure field type categories.
 
     """
+
     named_type         = 1
     compound_type      = 2
     parameterised_type = 3
