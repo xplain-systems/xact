@@ -35,7 +35,6 @@ def as_dict():
     Python applications.
 
     """
-
     map_typeinfo = dict()
     for typeinfo in _as_tuple():
         map_typeinfo[typeinfo.id] = dict(typeinfo._asdict())

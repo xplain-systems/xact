@@ -383,7 +383,6 @@ def step(list_node):
     Run a single simulation step.
 
     """
-
     raised = []
 
     # for node in list_node:

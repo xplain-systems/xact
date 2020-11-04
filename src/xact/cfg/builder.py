@@ -68,7 +68,6 @@ def add_process(cfg, id_process, id_host = None, **kwargs):
     Mutate the config structure to add a new process.
 
     """
-
     tup_hosts = tuple(cfg['host'].keys())
     if id_host is None:
         id_host = tup_hosts[0]

@@ -141,7 +141,6 @@ def _initializer(id_type, list_node):
     Return an initializer function for the specified type.
 
     """
-
     # -------------------------------------------------------------------------
     def _initialize_all_fields(
                 data_structure,
