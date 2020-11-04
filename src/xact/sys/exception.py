@@ -23,6 +23,8 @@ class RunComplete(ControlException):
     # -------------------------------------------------------------------------
     def __init__(self, return_code):
         """
+        Return an instance of a RunComplete ControlException object.
+
         """
         self.return_code = return_code
 

@@ -204,6 +204,8 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
     # -------------------------------------------------------------------------
     def __init__(self, *args, **kwargs):
         """
+        Return an instance of a ResultsCollectorJSONCallback object.
+
         """
         super(ResultsCollectorJSONCallback, self).__init__(*args, **kwargs)
         self.host_ok = {}
@@ -213,6 +215,8 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
     # -------------------------------------------------------------------------
     def v2_runner_on_unreachable(self, result):
         """
+        Handle on_unreachable events.
+
         """
         host = result._host
         self.host_unreachable[host.get_name()] = result
@@ -232,6 +236,8 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
     # -------------------------------------------------------------------------
     def v2_runner_on_failed(self, result, *args, **kwargs):
         """
+        Handle on_failed events.
+
         """
         host = result._host
         self.host_failed[host.get_name()] = result
