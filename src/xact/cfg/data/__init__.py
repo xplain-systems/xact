@@ -82,6 +82,10 @@ Node = collections.namedtuple('Node',
 
 # =============================================================================
 class FieldCategory(enum.IntEnum):
+    """
+    Enumeration for data structure field type categories.
+
+    """
     named_type         = 1
     compound_type      = 2
     parameterised_type = 3
@@ -97,7 +101,7 @@ def _init_stack(map):
     """
     stack      = collections.deque()
     tup_items  = ({key: value} for (key, value) in map.items())
-    list_items = sorted(tup_items, 
+    list_items = sorted(tup_items,
                         key = lambda item: xact.util.first(item.keys()))
     for item in reversed(list_items):
         try:
@@ -179,7 +183,7 @@ def _expand_node(node, subs, typeinfo, idx):
     """
     Return an expanded copy of the specified data type definition node.
 
-    This is not recursive. It expands only the 
+    This is not recursive. It expands only the
     node provided, not any children.
 
     """
