@@ -29,7 +29,7 @@ def setup(cfg = None, id_host = 'localhost', id_process = 'main_process'):
         if 'dirpath_log' in cfg_host:
             dirpath_log = cfg_host['dirpath_log']
 
-    global logger
+    global logger  # pylint: disable=C0103
     logger.remove()
     logger.add(sys.stderr,
                level     = log_level,

@@ -13,7 +13,7 @@ import loguru
 try:
     import psutil
 except ModuleNotFoundError:
-    psutil = None
+    psutil = None  # pylint: disable=C0103
 
 
 # -----------------------------------------------------------------------------

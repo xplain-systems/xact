@@ -12,7 +12,7 @@ import multiprocessing
 try:
     import setproctitle
 except ModuleNotFoundError:
-    setproctitle = None
+    setproctitle = None  # pylint: disable=C0103
 
 import xact.gen.python
 import xact.node
@@ -392,12 +392,12 @@ def step(list_node):
     for node in list_node:
         try:
             node.step()
-        except xact.sys.exception.RunComplete as ex:
-            raised.append(ex)
+        except xact.sys.exception.RunComplete as err:
+            raised.append(err)
 
     # for node in list_node:
     #     node.post_step()
 
     if raised:
-        ex = raised[0]
-        raise ex
+        err = raised[0]
+        raise err
