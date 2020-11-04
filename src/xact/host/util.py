@@ -28,7 +28,7 @@ def kill_process_by_prefix(prefix):
                       kill_signal = signal.SIGTERM)
 
     set_pid = _pid_from_prefix(prefix)
-    if 0 == len(set_pid):
+    if len(set_pid) == 0:
         return
     loguru.logger.info('Send SIGKILL to {n} pids.'.format(n = len(set_pid)))
     kill_process_tree(iter_pid    = set_pid,

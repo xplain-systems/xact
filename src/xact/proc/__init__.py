@@ -121,7 +121,7 @@ def _config_edges(cfg, id_process, id_process_host, map_node, map_queues):
         memory      = map_alloc[cfg_edge['data']]()
 
         # Intra process comms uses shared memory
-        if 'intra_process' == cfg_edge['ipc_type']:
+        if cfg_edge['ipc_type'] == 'intra_process':
             _point(map_node[id_node_src], relpath_src, memory)
             _point(map_node[id_node_dst], relpath_dst, memory)
 
