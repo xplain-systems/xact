@@ -127,7 +127,7 @@ class GapTable():
     # -------------------------------------------------------------------------
     def _fill_gaps_with_ready_types(self, output, ready_set):
         """
-        Use all available ready_type to fill gaps in associated incomplete_type
+        Use all available ready_type to fill gaps in associated incomplete_type.
 
         """
         incomplete_set = self._incomplete_set()

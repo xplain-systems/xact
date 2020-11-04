@@ -41,7 +41,7 @@ class SubstitutionTable(object):
     # -------------------------------------------------------------------------
     def __getitem__(self, key):
         """
-        Return self._lut[key] if key in self._lut else key
+        Return self._lut[key] if key in self._lut else key.
 
         """
         try:

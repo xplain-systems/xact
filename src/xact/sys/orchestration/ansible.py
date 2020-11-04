@@ -108,7 +108,7 @@ def _list_tasks(cfg, id_host):
 # -----------------------------------------------------------------------------
 def _call_ansible(hostname, list_tasks):
     """
-    Call ansible for a specific host
+    Call ansible for a specific host.
 
     """
     list_module_path = []  # ['/to/mymodules', '/usr/share/ansible']

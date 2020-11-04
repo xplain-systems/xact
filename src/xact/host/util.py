@@ -38,7 +38,7 @@ def kill_process_by_prefix(prefix):
 # -----------------------------------------------------------------------------
 def _pid_from_prefix(prefix):
     """
-    Return a list of process ids that correspond to the specified names
+    Return a list of process ids that correspond to the specified names.
 
     """
     if psutil is None:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Functional specification for the xact.proc package
+Functional specification for the xact.proc package.
 
 """

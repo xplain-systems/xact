@@ -15,7 +15,7 @@ class SpecifyAsDict:
     # -------------------------------------------------------------------------
     def it_returns_a_dict(self):
         """
-        The as_dict function returns a dict
+        The as_dict function returns a dict.
 
         """
         import xact.cfg.data.atomic_types
@@ -33,7 +33,7 @@ class Specify_AsTuple:
     # -------------------------------------------------------------------------
     def it_returns_a_tuple(self):
         """
-        The as_dict function returns a dict
+        The as_dict function returns a dict.
 
         """
         import xact.cfg.data.atomic_types
