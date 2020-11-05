@@ -252,11 +252,9 @@ def _sort_into_execution_tranches(map_forward, map_backward):
         set_next = _nodes_at_count_zero(map_count_in)
         _del_items(map_count_in, set_next)
 
-        if set_next:
-            list_tranches.append(set_next)
-            continue
-        else:
+        if not set_next:
             break
+        list_tranches.append(set_next)
 
     return list_tranches
 

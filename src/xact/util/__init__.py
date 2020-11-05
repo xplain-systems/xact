@@ -304,11 +304,9 @@ def topological_sort(map_edge):
         set_next = _nodes_at_count_zero(map_count_in)
         _del_items(map_count_in, set_next)
 
-        if set_next:
-            list_ranks.append(set_next)
-            continue
-        else:
+        if not set_next:
             break
+        list_ranks.append(set_next)
 
     return list_ranks
 
