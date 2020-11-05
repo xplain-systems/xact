@@ -82,7 +82,7 @@ def format_all_strings(map_data):
                 parent = cursor
                 cursor = cursor[key]
             if is_format_string(cursor):
-                parent[key] = cursor.format(**map_data)
+                parent[tup_path[-1]] = cursor.format(**map_data)
 
     return map_data
 
