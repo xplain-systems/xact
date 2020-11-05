@@ -359,13 +359,20 @@ class PathDict(collections.UserDict):
     """
 
     # -------------------------------------------------------------------------
+    def __init__(self, *args, **kwargs):
+        """
+        """
+        self.delim = '.'
+        super().__init__(*args, **kwargs)
+
+    # -------------------------------------------------------------------------
     def __getitem__(self, key):
         """
         Return a reference to the specified item in data.
 
         """
         reference = self.data
-        for name in self._ensure_list(key):
+        for name in self._ensure_list(key, self.delim):
             reference = reference[name]
         return reference
 
@@ -376,7 +383,7 @@ class PathDict(collections.UserDict):
 
         """
         reference = self.data
-        key       = self._ensure_list(key)
+        key       = self._ensure_list(key, self.delim)
 
         reference = self.data
         for name in key[:-1]:
@@ -389,13 +396,13 @@ class PathDict(collections.UserDict):
             reference = value
 
     # -------------------------------------------------------------------------
-    def _ensure_list(self, key):
+    def _ensure_list(self, key, delim):
         """
         Ensure that key is represented as a list of names.
 
         """
         if isinstance(key, str):
-            list_str  = key.split('.')
+            list_str  = key.split(delim)
             list_name = []
             for str_name in list_str:
                 try:
