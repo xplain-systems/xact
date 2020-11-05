@@ -71,8 +71,6 @@ class SpecifyGrpMain:
         xact.cli.command.grp_main prints help text when called with no args.
 
         """
-        import click.testing
-
         import xact.cli.command
 
         runner        = click.testing.CliRunner()
@@ -92,8 +90,6 @@ class SpecifyGrpMain:
         xact.cli.command.grp_main prints help text when called with a help arg.
 
         """
-        import click.testing
-
         import xact.cli.command
 
         runner        = click.testing.CliRunner()
