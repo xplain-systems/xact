@@ -280,5 +280,4 @@ def _make_list(data, type, count):
     """
     if isinstance(data, type):
         return [data] * count
-    else:
-        return data
+    return data
