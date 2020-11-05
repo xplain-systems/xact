@@ -74,7 +74,6 @@ Frame = collections.namedtuple('Frame',
                ['line', 'col', 'level', 'path', 'item'])
 
 
-
 # =============================================================================
 Node = collections.namedtuple('Node',
                ['line', 'col', 'level', 'path', 'name', 'spec', 'category'])

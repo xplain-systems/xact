@@ -72,7 +72,6 @@ def prepare(path_cfg       = None,
     cfg['runtime']['id']['ts_run']     = '00000000000000'
     cfg['runtime']['id']['id_run']     = '00000000'
 
-
     # cfg = xact.util.format_all_strings(cfg)
     cfg = xact.cfg.validate.normalized(cfg)
 
