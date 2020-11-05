@@ -11,7 +11,7 @@ pause/unpause and single-step an xact system.
 import copy
 import os
 import subprocess
-import sys  # pylint:ignore=W0406
+import sys  # pylint: disable=W0406
 import time
 import uuid
 
