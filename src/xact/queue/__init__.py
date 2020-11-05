@@ -95,8 +95,8 @@ class RemoteQueueClient:
         """
         cfg_host      = cfg['host'][id_host]
         address       = 'tcp://{hostname}:{port}'.format(
-                                    hostname = cfg_host['hostname'],
-                                    port     = _port_number(cfg_host, cfg_edge))
+                                hostname = cfg_host['hostname'],
+                                port     = _port_number(cfg_host, cfg_edge))
         is_src        = id_host == cfg_edge['id_host_src']
         socket_type   = zmq.PUB if is_src else zmq.SUB
         self._context = zmq.Context()

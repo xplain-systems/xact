@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Package with functionality to provision and deploy applications to remote hosts.
+Package with functionality to provision and deploy remote applications.
 
 """
 

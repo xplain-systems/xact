@@ -60,7 +60,8 @@ def kill_process_tree(iter_pid, kill_signal):
         return
     for pid in iter_pid:
 
-        assert pid != os.getpid(), 'A process should not attempt to kill itself'
+        assert pid != os.getpid(), \
+               'A process should not attempt to kill itself'
         try:
             parent = psutil.Process(pid)
         except psutil.NoSuchProcess:

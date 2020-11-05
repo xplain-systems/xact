@@ -123,15 +123,15 @@ def _command(cfg, id_host, command):
 
     else:
         remote_command = '{venv} && {cli} {grp} {cmd} {cfg}'.format(
-                                                    venv = command_venv,
-                                                    cli  = command_name,
-                                                    grp  = command_group,
-                                                    cmd  = command,
-                                                    cfg  = cfg_encoded)
+                                                venv = command_venv,
+                                                cli  = command_name,
+                                                grp  = command_group,
+                                                cmd  = command,
+                                                cfg  = cfg_encoded)
         local_command = 'ssh {act}@{host} "{cmd}"'.format(
-                                                    act  = cfg_host['acct_run'],
-                                                    host = cfg_host['hostname'],
-                                                    cmd  = remote_command)
+                                                act  = cfg_host['acct_run'],
+                                                host = cfg_host['hostname'],
+                                                cmd  = remote_command)
         subprocess.run(local_command, shell = True)
 
 
