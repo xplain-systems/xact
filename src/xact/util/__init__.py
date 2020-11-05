@@ -371,7 +371,7 @@ class PathDict(collections.UserDict):
 
         """
         reference = self.data
-        for name in self._ensure_list(key, self.delim):
+        for name in _ensure_list(key, delim = self.delim):
             reference = reference[name]
         return reference
 
@@ -382,7 +382,7 @@ class PathDict(collections.UserDict):
 
         """
         reference = self.data
-        key       = self._ensure_list(key, self.delim)
+        key       = _ensure_list(key, delim = self.delim)
 
         reference = self.data
         for name in key[:-1]:
@@ -394,23 +394,24 @@ class PathDict(collections.UserDict):
         else:
             reference = value
 
-    # -------------------------------------------------------------------------
-    def _ensure_list(self, key, delim):
-        """
-        Ensure that key is represented as a list of names.
 
-        """
-        if isinstance(key, str):
-            list_str  = key.split(delim)
-            list_name = []
-            for str_name in list_str:
-                try:
-                    name = int(str_name)
-                except ValueError:
-                    name = str_name
-                list_name.append(name)
-            key = list_name
-        return key
+# -------------------------------------------------------------------------
+def _ensure_list(key, delim):
+    """
+    Ensure that key is represented as a list of names.
+
+    """
+    if isinstance(key, str):
+        list_str  = key.split(delim)
+        list_name = []
+        for str_name in list_str:
+            try:
+                name = int(str_name)
+            except ValueError:
+                name = str_name
+            list_name.append(name)
+        key = list_name
+    return key
 
 
 # -----------------------------------------------------------------------------
