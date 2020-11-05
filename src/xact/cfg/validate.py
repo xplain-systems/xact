@@ -297,7 +297,7 @@ def _check_consistency(cfg):
     for cfg_process in cfg['process'].values():
         id_host = cfg_process['host']
         if id_host not in set_id_host:
-            msg = 'Unkown id_host in cfg: {sz}'.format(id = id_host)
+            msg = 'Unkown id_host in cfg: {id}'.format(id = id_host)
             raise xact.cfg.exception.CfgError(msg)
 
     for cfg_node in cfg['node'].values():
