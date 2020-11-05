@@ -59,7 +59,7 @@ class Node():
                                self.outputs)
             except xact.sys.exception.ControlException:
                 raise
-            except Exception as err:
+            except Exception:
                 xact.log.logger.exception(
                             'Reset function failed for id_node = "{id_node}"',
                             id_node = self.id_node)
@@ -82,7 +82,7 @@ class Node():
                               self.outputs)
             except xact.sys.exception.ControlException:
                 raise
-            except Exception as err:
+            except Exception:
                 xact.log.logger.exception(
                             'Step function failed for id_node = "{id_node}"',
                             id_node = self.id_node)

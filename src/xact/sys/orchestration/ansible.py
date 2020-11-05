@@ -64,11 +64,10 @@ def ensure_provisioned(cfg):
             file_play.write(yaml.dump(list_plays))
             file_play.flush()
 
-            proc = subprocess.run([
-                        'ansible-playbook',
-                        '-i', file_hosts.name,
-                        file_play.name],
-                        check = False)
+            subprocess.run(
+                    ['ansible-playbook', '-i',
+                     file_hosts.name, file_play.name],
+                    check = False)
 
 
 # -----------------------------------------------------------------------------

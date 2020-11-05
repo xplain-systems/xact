@@ -70,7 +70,6 @@ class SpecifyFromPath:
         """
         import xact.cfg.load
 
-        loaded = xact.cfg.load.from_path(dirpath_cfg_yaml)
         check_match(xact.cfg.load.from_path(dirpath_cfg_yaml),
                     dict_of_strings)
 
@@ -231,7 +230,7 @@ def _iter_leaves(data_structure):
 
     """
     for pv_pair in xact.util.gen_path_value_pairs_depth_first(data_structure):
-        (path, value) = pv_pair
+        (_, value) = pv_pair
         is_interior_node = isinstance(value, dict) or isinstance(value, list)
         is_leaf = not is_interior_node
         if is_leaf:

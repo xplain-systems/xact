@@ -287,7 +287,6 @@ def topological_sort(map_edge):
     set_node_out     = set(map_forward.keys())   # nodes with outbound edge(s)
     set_node_in      = set(map_backward.keys())  # nodes With inbound edge(s)
     set_node_sources = set_node_out - set_node_in
-    set_node_sinks   = set_node_in  - set_node_out
 
     map_count_in = dict((key, 0) for key in set_node_sources)
     for (key, inbound) in map_backward.items():
@@ -296,11 +295,9 @@ def topological_sort(map_edge):
     set_count_zero = _nodes_at_count_zero(map_count_in)
     _del_items(map_count_in, set_count_zero)
 
-    visited    = set()
-    list_ranks = list()
     list_ranks = [set_count_zero]
 
-    for idx in itertools.count():
+    for _ in itertools.count():
         set_prev = list_ranks[-1]
         for id_node in _downstream_neighbors(set_prev, map_forward):
             map_count_in[id_node] -= 1

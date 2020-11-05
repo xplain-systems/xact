@@ -211,18 +211,18 @@ def _validator(id_type, list_node):
     Return a validator function for the specified type.
 
     """
-    blacklist = set(('compound_type',
-                     'compound_type_scope_closer'))
+    # blacklist = set(('compound_type',
+    #                  'compound_type_scope_closer'))
 
-    path_dict = xact.util.PathDict()
-    for node in list_node:
-        if node['category'] in blacklist:
-            continue
+    # path_dict = xact.util.PathDict()
+    # for node in list_node:
+    #     if node['category'] in blacklist:
+    #         continue
 
-        path    = node['dst_path']
-        id_type = node['typeinfo']['id']
-        dtype   = numpy.dtype(id_type)
-        shape   = node['shape']
+    #     path    = node['dst_path']
+    #     id_type = node['typeinfo']['id']
+    #     dtype   = numpy.dtype(id_type)
+    #     shape   = node['shape']
 
     #     if shape is None:
     #         path_dict[path] = good.Schema(dtype.type)

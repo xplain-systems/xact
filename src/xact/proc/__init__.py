@@ -43,7 +43,6 @@ def _configure(cfg, id_process, id_process_host, map_queues):
     xact.log.setup(cfg,
                    id_host    = id_process_host,
                    id_process = id_process)
-    name_process = _set_process_title()
     map_node = _instantiate_nodes(cfg, id_process)
     _config_edges(cfg, id_process, id_process_host, map_node, map_queues)
     list_node = _get_list_node_in_runorder(cfg, id_process, map_node)
@@ -234,7 +233,6 @@ def _sort_into_execution_tranches(map_forward, map_backward):
     set_node_out     = set(map_forward.keys())   # nodes with outbound edge(s)
     set_node_in      = set(map_backward.keys())  # nodes With inbound edge(s)
     set_node_sources = set_node_out - set_node_in
-    set_node_sinks   = set_node_in  - set_node_out
 
     map_count_in = dict((key, 0) for key in set_node_sources)
     for (key, inbound) in map_backward.items():
@@ -247,7 +245,7 @@ def _sort_into_execution_tranches(map_forward, map_backward):
     list_tranches = list()
     list_tranches = [set_count_zero]
 
-    for idx in itertools.count():
+    for _ in itertools.count():
         set_prev = list_tranches[-1]
         for id_node in _list_downstream_neighbors(set_prev, map_forward):
             map_count_in[id_node] -= 1

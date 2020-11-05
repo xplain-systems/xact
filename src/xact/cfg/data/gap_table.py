@@ -71,7 +71,7 @@ class GapTable():
 
         """
         sanity_limit = 16
-        for i in range(sanity_limit):
+        for _ in range(sanity_limit):
 
             if self._is_finished():  # No gaps left to fill.
                 break

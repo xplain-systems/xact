@@ -49,7 +49,7 @@ def stop(cfg):
     Stop all compute nodes for the local host.
 
     """
-    id_host = _setup_host(cfg)
+    _setup_host(cfg)
     xact.log.logger.info('Host stop')
     kill_prefix = cfg['system']['id_system']
     xact.host.util.kill_process_by_prefix(kill_prefix)
@@ -62,7 +62,7 @@ def pause(cfg):
     Pause all compute nodes for the local host.
 
     """
-    id_host = _setup_host(cfg)
+    _setup_host(cfg)
     xact.log.logger.info('Host pause')
 
 
@@ -73,7 +73,7 @@ def step(cfg):
     Single step all compute nodes for the local host.
 
     """
-    id_host = _setup_host(cfg)
+    _setup_host(cfg)
     xact.log.logger.info('Host step')
 
 
@@ -168,9 +168,7 @@ def _start_one_child_process(cfg, id_process, map_queues):
     """
     # TODO: Support for different python interpreters / venvs.
     # TODO: Support for different runtimes (C/C++/C#).
-    id_system = cfg['system']['id_system']
     id_host   = cfg['runtime']['id']['id_host']
-
     name_proc = _process_name(cfg, id_process)
     # xact.host.util.kill_process_by_name(name_proc)
 
@@ -181,7 +179,7 @@ def _start_one_child_process(cfg, id_process, map_queues):
     proc.daemon = False
     try:
         proc.start()
-    except BrokenPipeError as err:
+    except BrokenPipeError:
         xact.log.logger.warning('Broken pipe when running: ' + id_process)
     return proc
 

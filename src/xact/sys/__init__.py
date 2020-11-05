@@ -110,7 +110,6 @@ def _command(cfg, id_host, command):
     dirpath_venv    = cfg_host['dirpath_venv']
     filepath_venv   = os.path.join(dirpath_venv, 'bin/activate')
     command_venv    = 'source {venv}'.format(venv = filepath_venv)
-    dirpath_install = cfg_host['dirpath_install']
     command_name    = 'xact'
     command_group   = 'host'
 
