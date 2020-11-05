@@ -44,7 +44,6 @@ class Node():
         (self.fcn_reset,
          self.fcn_step) = _load_functionality(cfg_node['functionality'])
 
-
     # -------------------------------------------------------------------------
     def reset(self):
         """
