@@ -132,7 +132,7 @@ def _command(cfg, id_host, command):
                                                 act  = cfg_host['acct_run'],
                                                 host = cfg_host['hostname'],
                                                 cmd  = remote_command)
-        subprocess.run(local_command, shell = True)
+        subprocess.run(local_command, shell = True, check = True)
 
 
 # -----------------------------------------------------------------------------
