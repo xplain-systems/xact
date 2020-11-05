@@ -24,7 +24,7 @@ def apply(data, address, value, delim_cfg_addr = '.'):
 
 
 # =============================================================================
-class SubstitutionTable(object):
+class SubstitutionTable():
     """
     Provide a nice syntax for conditional substitution logic.
 
