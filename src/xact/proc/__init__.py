@@ -341,18 +341,18 @@ def _run_main_loop_with_retry(list_node, id_process):
     idx_try = 0
     while True:
         xact.log.logger.info(
-                'Reset and run main loop for {proc} (Attempt {idx})',
-                                                            proc = id_process,
-                                                            idx  = idx_try)
+                        'Reset and run main loop for {proc} (Attempt {idx})',
+                        proc = id_process,
+                        idx  = idx_try)
 
         try:
             reset(list_node)
             _run_main_loop(list_node)
         except xact.sys.exception.RecoverableError:
             xact.log.logger.info(
-                    'Recoverable error for {proc} on attempt {idx}',
-                                                            proc = id_process,
-                                                            idx  = idx_try)
+                            'Recoverable error for {proc} on attempt {idx}',
+                            proc = id_process,
+                            idx  = idx_try)
             idx_try += 1
             continue
 
