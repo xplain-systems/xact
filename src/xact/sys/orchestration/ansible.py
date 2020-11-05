@@ -229,7 +229,7 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
         print(json.dumps({host.name: result._result}, indent=4))
 
     # -------------------------------------------------------------------------
-    def v2_runner_on_failed(self, result, *args, **kwargs):
+    def v2_runner_on_failed(self, result, ignore_errors = False):
         """
         Handle on_failed events.
 
