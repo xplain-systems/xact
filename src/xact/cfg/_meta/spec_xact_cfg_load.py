@@ -25,7 +25,8 @@ class SpecifyFromPath:
         """
         import xact.cfg.load
 
-        assert isinstance(xact.cfg.load.from_path(filepath_cfg_yaml), dict)
+        assert isinstance(xact.cfg.load.from_path(filepath_cfg_yaml),
+                          dict)
 
     # -------------------------------------------------------------------------
     def it_loads_a_single_yaml_file(self, dict_of_strings, filepath_cfg_yaml):
@@ -35,7 +36,8 @@ class SpecifyFromPath:
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_path(filepath_cfg_yaml), dict_of_strings)
+        check_match(xact.cfg.load.from_path(filepath_cfg_yaml),
+                    dict_of_strings)
 
     # -------------------------------------------------------------------------
     def it_loads_a_single_json_file(self, dict_of_strings, filepath_cfg_json):
@@ -45,7 +47,8 @@ class SpecifyFromPath:
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_path(filepath_cfg_json), dict_of_strings)
+        check_match(xact.cfg.load.from_path(filepath_cfg_json),
+                    dict_of_strings)
 
     # -------------------------------------------------------------------------
     def it_loads_a_single_xml_file(self, dict_of_strings, filepath_cfg_xml):
@@ -55,7 +58,8 @@ class SpecifyFromPath:
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_path(filepath_cfg_xml), dict_of_strings)
+        check_match(xact.cfg.load.from_path(filepath_cfg_xml),
+                    dict_of_strings)
 
     # -------------------------------------------------------------------------
     def it_loads_a_directory_of_yaml_files(
@@ -67,7 +71,8 @@ class SpecifyFromPath:
         import xact.cfg.load
 
         loaded = xact.cfg.load.from_path(dirpath_cfg_yaml)
-        check_match(xact.cfg.load.from_path(dirpath_cfg_yaml), dict_of_strings)
+        check_match(xact.cfg.load.from_path(dirpath_cfg_yaml),
+                    dict_of_strings)
 
     # -------------------------------------------------------------------------
     def it_loads_a_directory_of_json_files(
@@ -78,7 +83,8 @@ class SpecifyFromPath:
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_path(dirpath_cfg_json), dict_of_strings)
+        check_match(xact.cfg.load.from_path(dirpath_cfg_json),
+                    dict_of_strings)
 
     # -------------------------------------------------------------------------
     def it_loads_a_directory_of_xml_files(
@@ -89,7 +95,8 @@ class SpecifyFromPath:
         """
         import xact.cfg.load
 
-        check_match(xact.cfg.load.from_path(dirpath_cfg_xml), dict_of_strings)
+        check_match(xact.cfg.load.from_path(dirpath_cfg_xml),
+                    dict_of_strings)
 
 
 # =============================================================================
@@ -107,7 +114,8 @@ class SpecifyFromFilePath:
         """
         import xact.cfg.load
 
-        assert isinstance(xact.cfg.load.from_filepath(filepath_cfg_yaml), dict)
+        assert isinstance(xact.cfg.load.from_filepath(filepath_cfg_yaml),
+                          dict)
 
     # -------------------------------------------------------------------------
     def it_loads_a_single_yaml_file(self, dict_of_strings, filepath_cfg_yaml):
@@ -158,7 +166,8 @@ class SpecifyLoad:
         """
         import xact.cfg.load
 
-        assert isinstance(xact.cfg.load.from_dirpath(dirpath_cfg_yaml), dict)
+        assert isinstance(xact.cfg.load.from_dirpath(dirpath_cfg_yaml),
+                          dict)
 
     # -------------------------------------------------------------------------
     def it_loads_a_directory_of_yaml_files(
@@ -203,7 +212,8 @@ def check_match(loaded, true):
     Yield leaf values taken pairwise from the two specified nested maps.
 
     """
-    for pair in itertools.zip_longest(_iter_leaves(loaded), _iter_leaves(true)):
+    for pair in itertools.zip_longest(_iter_leaves(loaded),
+                                      _iter_leaves(true)):
 
         (pv_loaded, pv_true) = pair
 

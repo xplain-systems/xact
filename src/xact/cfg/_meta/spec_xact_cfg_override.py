@@ -58,10 +58,11 @@ class SpecifyApply:
         id_sys_orig   = copy.deepcopy(cfg['system']['id_system'])
         hostname_orig = copy.deepcopy(cfg['host']['some_host']['hostname'])
 
-        xact.cfg.override.apply(cfg,
-                                ('system:id_system',       'some_other_name',
-                                 'host:some_host:hostname', '111.111.111.111',),
-                                delim_cfg_addr = ':')
+        xact.cfg.override.apply(
+                            cfg,
+                            ('system:id_system', 'some_other_name',
+                             'host:some_host:hostname', '111.111.111.111'),
+                            delim_cfg_addr = ':')
 
         id_sys_mod           = cfg['system']['id_system']
         assert id_sys_orig   != id_sys_mod

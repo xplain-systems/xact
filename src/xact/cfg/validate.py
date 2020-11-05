@@ -150,11 +150,11 @@ def _normalized_cfg_schema():
                 'additionalProperties': {
                     'type': 'object',
                     'properties': {
-                        'process':       { '$ref': '#/definitions/id_process'         },  # pylint: disable=C0301
-                        'req_host_cfg':  { '$ref': '#/definitions/id_req_host_cfg'    },  # pylint: disable=C0301
-                        'functionality': { '$ref': '#/definitions/spec_functionality' },  # pylint: disable=C0301
-                        'state_type':    { '$ref': '#/definitions/id_data_type'       },  # pylint: disable=C0301
-                        'config':        { 'type': 'object'                           }   # pylint: disable=C0301
+                        'process':       { '$ref': '#/definitions/id_process'         },  # noqa pylint: disable=C0301
+                        'req_host_cfg':  { '$ref': '#/definitions/id_req_host_cfg'    },  # noqa pylint: disable=C0301
+                        'functionality': { '$ref': '#/definitions/spec_functionality' },  # noqa pylint: disable=C0301
+                        'state_type':    { '$ref': '#/definitions/id_data_type'       },  # noqa pylint: disable=C0301
+                        'config':        { 'type': 'object'                           }   # noqa pylint: disable=C0301
                     },
                     'required': [ 'process', 'functionality' ],
                     'additionalProperties': False
@@ -205,13 +205,13 @@ def _normalized_cfg_schema():
                     'id':  {
                         'type': 'object',
                         'properties': {
-                            'id_system':  { '$ref': '#/definitions/id_system'  },  # pylint: disable=C0301
-                            'id_cfg':     { '$ref': '#/definitions/id_cfg'     },  # pylint: disable=C0301
-                            'id_host':    { '$ref': '#/definitions/id_host'    },  # pylint: disable=C0301
-                            'id_process': { '$ref': '#/definitions/id_process' },  # pylint: disable=C0301
-                            'id_node':    { '$ref': '#/definitions/id_node'    },  # pylint: disable=C0301
-                            'ts_run':     { '$ref': '#/definitions/ts_run'     },  # pylint: disable=C0301
-                            'id_run':     { '$ref': '#/definitions/id_run'     }   # pylint: disable=C0301
+                            'id_system':  { '$ref': '#/definitions/id_system'  },  # noqa pylint: disable=C0301
+                            'id_cfg':     { '$ref': '#/definitions/id_cfg'     },  # noqa pylint: disable=C0301
+                            'id_host':    { '$ref': '#/definitions/id_host'    },  # noqa pylint: disable=C0301
+                            'id_process': { '$ref': '#/definitions/id_process' },  # noqa pylint: disable=C0301
+                            'id_node':    { '$ref': '#/definitions/id_node'    },  # noqa pylint: disable=C0301
+                            'ts_run':     { '$ref': '#/definitions/ts_run'     },  # noqa pylint: disable=C0301
+                            'id_run':     { '$ref': '#/definitions/id_run'     }   # noqa pylint: disable=C0301
                         },
                         'required': [
                             'id_host',

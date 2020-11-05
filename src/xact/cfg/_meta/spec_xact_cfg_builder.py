@@ -155,10 +155,10 @@ class SpecifyRemoveNode:
         import xact.cfg.builder
         import xact.cfg.validate
         xact.cfg.builder.add_node(
-                        cfg           = valid_normalized_config,
-                        id_node       = 'new_node_id',
-                        functionality = {'py_module': 'some.importable.module'},
-                        id_process    = 'some_process')
+                    cfg           = valid_normalized_config,
+                    id_node       = 'new_node_id',
+                    functionality = {'py_module': 'some.importable.module'},
+                    id_process    = 'some_process')
         xact.cfg.builder.remove_node(cfg     = valid_normalized_config,
                                      id_node = 'new_node_id')
         xact.cfg.validate.normalized(valid_normalized_config)

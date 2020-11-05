@@ -144,7 +144,7 @@ def grp_host():
     envvar   = _envvar('DISTRIBUTE'))
 @click.option(
     '-s', '--cfg-addr-delim', 'delim_cfg_addr',
-    help     = 'The character to use as a delimiter in config override addresses.',  # pylint: disable=C0301
+    help     = 'The character to use as a delimiter in config override addresses.',  # noqa pylint: disable=C0301
     required = False,
     default  = '.',
     type     = click.STRING,
