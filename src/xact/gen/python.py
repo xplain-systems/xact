@@ -141,10 +141,11 @@ def _initializer(id_type, list_node):
     Return an initializer function for the specified type.
 
     """
+    default_initializer_list = _get_initializers_for_all_nodes(list_node)
+
     # -------------------------------------------------------------------------
-    def _initialize_all_fields(
-                data_structure,
-                initializer_list = _get_initializers_for_all_nodes(list_node)):
+    def _initialize_all_fields(data_structure,
+                               initializer_list = default_initializer_list):
         """
         Initialize all known entries in the specified data structure.
 
