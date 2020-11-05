@@ -148,7 +148,7 @@ def _run_locally(cfg):
     and diagnosing errors.
 
     """
-    import xact.proc
+    import xact.proc  # pylint: disable=W0621
 
     id_host_local    = 'localhost'
     id_process_local = 'mainprocess'
