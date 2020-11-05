@@ -5,16 +5,12 @@ Test fixtures for xact.cfg package functional requirements tests.
 """
 
 
-import collections
 import io
-import itertools
 import json
 
 import pytest
 import yaml
 import xmltodict
-
-import xact.util
 
 
 # -----------------------------------------------------------------------------

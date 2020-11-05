@@ -5,9 +5,6 @@ Functional specification for xact.
 """
 
 
-import os
-import sys
-
 import click.testing
 import pytest
 
@@ -74,8 +71,6 @@ class SpecifyGrpMain:
         xact.cli.command.grp_main prints help text when called with no args.
 
         """
-        import textwrap
-
         import click.testing
 
         import xact.cli.command
@@ -97,8 +92,6 @@ class SpecifyGrpMain:
         xact.cli.command.grp_main prints help text when called with a help arg.
 
         """
-        import textwrap
-
         import click.testing
 
         import xact.cli.command

@@ -5,9 +5,6 @@ Functional specification for the xact.cli.util module.
 """
 
 
-import pytest
-
-
 # =============================================================================
 class SpecifyOrderedGroup_listCommands:
     """

@@ -5,9 +5,6 @@ Functional specification for the xact.cfg.edge module.
 """
 
 
-import pytest
-
-
 # =============================================================================
 class SpecifyDenormalize:
     """

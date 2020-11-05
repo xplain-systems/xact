@@ -45,8 +45,6 @@ class SpecifySerialize:
         Serialize compresses data.
 
         """
-        import re
-
         import xact.util.serialization
 
         original = {

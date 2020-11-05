@@ -5,9 +5,6 @@ Functional specification for the xact.cfg.builder module.
 """
 
 
-import pytest
-
-
 # =============================================================================
 class SpecifySetSystemId:
     """

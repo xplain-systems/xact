@@ -7,7 +7,6 @@ Module containing Ansible integration logic.
 
 import shutil
 import subprocess
-import sys
 import tempfile
 import json
 
@@ -19,11 +18,7 @@ import ansible.module_utils.common.collections
 import ansible.parsing.dataloader
 import ansible.plugins.callback
 import ansible.vars.manager
-import paramiko
 import yaml
-
-import xact.cfg
-import xact.host
 
 
 # -----------------------------------------------------------------------------

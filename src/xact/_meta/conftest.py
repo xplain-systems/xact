@@ -5,7 +5,6 @@ Test fixtures for xact.cfg.data package functional requirements tests.
 """
 
 
-import textwrap
 import inspect
 
 import pytest

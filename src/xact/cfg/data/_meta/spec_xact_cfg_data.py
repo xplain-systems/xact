@@ -5,9 +5,6 @@ Functional specification for the xact.cfg.data package.
 """
 
 
-import pytest
-
-
 # =============================================================================
 class SpecifyDenormalize:
     """
