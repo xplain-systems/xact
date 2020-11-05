@@ -63,7 +63,7 @@ def denormalize(cfg):
 
     std_form = dict()
     for (type_name, type_definition) in expanded.data.items():
-        std_form[type_name] = [it for it in _iter_expanded(type_definition)]
+        std_form[type_name] = list(_iter_expanded(type_definition))
     cfg['data'] = std_form
 
     return cfg
