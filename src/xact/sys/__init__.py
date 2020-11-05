@@ -58,7 +58,6 @@ def stop(cfg):
         xact.host.stop(cfg, id_host = cfg['runtime']['id']['id_host'])
 
 
-
 # -----------------------------------------------------------------------------
 def pause(cfg):
     """

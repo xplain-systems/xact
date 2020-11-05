@@ -48,6 +48,7 @@ def invalid_config():
              'of':     'invalid',
              'config': 100 }
 
+
 # -----------------------------------------------------------------------------
 @pytest.fixture
 def valid_normalized_config():

@@ -100,7 +100,6 @@ def denormalize(cfg):
                 xact.cfg.data.denormalize(cfg))
 
 
-
 # -----------------------------------------------------------------------------
 def merge_dicts(first, second):
     """

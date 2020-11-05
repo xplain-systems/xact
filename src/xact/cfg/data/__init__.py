@@ -228,7 +228,6 @@ def _expand_node(node, subs, typeinfo, idx):
     return dict([('_node_info', node_info)])
 
 
-
 # -----------------------------------------------------------------------------
 def _iter_expanded(expanded_def):
     """

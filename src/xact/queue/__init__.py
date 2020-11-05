@@ -42,7 +42,6 @@ class LocalQueue:
         return self._queue.put(msg, block = False)
 
 
-
 # =============================================================================
 class RemoteQueueServer:
     """

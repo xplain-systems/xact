@@ -142,7 +142,6 @@ def _config_edges(cfg, id_process, id_process_host, map_node, map_queues):
                 node.input_queues[relpath_dst[1:]] = queue
 
 
-
 # -----------------------------------------------------------------------------
 def _point(node, path, memory):
     """

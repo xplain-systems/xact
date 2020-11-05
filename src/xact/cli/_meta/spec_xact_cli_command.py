@@ -96,6 +96,7 @@ class SpecifyGrpMain:
         assert response.exit_code == 0
         assert response_text.startswith(expected_text)
 
+
 # =============================================================================
 class SpecifyErrorReporting:
     """
