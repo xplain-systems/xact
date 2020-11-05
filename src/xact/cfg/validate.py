@@ -283,72 +283,95 @@ def _check_consistency(cfg):
     Raise an exception if cfg is inconsistent.
 
     """
-    set_id_host          = set(cfg['host'].keys())
-    set_id_process       = set(cfg['process'].keys())
-    set_id_node          = set(cfg['node'].keys())
-    set_id_data          = set(cfg['data'].keys())
+    _check_process_consistency(cfg)
+    _check_node_consistency(cfg)
+    _check_edge_consistency(cfg)
+    _check_edge_end_uniqueness(cfg)
+    _check_required_host_configuration(cfg)
 
-    if 'req_host_cfg' in cfg:
-        set_id_req_host_cfg = set(cfg['req_host_cfg'].keys())
 
-    if 'role' in cfg:
-        set_id_role = set(cfg['role'].keys())
+# -----------------------------------------------------------------------------
+def _check_process_consistency(cfg):
+    """
+    Raise an exception if process configuration is inconsistent.
 
+    """
+    set_id_host = set(cfg['host'].keys())
     for cfg_process in cfg['process'].values():
-        id_host = cfg_process['host']
-        if id_host not in set_id_host:
-            msg = 'Unkown id_host in cfg: {id}'.format(id = id_host)
-            raise xact.cfg.exception.CfgError(msg)
+        _check(item      = cfg_process['host'],
+               set_valid = set_id_host,
+               msg       = 'Unkown id_host in cfg: {id}')
 
+
+# -----------------------------------------------------------------------------
+def _check_node_consistency(cfg):
+    """
+    Raise an exception if node configuration is inconsistent.
+
+    """
+    set_id_process      = set(cfg['process'].keys())
+    set_id_data         = set(cfg['data'].keys())
+    set_id_req_host_cfg = set(cfg['req_host_cfg'].keys()) if \
+                                            'req_host_cfg' in cfg else set()
     for cfg_node in cfg['node'].values():
-        id_process = cfg_node['process']
-        if id_process not in set_id_process:
-            msg = 'Unkown id_process in cfg: {id}'.format(id = id_process)
-            raise xact.cfg.exception.CfgError(msg)
+        _check(item      = cfg_node['process'],
+               set_valid = set_id_process,
+               msg       = 'Unkown id_process in cfg: {id}')
 
         if 'state_type' in cfg_node:
-            id_data = cfg_node['state_type']
-            if id_data not in set_id_data:
-                msg = 'Unkown id_data in cfg: {id}'.format(id = id_data)
-                raise xact.cfg.exception.CfgError(msg)
+            _check(item      = cfg_node['state_type'],
+                   set_valid = set_id_data,
+                   msg       = 'Unkown id_data in cfg: {id}')
 
         if 'req_host_cfg' in cfg_node:
-            id_req_host_cfg = cfg_node['req_host_cfg']
-            if id_req_host_cfg not in set_id_req_host_cfg:
-                msg = 'Unkown id_req_host_cfg in cfg: {id}'.format(
-                                                        id = id_req_host_cfg)
-                raise xact.cfg.exception.CfgError(msg)
+            _check(item      = cfg_node['req_host_cfg'],
+                   set_valid = set_id_req_host_cfg,
+                   msg       = 'Unkown id_req_host_cfg in cfg: {id}')
 
-    set_edge_path = set()
+
+# -----------------------------------------------------------------------------
+def _check_edge_consistency(cfg):
+    """
+    Raise an exception if edge configuration is inconsistent.
+
+    """
+    set_id_node = set(cfg['node'].keys())
+    set_id_data = set(cfg['data'].keys())
     for cfg_edge in cfg['edge']:
-        id_node_owner = cfg_edge['owner']
-        if id_node_owner not in set_id_node:
-            msg = 'Unkown id_node in cfg: {id}'.format(id = id_node_owner)
-            raise xact.cfg.exception.CfgError(msg)
 
-        id_data = cfg_edge['data']
-        if id_data not in set_id_data:
-            msg = 'Unknown id_data in cfg: {id}'.format(id = id_data)
-            raise xact.cfg.exception.CfgError(msg)
+        _check(item      = cfg_edge['owner'],
+               set_valid = set_id_node,
+               msg       = 'Unkown id_node in cfg: {id}')
 
-        id_node_src = cfg_edge['src'].split('.')[0]
-        if id_node_src not in set_id_node:
-            msg = 'Unknown id_node in cfg: {id}'.format(id = id_node_src)
-            raise xact.cfg.exception.CfgError(msg)
+        _check(item      = cfg_edge['data'],
+               set_valid = set_id_data,
+               msg       = 'Unkown id_data in cfg: {id}')
+
+        _check(item      = cfg_edge['src'].split('.')[0],
+               set_valid = set_id_node,
+               msg       = 'Unkown id_node in cfg: {id}')
+
+        _check(item      = cfg_edge['dst'].split('.')[0],
+               set_valid = set_id_node,
+               msg       = 'Unkown id_node in cfg: {id}')
 
         if cfg_edge['src'].split('.')[1] != 'outputs':
             msg = 'Edge source needs to be an output.'
-            raise xact.cfg.exception.CfgError(msg)
-
-        id_node_dst = cfg_edge['dst'].split('.')[0]
-        if id_node_dst not in set_id_node:
-            msg = 'Unknown id_node in cfg: {id}'.format(id = id_node_dst)
             raise xact.cfg.exception.CfgError(msg)
 
         if cfg_edge['dst'].split('.')[1] != 'inputs':
             msg = 'Edge destination needs to be an input.'
             raise xact.cfg.exception.CfgError(msg)
 
+
+# -----------------------------------------------------------------------------
+def _check_edge_end_uniqueness(cfg):
+    """
+    Raise an exception if edge sources or destinations are duplicated.
+
+    """
+    set_edge_path = set()
+    for cfg_edge in cfg['edge']:
         if cfg_edge['src'] in set_edge_path:
             msg = 'Repeated edge source: {src}'.format(src = cfg_edge['src'])
             raise xact.cfg.exception.CfgError(msg)
@@ -360,6 +383,14 @@ def _check_consistency(cfg):
             raise xact.cfg.exception.CfgError(msg)
         set_edge_path.add(cfg_edge['dst'])
 
+
+# -----------------------------------------------------------------------------
+def _check_required_host_configuration(cfg):
+    """
+    Raise an exception if req_host_cfg roles are inconsistent.
+
+    """
+    set_id_role = set(cfg['role'].keys()) if 'role' in cfg else set()
     if 'req_host_cfg' in cfg:
         for cfg_req_host_cfg in cfg['req_host_cfg'].values():
             if 'role' not in cfg_req_host_cfg:
@@ -368,3 +399,13 @@ def _check_consistency(cfg):
                 if id_role not in set_id_role:
                     msg = 'Unknown id_role in cfg: {id}'.format(id = id_role)
                     raise xact.cfg.exception.CfgError(msg)
+
+
+# -----------------------------------------------------------------------------
+def _check(item, set_valid, msg):
+    """
+    Raise an exception if item is not in the specified collection.
+
+    """
+    if item not in set_valid:
+        raise xact.cfg.exception.CfgError(msg.format(id = item))
