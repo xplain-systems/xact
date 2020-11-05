@@ -231,7 +231,7 @@ def _iter_leaves(data_structure):
     """
     for pv_pair in xact.util.gen_path_value_pairs_depth_first(data_structure):
         (_, value) = pv_pair
-        is_interior_node = isinstance(value, dict) or isinstance(value, list)
+        is_interior_node = isinstance(value, (dict, list))
         is_leaf = not is_interior_node
         if is_leaf:
             yield pv_pair
