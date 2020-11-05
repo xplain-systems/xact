@@ -25,6 +25,7 @@ def apply(cfg, tup_overrides = None, delim_cfg_addr = '.'):
                                       delim_cfg_addr = delim_cfg_addr)
         except KeyError:
             raise RuntimeError(
-                    'Could not find "{path}" in cfg'.format(path = address))
+                    'Could not find "{path}" in cfg'.format(
+                            path = address)) from KeyError
 
     return cfg
