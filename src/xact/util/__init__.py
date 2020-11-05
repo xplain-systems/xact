@@ -240,7 +240,7 @@ def string_types():
 
     """
     is_python_2 = str is bytes
-    if is_python_2:
+    if is_python_2:  # pylint: disable=R1705
         return (str, unicode)  # pylint: disable=E0602
     else:
         return (str, bytes)
