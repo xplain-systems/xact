@@ -361,6 +361,8 @@ class PathDict(collections.UserDict):
     # -------------------------------------------------------------------------
     def __init__(self, *args, **kwargs):
         """
+        Return a PathDict instance.
+
         """
         self.delim = '.'
         super().__init__(*args, **kwargs)
