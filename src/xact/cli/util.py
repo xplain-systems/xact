@@ -55,11 +55,11 @@ class OrderedGroup(click.Group):
 
 # -----------------------------------------------------------------------------
 def run_test(cfg,
-             expected_exit_code    = 0,
-             do_expect_stdout      = False,
-             do_expect_stderr      = False,
-             expected_stdout_value = None,
-             expected_stderr_value = None):
+             expected_exit_code = 0,
+             do_expect_stdout   = False,
+             do_expect_stderr   = False,
+             expected_stdout    = None,
+             expected_stderr    = None):
     """
     Run a test via the command line interface.
 
@@ -69,47 +69,41 @@ def run_test(cfg,
                              ['system', 'start', '--no-distribute',
                               '--cfg', xact.util.serialization.serialize(cfg)])
 
-    if not _isok(response, expected_exit_code,
-                 do_expect_stdout, do_expect_stderr,
-                 expected_stdout_value, expected_stderr_value):
+    isok_exit_code = response.exit_code == expected_exit_code
+    isok_stdout    = _isok(response.stdout, do_expect_stdout, expected_stdout)
+    isok_stderr    = _isok(response.stderr, do_expect_stderr, expected_stderr)
 
-        msg = ('exit_code:\n{exit_code}\n\n'
-               'stdout:\n{stdout}\n\n'
-               'stderr:\n{stderr}\n\n').format(
-                                            exit_code = response.exit_code,
-                                            stdout    = response.stdout,
-                                            stderr    = response.stderr)
-        pytest.fail(msg = msg, pytrace = False)
+    isok = (isok_exit_code and isok_stdout and isok_stderr)
+
+    if isok:
+        return
+
+    msg = ''
+    if not isok_exit_code:
+        msg += 'exit_code:\n{exit_code}\n\n'.format(
+                                                exit_code = response.exit_code)
+
+    if not isok_stdout:
+        msg += 'stdout:\n{stdout}\n\n'.format(stdout = response.stdout)
+
+    if not isok_stderr:
+        msg += 'stderr:\n{stderr}\n\n'.format(stderr = response.stderr)
+
+    pytest.fail(msg = msg, pytrace = False)
 
 
 # -----------------------------------------------------------------------------
-def _isok(response,
-          expected_exit_code    = 0,
-          do_expect_stdout      = False,
-          do_expect_stderr      = False,
-          expected_stdout_value = None,
-          expected_stderr_value = None):
+def _isok(response_output, do_expect_output, expected_output):
     """
     Return true iff response is OK.
 
     """
-    if response.exit_code != expected_exit_code:
+    has_output = response_output != ''
+    if has_output != do_expect_output:
         return False
 
-    has_stdout = response.stdout != ''
-    has_stderr = response.stderr != ''
-
-    if has_stdout != do_expect_stdout:
-        return False
-    if has_stderr != do_expect_stderr:
-        return False
-
-    do_check_stdout_value = has_stdout and (expected_stdout_value is not None)
-    do_check_stderr_value = has_stderr and (expected_stderr_value is not None)
-
-    if do_check_stdout_value and (response.stdout != expected_stdout_value):
-        return False
-    if do_check_stderr_value and (response.stderr != expected_stderr_value):
-        return False
+    if expected_output is not None:
+        if response_output != expected_output:
+            return False
 
     return True
