@@ -36,7 +36,7 @@ class OrderedGroup(click.Group):
         Return an OrderedGroup instance.
 
         """
-        super(OrderedGroup, self).__init__(name, commands, **attrs)
+        super().__init__(name, commands, **attrs)
 
         # From Python 3.5 dict() is order preserving, so
         # we simply replace the default commands container

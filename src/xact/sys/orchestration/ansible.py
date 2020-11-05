@@ -202,7 +202,7 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
         Return an instance of a ResultsCollectorJSONCallback object.
 
         """
-        super(ResultsCollectorJSONCallback, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.host_ok = {}
         self.host_unreachable = {}
         self.host_failed = {}
