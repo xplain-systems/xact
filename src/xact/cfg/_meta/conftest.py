@@ -74,7 +74,7 @@ def valid_normalized_config():
         'process': {
             'some_process': {
                 'host': 'some_host'
-             }
+            }
         },
         'node': {
             'some_node': {
@@ -92,7 +92,7 @@ def valid_normalized_config():
                 'data':  'some_data_type',
                 'src':   'some_node.outputs.port',
                 'dst':   'some_node.inputs.port'
-             }
+            }
         ],
         'req_host_cfg': {
             'some_requirement_on_host_cfg': {

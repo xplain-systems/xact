@@ -35,7 +35,7 @@ def valid_partly_denormalized_config():
         'process': {
             'some_process': {
                 'host': 'some_host'
-             }
+            }
         },
         'node': {
             'some_node': {
@@ -66,7 +66,7 @@ def valid_partly_denormalized_config():
                 'id_host_src':  'some_host',
                 'id_host_dst':  'some_host',
                 'idx_edge':     0,
-             }
+            }
         ],
         'req_host_cfg': {
             'some_requirement_on_host_cfg': {

@@ -29,7 +29,7 @@ def skeleton_config():
         'process': {
             'some_process': {
                 'host': 'some_host'
-             }
+            }
         },
         'node': {
             'test_node': {
@@ -47,7 +47,7 @@ def skeleton_config():
                 'data':  'some_data_type',
                 'src':   'test_node.outputs.port',
                 'dst':   'test_node.inputs.port'
-             }
+            }
         ],
         'req_host_cfg': {
             'some_requirement_on_host_cfg': {
