@@ -55,7 +55,7 @@ def stop(cfg):
         for id_host in _list_id_host(cfg):
             _command(cfg, id_host, 'stop-host')
     else:
-        xact.host.stop(cfg, id_host = cfg['runtime']['id']['id_host'])
+        xact.host.stop(cfg)
 
 
 # -----------------------------------------------------------------------------
