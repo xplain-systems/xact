@@ -230,30 +230,11 @@ def add_pipeline(cfg,
 
     assert num_edges == ( num_nodes - 1 )
 
-    if isinstance(spec_id_process, str):
-        list_id_process = [spec_id_process] * num_nodes
-    else:
-        list_id_process = spec_id_process
-
-    if isinstance(spec_req_host_cfg, str):
-        list_req_host_cfg = [spec_req_host_cfg] * num_nodes
-    else:
-        list_req_host_cfg = spec_req_host_cfg
-
-    if isinstance(spec_py_module, str):
-        list_py_module = [spec_py_module] * num_nodes
-    else:
-        list_py_module = spec_py_module
-
-    if isinstance(spec_state_type, str):
-        list_state_type = [spec_state_type] * num_nodes
-    else:
-        list_state_type = spec_state_type
-
-    if isinstance(spec_config, dict):
-        list_config = [spec_config] * num_nodes
-    else:
-        list_config = spec_config
+    list_id_process   = _make_list(spec_id_process,   str,  num_nodes)
+    list_req_host_cfg = _make_list(spec_req_host_cfg, str,  num_nodes)
+    list_py_module    = _make_list(spec_py_module,    str,  num_nodes)
+    list_state_type   = _make_list(spec_state_type,   str,  num_nodes)
+    list_config       = _make_list(spec_config,       dict, num_nodes)
 
     for (id_node,
          id_process,
@@ -289,3 +270,15 @@ def add_pipeline(cfg,
                      id_dst  = id_node_dst,
                      dst_ref = 'inputs.{port}'.format(port = port_dst),
                      data    = edge_data_type)
+
+
+# -----------------------------------------------------------------------------
+def _make_list(data, type, count):
+    """
+    If data is type, return count copies in a list, else return as-is.
+
+    """
+    if isinstance(data, type):
+        return [data] * count
+    else:
+        return data

@@ -47,16 +47,9 @@ def denormalize(cfg):
         is_intra_process  = is_same_host and is_same_process
         is_inter_process  = is_same_host and (not is_same_process)
         is_inter_host     = (not is_same_host) and (not is_same_process)
-
-        if is_intra_process:
-            ipc_type = 'intra_process'
-        elif is_inter_process:
-            ipc_type = 'inter_process'
-        elif is_inter_host:
-            ipc_type = 'inter_host'
-        else:
-            raise RuntimeError(
-                        'Cannot use one process_id on two different hosts')
+        ipc_type          = _ipc_type(is_intra_process,
+                                      is_inter_process,
+                                      is_inter_host)
 
         if is_inter_host:
             set_id_host_remote_owner.add(id_host_owner)
@@ -79,9 +72,25 @@ def denormalize(cfg):
         cfg_edge['idx_edge']        = idx_edge
 
     for (id_host, cfg_host) in map_cfg_host.items():
-        if id_host in set_id_host_remote_owner:
-            cfg_host['is_inter_host_edge_owner'] = True
-        else:
-            cfg_host['is_inter_host_edge_owner'] = False
+        cfg_host['is_inter_host_edge_owner'] = (
+                                        id_host in set_id_host_remote_owner)
 
     return cfg
+
+
+# -----------------------------------------------------------------------------
+def _ipc_type(is_intra_process, is_inter_process, is_inter_host):
+    """
+    Return ipc_type as a string.
+
+    """
+    if is_intra_process:
+        ipc_type = 'intra_process'
+    elif is_inter_process:
+        ipc_type = 'inter_process'
+    elif is_inter_host:
+        ipc_type = 'inter_host'
+    else:
+        raise RuntimeError(
+                    'Cannot use one process_id on two different hosts')
+    return ipc_type
