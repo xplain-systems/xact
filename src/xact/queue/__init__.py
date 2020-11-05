@@ -56,7 +56,7 @@ class RemoteQueueServer:
         Return an instance of a RemoteQueueServer object.
 
         """
-        port          =  _port(cfg['host'][id_host], cfg_edge)
+        port          =  _port_number(cfg['host'][id_host], cfg_edge)
         address       = 'tcp://*:{port}'.format(port = port)
         is_src        = id_host == cfg_edge['id_host_src']
         socket_type   = zmq.PUB if is_src else zmq.SUB
