@@ -84,7 +84,7 @@ class SpecifyGrpMain:
         response      = runner.invoke(xact.cli.command.grp_main)
         response_text = ' '.join(line.strip() for line in
                                         response.output.splitlines())
-        expected_text = ' '.join(line.strip() for  line in
+        expected_text = ' '.join(line.strip() for line in
                                         expected_help_text_main.splitlines())
 
         assert response.exit_code == 0
@@ -107,7 +107,7 @@ class SpecifyGrpMain:
         response      = runner.invoke(xact.cli.command.grp_main, ['--help'])
         response_text = ' '.join(line.strip() for line in
                                         response.output.splitlines())
-        expected_text = ' '.join(line.strip() for  line in
+        expected_text = ' '.join(line.strip() for line in
                                         expected_help_text_main.splitlines())
 
         assert response.exit_code == 0
