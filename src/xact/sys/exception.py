@@ -29,6 +29,7 @@ class RunComplete(ControlException):
 
         """
         self.return_code = return_code
+        super().__init__()
 
 
 # =============================================================================
