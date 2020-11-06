@@ -11,7 +11,7 @@ import pytest
 
 
 # -----------------------------------------------------------------------------
-def nodea_reset(runtime, cfg, inputs, state, outputs):
+def nodea_reset(runtime, cfg, inputs, state, outputs):  # Pylint: disable=W0613
     """
     Reset function for node A.
 
@@ -20,7 +20,7 @@ def nodea_reset(runtime, cfg, inputs, state, outputs):
 
 
 # -----------------------------------------------------------------------------
-def nodea_step(inputs, state, outputs):
+def nodea_step(inputs, state, outputs):  # Pylint: disable=W0613
     """
     Step function for node A.
 
@@ -30,7 +30,7 @@ def nodea_step(inputs, state, outputs):
 
 
 # -----------------------------------------------------------------------------
-def nodeb_reset(runtime, cfg, inputs, state, outputs):
+def nodeb_reset(runtime, cfg, inputs, state, outputs):  # Pylint: disable=W0613
     """
     Reset function for node B.
 
@@ -39,7 +39,7 @@ def nodeb_reset(runtime, cfg, inputs, state, outputs):
 
 
 # -----------------------------------------------------------------------------
-def nodeb_step(inputs, state, outputs):
+def nodeb_step(inputs, state, outputs):  # Pylint: disable=W0613
     """
     Step function for node B.
 
