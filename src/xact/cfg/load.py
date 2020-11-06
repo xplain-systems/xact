@@ -104,7 +104,7 @@ def _from_xml_file(_, file_cfg):
     Return confiuguration data loaded from the specified XML file path.
 
     """
-    import xmltodict
+    import xmltodict  # pylint: disable=C0415
     cfg = xmltodict.parse(file_cfg.read())
     if tuple(cfg.keys()) == ('root',):
         cfg = cfg['root']
@@ -117,7 +117,7 @@ def _from_json_file(_, file_cfg):
     Return confiuguration data loaded from the specified JSON file path.
 
     """
-    import json
+    import json  # pylint: disable=C0415
     list_str_line = []
     for str_line in file_cfg:
         str_line_naked = str_line.strip()
@@ -134,7 +134,7 @@ def _from_yaml_file(filepath_cfg, file_cfg):
 
     """
     try:
-        import yaml
+        import yaml  # pylint: disable=C0415
         loader = yaml.SafeLoader
 
         yaml.add_constructor('!regex',
@@ -162,5 +162,5 @@ def _from_toml_file(filepath_cfg, file_cfg):
     Return confiuguration data loaded from the specified TOML file path.
 
     """
-    import toml
+    import toml  # pylint: disable=C0415
     return toml.loads(file_cfg.read())

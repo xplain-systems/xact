@@ -46,7 +46,7 @@ def nodeb_step(inputs, state, outputs):
     """
     if inputs['test_input']['counter'] > 10:
         print('RUN COMPLETED SUCCESSFULLY')
-        import xact.sys.exception
+        import xact.sys.exception  # pylint: disable=C0415
         raise xact.sys.exception.RunComplete(0)
 
 

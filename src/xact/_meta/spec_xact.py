@@ -22,8 +22,8 @@ class SpecifyXact:
         xact.cli.command.grp_main runs a simple xact system.
 
         """
-        import xact.cli.command
-        import xact.util.serialization
+        import xact.cli.command         # pylint: disable=C0415
+        import xact.util.serialization  # pylint: disable=C0415
 
         cfg    = simple_test_config
         runner = click.testing.CliRunner()
@@ -71,7 +71,7 @@ class SpecifyGrpMain:
         xact.cli.command.grp_main prints help text when called with no args.
 
         """
-        import xact.cli.command
+        import xact.cli.command  # pylint: disable=C0415
 
         runner        = click.testing.CliRunner()
         response      = runner.invoke(xact.cli.command.grp_main)
@@ -90,7 +90,7 @@ class SpecifyGrpMain:
         xact.cli.command.grp_main prints help text when called with a help arg.
 
         """
-        import xact.cli.command
+        import xact.cli.command  # pylint: disable=C0415
 
         runner        = click.testing.CliRunner()
         response      = runner.invoke(xact.cli.command.grp_main, ['--help'])
