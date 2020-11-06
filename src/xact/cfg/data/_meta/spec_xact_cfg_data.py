@@ -18,8 +18,8 @@ class SpecifyDenormalize:
         Check denormalize returns a valid denormalized config structure.
 
         """
-        import xact.cfg.data
-        import xact.cfg.validate
+        import xact.cfg.data      # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         denormalized_config = xact.cfg.data.denormalize(
                                             valid_partly_denormalized_config)
         xact.cfg.validate.denormalized(denormalized_config)
@@ -38,7 +38,7 @@ class Specify_ExpandNode:
         Check denormalize returns a valid denormalized config structure.
 
         """
-        import xact.cfg.data
+        import xact.cfg.data  # pylint: disable=C0415
         named_type = xact.cfg.data.FieldCategory.named_type
         SubsTab    = xact.cfg.util.SubstitutionTable
         output     = xact.cfg.data._expand_node(

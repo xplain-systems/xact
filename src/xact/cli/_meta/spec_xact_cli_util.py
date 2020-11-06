@@ -18,9 +18,8 @@ class SpecifyOrderedGroup_listCommands:
         OrderedGroup.list_commands returns commands in order.
 
         """
-        import click
-
-        import xact.cli.util
+        import click          # pylint: disable=C0415
+        import xact.cli.util  # pylint: disable=C0415
 
         tup_names = ('C1', 'C2', 'C3')
         group = xact.cli.util.OrderedGroup()

@@ -18,7 +18,7 @@ class SpecifySerialize:
         Serialize returns a python string.
 
         """
-        import xact.util.serialization
+        import xact.util.serialization  # pylint: disable=C0415
 
         original = {'a': 1, 'b': 2, 'c': 3}
         encoded = xact.util.serialization.serialize(original)
@@ -30,9 +30,8 @@ class SpecifySerialize:
         Serialize returns a python string encoded as base64.
 
         """
-        import re
-
-        import xact.util.serialization
+        import re                       # pylint: disable=C0415
+        import xact.util.serialization  # pylint: disable=C0415
 
         original = {'a': 1, 'b': 2, 'c': 3}
         encoded = xact.util.serialization.serialize(original)
@@ -45,7 +44,7 @@ class SpecifySerialize:
         Serialize compresses data.
 
         """
-        import xact.util.serialization
+        import xact.util.serialization  # pylint: disable=C0415
 
         original = {
             'a_key_with_redundant_information_01': 1,
@@ -69,7 +68,7 @@ class SpecifyDeserialize:
         Deserialize returns a python dict.
 
         """
-        import xact.util.serialization
+        import xact.util.serialization  # pylint: disable=C0415
 
         encoded = 'eNpLtFIw5EqyUjDiSrZSMOYCABljAuk='
         decoded = xact.util.serialization.deserialize(encoded)
@@ -81,7 +80,7 @@ class SpecifyDeserialize:
         Serialize and deserialize can do a lossless round trip.
 
         """
-        import xact.util.serialization
+        import xact.util.serialization  # pylint: disable=C0415
 
         original = {'a': 1, 'b': 2, 'c': 3}
         encoded = xact.util.serialization.serialize(original)

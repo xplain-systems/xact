@@ -22,7 +22,7 @@ class SpecifyApply:
         Check apply makes no changes when the override is None.
 
         """
-        import xact.cfg.override
+        import xact.cfg.override  # pylint: disable=C0415
 
         cfg_orig = copy.deepcopy(valid_normalized_config)
         cfg_mod = xact.cfg.override.apply(valid_normalized_config, None)
@@ -35,7 +35,7 @@ class SpecifyApply:
         Check apply makes no changes when the override is None.
 
         """
-        import xact.cfg.override
+        import xact.cfg.override  # pylint: disable=C0415
 
         cfg         = valid_normalized_config
         id_sys_orig = copy.deepcopy(cfg['system']['id_system'])
@@ -52,7 +52,7 @@ class SpecifyApply:
         Check apply makes no changes when the override is None.
 
         """
-        import xact.cfg.override
+        import xact.cfg.override  # pylint: disable=C0415
 
         cfg           = valid_normalized_config
         id_sys_orig   = copy.deepcopy(cfg['system']['id_system'])

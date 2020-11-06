@@ -21,7 +21,7 @@ class SpecifyNormalized:
         Check normalized does not throw when given valid data.
 
         """
-        import xact.cfg.validate
+        import xact.cfg.validate  # pylint: disable=C0415
 
         xact.cfg.validate.normalized(valid_normalized_config)
 
@@ -31,8 +31,8 @@ class SpecifyNormalized:
         Check normalized raises an exception when given invalid data.
 
         """
-        import xact.cfg.exception
-        import xact.cfg.validate
+        import xact.cfg.exception  # pylint: disable=C0415
+        import xact.cfg.validate   # pylint: disable=C0415
 
         with pytest.raises(xact.cfg.exception.CfgError):
             xact.cfg.validate.normalized(invalid_config)
@@ -51,8 +51,8 @@ class SpecifyDenormalized:
         Check normalized does not throw when given valid data.
 
         """
-        import xact.cfg
-        import xact.cfg.validate
+        import xact.cfg           # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
 
         valid_denormalized_config = xact.cfg.denormalize(
                                                     valid_normalized_config)
@@ -64,8 +64,8 @@ class SpecifyDenormalized:
         Check normalized raises an exception when given invalid data.
 
         """
-        import xact.cfg.exception
-        import xact.cfg.validate
+        import xact.cfg.exception  # pylint: disable=C0415
+        import xact.cfg.validate   # pylint: disable=C0415
 
         with pytest.raises(xact.cfg.exception.CfgError):
             xact.cfg.validate.denormalized(invalid_config)

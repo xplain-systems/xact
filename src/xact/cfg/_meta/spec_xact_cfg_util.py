@@ -18,7 +18,7 @@ class SpecifyApply:
         Check apply can be used to modify nested struct fields.
 
         """
-        import xact.cfg.util
+        import xact.cfg.util  # pylint: disable=C0415
 
         data = {'a': {'b': 1}}
         data = xact.cfg.util.apply(data, 'a.b', 2)
@@ -30,7 +30,7 @@ class SpecifyApply:
         Check apply can be used to modify nested struct fields.
 
         """
-        import xact.cfg.util
+        import xact.cfg.util  # pylint: disable=C0415
 
         data = {'a': {'b': 1}}
         data = xact.cfg.util.apply(data, 'a:b', 2, delim_cfg_addr=':')

@@ -21,7 +21,7 @@ class Specify_envvar:
         xact.cli.command._envvar returns a string prefixed with xact.
 
         """
-        import xact.cli.command
+        import xact.cli.command  # pylint: disable=C0415
 
         assert xact.cli.command._envvar('FOO') == 'XACT_FOO'
 
@@ -63,8 +63,8 @@ class SpecifyGrpMain:
         xact.cli.command.grp_main prints help text when called with no args.
 
         """
-        import click.testing
-        import xact.cli.command
+        import click.testing     # pylint: disable=C0415
+        import xact.cli.command  # pylint: disable=C0415
 
         runner = click.testing.CliRunner()
         response = runner.invoke(xact.cli.command.grp_main)  # , ['--help'])
@@ -83,8 +83,8 @@ class SpecifyGrpMain:
         xact.cli.command.grp_main prints help text when called with a help arg.
 
         """
-        import click.testing
-        import xact.cli.command
+        import click.testing     # pylint: disable=C0415
+        import xact.cli.command  # pylint: disable=C0415
 
         runner = click.testing.CliRunner()
         response = runner.invoke(xact.cli.command.grp_main, ['--help'])
@@ -110,8 +110,8 @@ class SpecifyErrorReporting:
         xact.cli.command.grp_main prints error message on import error.
 
         """
-        import xact.cli.command
-        import xact.cli.util
+        import xact.cli.command  # pylint: disable=C0415
+        import xact.cli.util     # pylint: disable=C0415
 
         cfg = skeleton_config
         cfg_test_node_functionality = cfg['node']['test_node']['functionality']

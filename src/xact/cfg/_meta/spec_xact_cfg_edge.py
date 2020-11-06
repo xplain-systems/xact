@@ -18,7 +18,7 @@ class SpecifyDenormalize:
         Check edge.denormalize adds fields to the config structure.
 
         """
-        import xact.cfg.edge
+        import xact.cfg.edge  # pylint: disable=C0415
 
         cfg_denorm = xact.cfg.edge.denormalize(valid_normalized_config)
 

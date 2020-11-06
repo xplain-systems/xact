@@ -23,7 +23,7 @@ class SpecifyFromPath:
         Xact.cfg.from_path returns a dict.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         assert isinstance(xact.cfg.load.from_path(filepath_cfg_yaml),
                           dict)
@@ -34,7 +34,7 @@ class SpecifyFromPath:
         Xact.cfg.from_path can load configuration from a single YAML file.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_path(filepath_cfg_yaml),
                     dict_of_strings)
@@ -45,7 +45,7 @@ class SpecifyFromPath:
         Xact.cfg.from_path can load configuration from a single JSON file.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_path(filepath_cfg_json),
                     dict_of_strings)
@@ -56,7 +56,7 @@ class SpecifyFromPath:
         Xact.cfg.from_path can load configuration from a single XML file.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_path(filepath_cfg_xml),
                     dict_of_strings)
@@ -68,7 +68,7 @@ class SpecifyFromPath:
         Xact.cfg.from_path can load configuration from a single YAML file.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_path(dirpath_cfg_yaml),
                     dict_of_strings)
@@ -80,7 +80,7 @@ class SpecifyFromPath:
         Xact.cfg.from_path can load configuration from a single JSON file.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_path(dirpath_cfg_json),
                     dict_of_strings)
@@ -92,7 +92,7 @@ class SpecifyFromPath:
         Xact.cfg.from_path can load configuration from a single XML file.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_path(dirpath_cfg_xml),
                     dict_of_strings)
@@ -111,7 +111,7 @@ class SpecifyFromFilePath:
         Xact.cfg.load.from_filepath returns a dict.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         assert isinstance(xact.cfg.load.from_filepath(filepath_cfg_yaml),
                           dict)
@@ -122,7 +122,7 @@ class SpecifyFromFilePath:
         Xact.cfg.load.from_filepath can load config. from a single YAML file.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_filepath(filepath_cfg_yaml),
                     dict_of_strings)
@@ -133,7 +133,7 @@ class SpecifyFromFilePath:
         Xact.cfg.load.from_filepath can load config. from a single JSON file.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_filepath(filepath_cfg_json),
                     dict_of_strings)
@@ -144,7 +144,7 @@ class SpecifyFromFilePath:
         Xact.cfg.load.from_filepath can load config. from a single XML file.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_filepath(filepath_cfg_xml),
                     dict_of_strings)
@@ -163,7 +163,7 @@ class SpecifyLoad:
         Xact.cfg.load returns a dict.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         assert isinstance(xact.cfg.load.from_dirpath(dirpath_cfg_yaml),
                           dict)
@@ -175,7 +175,7 @@ class SpecifyLoad:
         Xact.cfg.load loads a directory of yaml files.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_dirpath(dirpath_cfg_yaml),
                     dict_of_strings)
@@ -187,7 +187,7 @@ class SpecifyLoad:
         Xact.cfg.load loads a directory of json files.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_dirpath(dirpath_cfg_json),
                     dict_of_strings)
@@ -199,7 +199,7 @@ class SpecifyLoad:
         Xact.cfg.load loads a directory of xml files.
 
         """
-        import xact.cfg.load
+        import xact.cfg.load  # pylint: disable=C0415
 
         check_match(xact.cfg.load.from_dirpath(dirpath_cfg_xml),
                     dict_of_strings)

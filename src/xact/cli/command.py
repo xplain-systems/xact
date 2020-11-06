@@ -176,9 +176,9 @@ def start(path_cfg       = None,
     > xact dev start first:key first_value second:key second_value
 
     """
-    import xact.cfg            # pylint: disable=W0621
-    import xact.cfg.exception  # pylint: disable=W0621
-    import xact.sys            # pylint: disable=W0621
+    import xact.cfg            # pylint: disable=C0415,W0621
+    import xact.cfg.exception  # pylint: disable=C0415,W0621
+    import xact.sys            # pylint: disable=C0415,W0621
 
     with xact.log.logger.catch(onerror = lambda _: sys.exit(1)):
         try:
@@ -223,8 +223,8 @@ def stop(path_cfg = None):
     Stop the specified system.
 
     """
-    import xact.cfg  # pylint: disable=W0621
-    import xact.sys  # pylint: disable=W0621
+    import xact.cfg  # pylint: disable=C0415,W0621
+    import xact.sys  # pylint: disable=C0415,W0621
     sys.exit(
         xact.sys.stop(
             xact.cfg.prepare(path_cfg = path_cfg)))
@@ -245,8 +245,8 @@ def pause(path_cfg = None):
     Pause the specified system.
 
     """
-    import xact.cfg  # pylint: disable=W0621
-    import xact.sys  # pylint: disable=W0621
+    import xact.cfg  # pylint: disable=C0415,W0621
+    import xact.sys  # pylint: disable=C0415,W0621
     sys.exit(
         xact.sys.pause(
             xact.cfg.prepare(path_cfg = path_cfg)))
@@ -267,8 +267,8 @@ def step(path_cfg = None):
     Single step the specified system.
 
     """
-    import xact.cfg  # pylint: disable=W0621
-    import xact.sys  # pylint: disable=W0621
+    import xact.cfg  # pylint: disable=C0415,W0621
+    import xact.sys  # pylint: disable=C0415,W0621
     sys.exit(
         xact.sys.step(
             xact.cfg.prepare(path_cfg = path_cfg)))
@@ -290,8 +290,8 @@ def start_host(cfg = None):
     serialized configuration structure.
 
     """
-    import xact.util.serialization  # pylint: disable=W0621
-    import xact.host                # pylint: disable=W0621
+    import xact.util.serialization  # pylint: disable=C0415,W0621
+    import xact.host                # pylint: disable=C0415,W0621
     sys.exit(
         xact.host.start(
             xact.util.serialization.deserialize(cfg)))
@@ -313,8 +313,8 @@ def stop_host(cfg = None):
     serialized configuration structure.
 
     """
-    import xact.util.serialization  # pylint: disable=W0621
-    import xact.host                # pylint: disable=W0621
+    import xact.util.serialization  # pylint: disable=C0415,W0621
+    import xact.host                # pylint: disable=C0415,W0621
     sys.exit(
         xact.host.stop(
             xact.util.serialization.deserialize(cfg)))
@@ -336,8 +336,8 @@ def pause_host(cfg = None):
     serialized configuration structure.
 
     """
-    import xact.util.serialization  # pylint: disable=W0621
-    import xact.host                # pylint: disable=W0621
+    import xact.util.serialization  # pylint: disable=C0415,W0621
+    import xact.host                # pylint: disable=C0415,W0621
     sys.exit(
         xact.host.pause(
             xact.util.serialization.deserialize(cfg)))
@@ -359,8 +359,8 @@ def step_host(cfg = None):
     serialized configuration structure.
 
     """
-    import xact.util.serialization  # pylint: disable=W0621
-    import xact.host                # pylint: disable=W0621
+    import xact.util.serialization  # pylint: disable=C0415,W0621
+    import xact.host                # pylint: disable=C0415,W0621
     sys.exit(
         xact.host.step(
             xact.util.serialization.deserialize(cfg)))

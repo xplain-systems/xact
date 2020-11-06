@@ -18,8 +18,8 @@ class SpecifySetSystemId:
         Check builder.set_system_id returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.set_system_id(cfg       = valid_normalized_config,
                                        id_system = 'new_system_id')
         xact.cfg.validate.normalized(valid_normalized_config)
@@ -38,8 +38,8 @@ class SpecifyAddHost:
         Check builder.add_host returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_host(cfg     = valid_normalized_config,
                                   id_host = 'new_host_id')
         xact.cfg.validate.normalized(valid_normalized_config)
@@ -58,8 +58,8 @@ class SpecifyRemoveHost:
         Check builder.remove_host returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_host(cfg     = valid_normalized_config,
                                   id_host = 'new_host_id')
         xact.cfg.builder.remove_host(cfg     = valid_normalized_config,
@@ -80,8 +80,8 @@ class SpecifyAddProcess:
         Check builder.add_process returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_process(cfg        = valid_normalized_config,
                                      id_process = 'new_process_id',
                                      id_host    = 'some_host')
@@ -101,8 +101,8 @@ class SpecifyRemoveProcess:
         Check builder.remove_process returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_process(cfg        = valid_normalized_config,
                                      id_process = 'new_process_id',
                                      id_host    = 'some_host')
@@ -124,8 +124,8 @@ class SpecifyAddNode:
         Check builder.add_node returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_node(
                         cfg           = valid_normalized_config,
                         id_node       = 'new_node_id',
@@ -149,8 +149,8 @@ class SpecifyRemoveNode:
         Check builder.remove_node returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_node(
                     cfg           = valid_normalized_config,
                     id_node       = 'new_node_id',
@@ -174,8 +174,8 @@ class SpecifyAddEdge:
         Check builder.add_edge returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_edge(cfg     = valid_normalized_config,
                                   id_src  = 'some_node',
                                   src_ref = 'outputs.foo',
@@ -198,8 +198,8 @@ class SpecifyRemoveEdge:
         Check builder.remove_edge returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_edge(cfg     = valid_normalized_config,
                                   id_src  = 'some_node',
                                   src_ref = 'output.new_port',
@@ -225,8 +225,8 @@ class SpecifyAddData:
         Check builder.add_data returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_data(cfg       = valid_normalized_config,
                                   id_data   = 'new_type_alias',
                                   spec_data = 'py_dict')
@@ -246,8 +246,8 @@ class SpecifyRemoveData:
         Check builder.remove_data returns valid configuration.
 
         """
-        import xact.cfg.builder
-        import xact.cfg.validate
+        import xact.cfg.builder   # pylint: disable=C0415
+        import xact.cfg.validate  # pylint: disable=C0415
         xact.cfg.builder.add_data(cfg       = valid_normalized_config,
                                   id_data   = 'new_type_alias',
                                   spec_data = 'py_dict')
