@@ -35,8 +35,6 @@ def nodeb_reset(runtime, cfg, inputs, state, outputs):  # pylint: disable=W0613
     Reset function for node B.
 
     """
-    pass
-
 
 # -----------------------------------------------------------------------------
 def nodeb_step(inputs, state, outputs):  # pylint: disable=W0613
