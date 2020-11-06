@@ -262,6 +262,11 @@ def topological_sort(map_forward, map_backward = None):
     Return graph nodes as list of sets of equivalent rank in topological order.
 
     """
+    # If the backward map has not been
+    # specified, we can easily build it
+    # by inverting the (bijective) forward
+    # mapping.
+    #
     if map_backward is None:
         map_backward = collections.defaultdict(set)
         for (key, set_value) in map_forward.items():
@@ -272,36 +277,63 @@ def topological_sort(map_forward, map_backward = None):
     set_node_in      = set(map_backward.keys())  # nodes With inbound edge(s)
     set_node_sources = set_node_out - set_node_in
 
-    map_count_in = dict((key, 0) for key in set_node_sources)
+    # Build a map from id_node -> indegree
+    # (count of inbound edges), populated
+    # from the map_backward dict.
+    #
+    map_indegree = dict((key, 0) for key in set_node_sources)
     for (key, inbound) in map_backward.items():
-        map_count_in[key] = len(inbound)
+        map_indegree[key] = len(inbound)
 
-    set_count_zero = _nodes_at_count_zero(map_count_in)
-    _del_items(map_count_in, set_count_zero)
+    # The output of the topological sort
+    # is a partial ordering represented
+    # as a list of sets; each set representing
+    # nodes of equal rank. Here we create
+    # the output list and fill it with
+    # nodes at rank zero, removing them
+    # from the graph.
+    #
+    set_rank_zero = _nodes_at_count_zero(map_indegree)
+    list_set_ranks = [set_rank_zero]
+    _del_items(map_indegree, set_rank_zero)
 
-    list_ranks = [set_count_zero]
+    # The topological sort algorithm
+    # uses breadth first search. An
+    # indegree number is maintained
+    # for all nodes remaining in the
+    # graph. At each iteration, the
+    # 'source' nodes (indegree zero)
+    # are taken from the graph and
+    # added to the output, and the
+    # indegree of immediate downstream
+    # neighbors is decremented.
+    #
+    while True:
 
-    for _ in itertools.count():
-        set_prev = list_ranks[-1]
+        # Maintain indegree number.
+        set_prev = list_set_ranks[-1]
         for id_node in _list_downstream_neighbors(set_prev, map_forward):
-            map_count_in[id_node] -= 1
-        set_next = _nodes_at_count_zero(map_count_in)
-        _del_items(map_count_in, set_next)
+            map_indegree[id_node] -= 1
 
-        if not set_next:
-            break
-        list_ranks.append(set_next)
+        # Remove next rank from graph.
+        set_next = _nodes_at_count_zero(map_indegree)
+        _del_items(map_indegree, set_next)
+        if set_next:
+            list_set_ranks.append(set_next)
+            continue
+        else:
+            break  # Terminate
 
-    return list_ranks
+    return list_set_ranks
 
 
 # -----------------------------------------------------------------------------
-def _nodes_at_count_zero(map_count_in):
+def _nodes_at_count_zero(map_indegree):
     """
     Return the set of id_node with input degree zero.
 
     """
-    return set(key for (key, count) in map_count_in.items() if count == 0)
+    return set(key for (key, count) in map_indegree.items() if count == 0)
 
 
 # -----------------------------------------------------------------------------
