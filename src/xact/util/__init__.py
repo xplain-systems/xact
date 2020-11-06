@@ -333,7 +333,7 @@ def _list_downstream_neighbors(set_id_node, map_forward):
 
 
 # =============================================================================
-class PathDict(collections.UserDict):  # Pylint: disable=R0901
+class PathDict(collections.UserDict):  # pylint: disable=R0901
     """
     Custom dictionary class supporting path-tuple based access.
 

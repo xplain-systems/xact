@@ -99,7 +99,7 @@ def from_filepath(filepath_cfg):
 
 
 # -----------------------------------------------------------------------------
-def _from_xml_file(filepath_cfg, file_cfg):  # Pylint: disable=W0613
+def _from_xml_file(filepath_cfg, file_cfg):  # pylint: disable=W0613
     """
     Return confiuguration data loaded from the specified XML file path.
 
@@ -112,7 +112,7 @@ def _from_xml_file(filepath_cfg, file_cfg):  # Pylint: disable=W0613
 
 
 # -----------------------------------------------------------------------------
-def _from_json_file(filepath_cfg, file_cfg):  # Pylint: disable=W0613
+def _from_json_file(filepath_cfg, file_cfg):  # pylint: disable=W0613
     """
     Return confiuguration data loaded from the specified JSON file path.
 
@@ -128,7 +128,7 @@ def _from_json_file(filepath_cfg, file_cfg):  # Pylint: disable=W0613
 
 
 # -----------------------------------------------------------------------------
-def _from_yaml_file(filepath_cfg, file_cfg):  # Pylint: disable=W0613
+def _from_yaml_file(filepath_cfg, file_cfg):  # pylint: disable=W0613
     """
     Return confiuguration data loaded from the specified YAML file path.
 
@@ -157,7 +157,7 @@ def _from_yaml_file(filepath_cfg, file_cfg):  # Pylint: disable=W0613
 
 
 # -----------------------------------------------------------------------------
-def _from_toml_file(filepath_cfg, file_cfg):  # Pylint: disable=W0613
+def _from_toml_file(filepath_cfg, file_cfg):  # pylint: disable=W0613
     """
     Return confiuguration data loaded from the specified TOML file path.
 
