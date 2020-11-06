@@ -172,10 +172,27 @@ def _get_list_id_node_in_runorder(cfg, id_process):
     """
     Return a list of node ids sorted by order of execution.
 
+    Execution order is not fully specified by
+    a breadth-first forwards traversal of the data
+    flow graph, since nodes at the same 'depth'
+    in the graph can be executed in arbitrary order.
+
+    To give us the freedom to decide amongst
+    those possible orderings later, we return
+    a list of sets, where each entry in the
+    list is comprised of the set of nodes at
+    the same 'depth' in the graph.
+
+    Graphs must be acyclic. If we want to handle
+    feedback loops, this algorithm must be
+    changed to deal with them in an intelligent
+    manner.
+
     """
-    (map_forward, map_backward) = _local_data_flow(iter_cfg_edge = cfg['edge'],
-                                                   id_process    = id_process)
-    list_tranches  = _sort_into_execution_tranches(map_forward, map_backward)
+    (map_forward, map_backward) = _local_acyclic_data_flow(
+                                                iter_cfg_edge = cfg['edge'],
+                                                id_process    = id_process)
+    list_tranches  = xact.util.topological_sort(map_forward, map_backward)
     list_id_node   = list(_specify_detailed_execution_order(list_tranches))
     list_id_node.extend(sorted(_get_list_id_node_unscheduled(
                                             cfg, list_id_node, id_process)))
@@ -183,7 +200,7 @@ def _get_list_id_node_in_runorder(cfg, id_process):
 
 
 # -----------------------------------------------------------------------------
-def _local_data_flow(iter_cfg_edge, id_process):
+def _local_acyclic_data_flow(iter_cfg_edge, id_process):
     """
     Return the data flow graph for the specified process.
 
@@ -206,93 +223,6 @@ def _local_data_flow(iter_cfg_edge, id_process):
             map_backward[id_node_dst].add(id_node_src)
 
     return (map_forward, map_backward)
-
-
-# -----------------------------------------------------------------------------
-def _sort_into_execution_tranches(map_forward, map_backward):
-    """
-    Return data flow graph nodes as a list of tranches in execution order.
-
-    Execution order is not fully specified by
-    a breadth-first forwards traversal of the data
-    flow graph, since nodes at the same 'depth'
-    in the graph can be executed in arbitrary order.
-
-    To give us the freedom to decide amongst
-    those possible orderings later, we return
-    a list of sets, where each entry in the
-    list is comprised of the set of nodes at
-    the same 'depth' in the graph.
-
-    Graphs must be acyclic. If we want to handle
-    feedback loops, this algorithm must be
-    changed to deal with them in an intelligent
-    manner.
-
-    """
-    set_node_out     = set(map_forward.keys())   # nodes with outbound edge(s)
-    set_node_in      = set(map_backward.keys())  # nodes With inbound edge(s)
-    set_node_sources = set_node_out - set_node_in
-
-    map_count_in = dict((key, 0) for key in set_node_sources)
-    for (key, inbound) in map_backward.items():
-        map_count_in[key] = len(inbound)
-
-    set_count_zero = _nodes_at_count_zero(map_count_in)
-    _del_items(map_count_in, set_count_zero)
-
-    visited       = set()
-    list_tranches = list()
-    list_tranches = [set_count_zero]
-
-    for _ in itertools.count():
-        set_prev = list_tranches[-1]
-        for id_node in _list_downstream_neighbors(set_prev, map_forward):
-            map_count_in[id_node] -= 1
-        set_next = _nodes_at_count_zero(map_count_in)
-        _del_items(map_count_in, set_next)
-
-        if not set_next:
-            break
-        list_tranches.append(set_next)
-
-    return list_tranches
-
-
-# -----------------------------------------------------------------------------
-def _nodes_at_count_zero(map_count_in):
-    """
-    Return the set of id_node with input degree zero.
-
-    """
-    return set(key for (key, count) in map_count_in.items() if count == 0)
-
-
-# -----------------------------------------------------------------------------
-def _del_items(map_data, set_keys):
-    """
-    Delete the specified items from the dict.
-
-    """
-    for key in set_keys:
-        del map_data[key]
-
-
-# -----------------------------------------------------------------------------
-def _list_downstream_neighbors(set_id_node, map_forward):
-    """
-    Return the list of source nodes from the specified graph.
-
-    The graph should be provided as a dict mapping
-    from upstream nodes to downstream nodes.
-
-    """
-    list_neighbors = list()
-    for id_node in set_id_node:
-        if id_node in map_forward:
-            for id_node_downstream in map_forward[id_node]:
-                list_neighbors.append(id_node_downstream)
-    return list_neighbors
 
 
 # -----------------------------------------------------------------------------

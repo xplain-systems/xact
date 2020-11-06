@@ -257,32 +257,16 @@ def iter_format_string_fields(fmt_string):
 
 
 # -----------------------------------------------------------------------------
-def topological_sort(map_edge):
+def topological_sort(map_forward, map_backward = None):
     """
     Return graph nodes as list of sets of equivalent rank in topological order.
 
-    Execution order is not fully specified by
-    a breadth-first forwards traversal of the data
-    flow graph, since nodes at the same 'depth'
-    in the graph can be executed in arbitrary order.
-
-    To give us the freedom to decide amongst
-    those possible orderings later, we return
-    a list of sets, where each entry in the
-    list is comprised of the set of nodes at
-    the same 'depth' in the graph.
-
-    Graphs must be acyclic. If we want to handle
-    feedback loops, this algorithm must be
-    changed to deal with them in an intelligent
-    manner.
-
     """
-    map_forward  = map_edge
-    map_backward = collections.defaultdict(set)
-    for (key, set_value) in map_forward.items():
-        for value in set_value:
-            map_backward[value].add(key)
+    if map_backward is None:
+        map_backward = collections.defaultdict(set)
+        for (key, set_value) in map_forward.items():
+            for value in set_value:
+                map_backward[value].add(key)
 
     set_node_out     = set(map_forward.keys())   # nodes with outbound edge(s)
     set_node_in      = set(map_backward.keys())  # nodes With inbound edge(s)
@@ -299,7 +283,7 @@ def topological_sort(map_edge):
 
     for _ in itertools.count():
         set_prev = list_ranks[-1]
-        for id_node in _downstream_neighbors(set_prev, map_forward):
+        for id_node in _list_downstream_neighbors(set_prev, map_forward):
             map_count_in[id_node] -= 1
         set_next = _nodes_at_count_zero(map_count_in)
         _del_items(map_count_in, set_next)
@@ -331,19 +315,21 @@ def _del_items(map_data, set_keys):
 
 
 # -----------------------------------------------------------------------------
-def _downstream_neighbors(set_id_node, map_forward):
+def _list_downstream_neighbors(set_id_node, map_forward):
     """
-    Return the set of source nodes from the specified graph.
+    Return the list of downstream neighbors from the specified edge map.
 
-    The graph should be provided as a dict mapping
-    from upstream nodes to downstream nodes.
+    The edge map should be provided as a dict
+    mapping from upstream nodes to downstream
+    nodes.
 
     """
-    set_neighbors = set()
+    list_neighbors = list()
     for id_node in set_id_node:
         if id_node in map_forward:
-            set_neighbors |= map_forward[id_node]
-    return set_neighbors
+            for id_node_downstream in map_forward[id_node]:
+                list_neighbors.append(id_node_downstream)
+    return list_neighbors
 
 
 # =============================================================================
