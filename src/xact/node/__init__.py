@@ -59,11 +59,11 @@ class Node():
                                self.outputs)
             except xact.sys.exception.ControlException:
                 raise
-            except Exception:
+            except Exception as err:
                 xact.log.logger.exception(
                             'Reset function failed for id_node = "{id_node}"',
                             id_node = self.id_node)
-                raise xact.sys.exception.NonRecoverableError()
+                raise xact.sys.exception.NonRecoverableError() from err
 
     # -------------------------------------------------------------------------
     def step(self):
@@ -82,11 +82,11 @@ class Node():
                               self.outputs)
             except xact.sys.exception.ControlException:
                 raise
-            except Exception:
+            except Exception as err:
                 xact.log.logger.exception(
                             'Step function failed for id_node = "{id_node}"',
                             id_node = self.id_node)
-                raise xact.sys.exception.NonRecoverableError()
+                raise xact.sys.exception.NonRecoverableError() from err
 
         for (path, queue) in self.output_queues.items():
             item = _get_ref(self.outputs, path)
