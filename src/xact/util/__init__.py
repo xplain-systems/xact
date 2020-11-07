@@ -514,7 +514,7 @@ def function_from_source(string_source):
     """
     list_functions = list()
     fcn_locals     = dict()
-    exec(string_source, dict(), fcn_locals)
+    exec(string_source, dict(), fcn_locals)  # pylint: disable=W0122
     for value in fcn_locals.values():
         if callable(value):
             list_functions.append(value)
