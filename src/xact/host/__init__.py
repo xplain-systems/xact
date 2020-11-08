@@ -127,7 +127,10 @@ def connect_queues(cfg, id_host_local):
     """
     map_cfg_edge    = _index_edge_config(cfg)
     map_id_by_class = _group_edges_by_class(cfg, id_host_local)
-    map_queues      = _construct_queues(cfg, map_cfg_edge, map_id_by_class)
+    map_queues      = _construct_queues(cfg,
+                                        map_cfg_edge,
+                                        map_id_by_class,
+                                        id_host_local)
     return map_queues
 
 
@@ -172,7 +175,7 @@ def _group_edges_by_class(cfg, id_host_local):
 
 
 # -----------------------------------------------------------------------------
-def _construct_queues(cfg, map_cfg_edge, map_id_by_class):
+def _construct_queues(cfg, map_cfg_edge, map_id_by_class, id_host_local):
     """
     Return a map from edge id to queue instance.
 
