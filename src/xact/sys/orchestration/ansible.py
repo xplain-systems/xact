@@ -22,7 +22,7 @@ import yaml
 
 
 # -----------------------------------------------------------------------------
-def ensure_deployed(cfg):
+def ensure_deployed(cfg):  # pylint: disable=W0613
     """
     Ensure that application components are deployed to hosts as per cfg.
 
@@ -134,7 +134,7 @@ def _roles_for_host(cfg, set_id_cfg_for_host):
 
 
 # -----------------------------------------------------------------------------
-def _call_ansible(hostname, list_tasks):
+def _call_ansible(hostname, list_tasks):  # pylint: disable=W0613
     """
     Call ansible for a specific host.
 
@@ -254,7 +254,8 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
         self.host_unreachable[host.get_name()] = result
 
     # -------------------------------------------------------------------------
-    def v2_runner_on_ok(self, result, *args, **kwargs):
+    def v2_runner_on_ok(  # pylint: disable=W0613
+                    self, result, *args, **kwargs):
         """
         Print a json representation of the result.
 
