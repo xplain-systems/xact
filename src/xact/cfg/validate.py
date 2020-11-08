@@ -252,6 +252,7 @@ def _denormalized_cfg_schema():
     _denormalize_edge_section(schema)
     return schema
 
+
 # -----------------------------------------------------------------------------
 def _denormalize_host_section(schema):
     """
