@@ -14,7 +14,7 @@ import xact.util
 
 
 # =============================================================================
-class Node():
+class Node():  # pylint: disable=R0902
     """
     Class representing a node in the data flow graph.
 
