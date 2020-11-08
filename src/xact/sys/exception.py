@@ -12,8 +12,6 @@ class ControlException(Exception):
 
     """
 
-    pass
-
 
 # =============================================================================
 class RunComplete(ControlException):
@@ -39,8 +37,6 @@ class RecoverableError(ControlException):
 
     """
 
-    pass
-
 
 # =============================================================================
 class NonRecoverableError(ControlException):
@@ -48,5 +44,3 @@ class NonRecoverableError(ControlException):
     Thrown to trigger an error condition system halt.
 
     """
-
-    pass

@@ -27,7 +27,6 @@ def ensure_deployed(cfg):
     Ensure that application components are deployed to hosts as per cfg.
 
     """
-    pass
 
 
 # -----------------------------------------------------------------------------
