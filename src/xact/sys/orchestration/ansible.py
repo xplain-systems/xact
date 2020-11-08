@@ -71,7 +71,7 @@ def _list_tasks(cfg, id_host):
     Return the list of tasks for the specified host.
 
     """
-    for key in ('req_host_cfg', 'role')
+    for key in ('req_host_cfg', 'role'):
         if key not in cfg:
             return []
 
@@ -80,6 +80,7 @@ def _list_tasks(cfg, id_host):
     list_id_role_for_host = _roles_for_host(cfg, set_id_cfg_for_host)
     list_tasks_for_host   = _tasks_for_host(cfg, list_id_role_for_host)
     return list_tasks_for_host
+
 
 # -----------------------------------------------------------------------------
 def _tasks_for_host(cfg, list_id_role_for_host):
