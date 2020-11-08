@@ -99,11 +99,9 @@ def _as_tuple():
         ('float16',      False, False, True,  float,     numpy.float16,    None,             ),   # noqa
         ('float32',      False, False, True,  float,     numpy.float32,    None,             ),   # noqa
         ('float64',      False, False, True,  float,     numpy.float64,    None,             ),   # noqa
-        ('float128',     False, False, True,  float,     numpy.float128,   None,             ),   # noqa
         ('csingle',      False, False, True,  float,     numpy.csingle,    None,             ),   # noqa
         ('complex_',     True,  False, False, complex,   numpy.complex_,   None,             ),   # noqa
         ('clongfloat',   False, False, True,  complex,   numpy.clongfloat, None,             ),   # noqa
         ('complex64',    False, False, True,  complex,   numpy.complex64,  None,             ),   # noqa
-        ('complex128',   False, False, True,  complex,   numpy.complex128, None,             ),   # noqa
-        ('complex256',   False, False, True,  complex,   numpy.complex256, None,             )))  # noqa
+        ('complex128',   False, False, True,  complex,   numpy.complex128, None,             )))  # noqa
     # pylint: enable=C0301
