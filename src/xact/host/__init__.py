@@ -125,35 +125,67 @@ def connect_queues(cfg, id_host_local):
     Start servers and connect clients as required.
 
     """
-    set_id_edge_ipc    = set()
-    set_id_edge_server = set()
-    set_id_edge_client = set()
-    map_cfg_edge       = dict()
+    map_cfg_edge    = _index_edge_config(cfg)
+    map_id_by_class = _group_edges_by_class(cfg, id_host_local)
+    map_queues      = _construct_queues(cfg, map_cfg_edge, map_id_by_class)
+    return map_queues
+
+
+# -----------------------------------------------------------------------------
+def _index_edge_config(cfg):
+    """
+    Retun a map from edge id to the config for that edge.
+
+    """
+    map_cfg_edge = dict()
+    for cfg_edge in cfg['edge']:
+        map_cfg_edge[cfg_edge['id_edge']] = cfg_edge
+    return map_cfg_edge
+
+
+# -----------------------------------------------------------------------------
+def _group_edges_by_class(cfg, id_host_local):
+    """
+    Return a map of edge ids grouped into ipc, server, or client edge classes.
+
+    """
+    map_id_by_class = {
+        'ipc':    set(),
+        'server': set(),
+        'client': set()
+    }
 
     for cfg_edge in cfg['edge']:
-
         id_edge = cfg_edge['id_edge']
-        map_cfg_edge[id_edge] = cfg_edge
 
         if id_host_local not in cfg_edge['list_id_host']:
             continue
         if cfg_edge['ipc_type'] == 'inter_process':
-            set_id_edge_ipc.add(id_edge)
+            map_id_by_class['ipc'].add(id_edge)
         if cfg_edge['ipc_type'] == 'inter_host':
             if id_host_local == cfg_edge['id_host_owner']:
-                set_id_edge_server.add(id_edge)
+                map_id_by_class['server'].add(id_edge)
             else:
-                set_id_edge_client.add(id_edge)
+                map_id_by_class['client'].add(id_edge)
 
+    return map_id_by_class
+
+
+# -----------------------------------------------------------------------------
+def _construct_queues(cfg, map_cfg_edge, map_id_by_class):
+    """
+    Return a map from edge id to queue instance.
+
+    """
     map_queues = dict()
-    for id_edge in set_id_edge_server:
+    for id_edge in map_id_by_class['server']:
         map_queues[id_edge] = xact.queue.RemoteQueueServer(
                                     cfg, map_cfg_edge[id_edge], id_host_local)
 
-    for id_edge in set_id_edge_ipc:
+    for id_edge in map_id_by_class['ipc']:
         map_queues[id_edge] = xact.queue.LocalQueue()
 
-    for id_edge in set_id_edge_client:
+    for id_edge in map_id_by_class['client']:
         map_queues[id_edge] = xact.queue.RemoteQueueClient(
                                     cfg, map_cfg_edge[id_edge], id_host_local)
 
