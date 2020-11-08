@@ -71,33 +71,66 @@ def _list_tasks(cfg, id_host):
     Return the list of tasks for the specified host.
 
     """
+    for key in ('req_host_cfg', 'role')
+        if key not in cfg:
+            return []
+
+    set_id_proc_on_host   = _processes_on_host(cfg, id_host)
+    set_id_cfg_for_host   = _config_required_by_host(cfg, set_id_proc_on_host)
+    list_id_role_for_host = _roles_for_host(cfg, set_id_cfg_for_host)
+    list_tasks_for_host   = _tasks_for_host(cfg, list_id_role_for_host)
+    return list_tasks_for_host
+
+# -----------------------------------------------------------------------------
+def _tasks_for_host(cfg, list_id_role_for_host):
+    """
+    Return a list of the tasks required to configure the specified host.
+
+    """
+    list_tasks_for_host = []
+    for id_role in list_id_role_for_host:
+        list_tasks_for_host.extend(cfg['role'][id_role]['tasks'])
+    return list_tasks_for_host
+
+
+# -----------------------------------------------------------------------------
+def _processes_on_host(cfg, id_host):
+    """
+    Return a set of the process ids found on the specified host.
+
+    """
     set_id_proc_on_host = set()
     for (id_proc, cfg_proc) in cfg['process'].items():
         if cfg_proc['host'] == id_host:
             set_id_proc_on_host.add(id_proc)
+    return set_id_proc_on_host
 
-    set_id_required_config_for_host = set()
+
+# -----------------------------------------------------------------------------
+def _config_required_by_host(cfg, set_id_proc_on_host):
+    """
+    Return a set of the config ids required by the specified host.
+
+    """
+    set_id_cfg_for_host = set()
     for cfg_node in cfg['node'].values():
         if cfg_node['process'] in set_id_proc_on_host:
-            set_id_required_config_for_host.add(cfg_node['req_host_cfg'])
+            set_id_cfg_for_host.add(cfg_node['req_host_cfg'])
+    return set_id_cfg_for_host
 
-    if 'req_host_cfg' not in cfg:
-        return []
 
-    if 'role' not in cfg:
-        return []
+# -----------------------------------------------------------------------------
+def _roles_for_host(cfg, set_id_cfg_for_host):
+    """
+    Return a list of role ids for the current host.
 
+    """
     list_id_role_for_host = []
-    for id_config_for_host in set_id_required_config_for_host:
+    for id_config_for_host in set_id_cfg_for_host:
         cfg_for_host_part = cfg['req_host_cfg'][id_config_for_host]
         if 'role' in cfg_for_host_part:
             list_id_role_for_host.extend(cfg_for_host_part['role'])
-
-    list_tasks_for_host = []
-    for id_role in list_id_role_for_host:
-        list_tasks_for_host.extend(cfg['role'][id_role]['tasks'])
-
-    return list_tasks_for_host
+    return list_id_role_for_host
 
 
 # -----------------------------------------------------------------------------
