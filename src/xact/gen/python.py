@@ -93,7 +93,7 @@ def _allocator(id_type, list_node):
 
 
 # -----------------------------------------------------------------------------
-def _make_prototype_instance(id_type, list_node):
+def _make_prototype_instance(id_type, list_node):  # pylint: disable=W0613
     """
     Return a prototype data instance for the specified type.
 
@@ -136,7 +136,7 @@ def _make_prototype_instance(id_type, list_node):
 
 
 # -----------------------------------------------------------------------------
-def _initializer(id_type, list_node):
+def _initializer(id_type, list_node):  # pylint: disable=W0613
     """
     Return an initializer function for the specified type.
 
@@ -209,7 +209,7 @@ def _get_initializer_for_one_node(node):
 
 
 # -----------------------------------------------------------------------------
-def _validator(id_type, list_node):
+def _validator(id_type, list_node):  # pylint: disable=W0613
     """
     Return a validator function for the specified type.
 
