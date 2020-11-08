@@ -282,19 +282,36 @@ def _denormalize_edge_section(schema):
     """
     edge_schema = schema['properties']['edge']['items']
     edge_props  = edge_schema['properties']
-    edge_props['id_edge']         = { '$ref': '#/definitions/id_edge'  }
-    edge_props['relpath_src']     = { 'type': 'array'                  }
-    edge_props['relpath_dst']     = { 'type': 'array'                  }
-    edge_props['id_node_src']     = { '$ref': '#/definitions/id_node'  }
-    edge_props['id_node_dst']     = { '$ref': '#/definitions/id_node'  }
-    edge_props['list_id_process'] = { 'type': 'array'                  }
-    edge_props['list_id_host']    = { 'type': 'array'                  }
-    edge_props['ipc_type']        = { '$ref': '#/definitions/ipc_type' }
-    edge_props['id_host_owner']   = { '$ref': '#/definitions/id_host'  }
-    edge_props['id_host_src']     = { '$ref': '#/definitions/id_host'  }
-    edge_props['id_host_dst']     = { '$ref': '#/definitions/id_host'  }
-    edge_props['idx_edge']        = { 'oneOf': [ { 'type': 'number' },
-                                                 { 'type': 'null'   } ]}
+
+    # The edge id is used to index the queue database.
+    edge_props['id_edge'] = { '$ref': '#/definitions/id_edge' }
+
+    # The node id is used to index the node database
+    edge_props['id_node_src'] = { '$ref': '#/definitions/id_node' }
+    edge_props['id_node_dst'] = { '$ref': '#/definitions/id_node' }
+
+    # Relative paths are used to set the input and output data pointers.
+    edge_props['relpath_src'] = { 'type': 'array' }
+    edge_props['relpath_dst'] = { 'type': 'array' }
+
+    # The IPC type is used to determine the queue type to use for the edge.
+    edge_props['ipc_type'] = { '$ref': '#/definitions/ipc_type' }
+
+    # The edge index is used to determine the port number for remote queues.
+    edge_props['idx_edge'] = { 'oneOf': [ { 'type': 'number' },
+                                          { 'type': 'null'   } ]}
+
+    # Process and host id lists control when edges should be ignored.
+    edge_props['list_id_process'] = { 'type': 'array' }
+    edge_props['list_id_host']    = { 'type': 'array' }
+
+    # The host that owns the edge must serve any remote queues.
+    edge_props['id_host_owner'] = { '$ref': '#/definitions/id_host' }
+
+    # Remote queues are configured differently for sending vs. receiving.
+    edge_props['id_host_src'] = { '$ref': '#/definitions/id_host' }
+    edge_props['id_host_dst'] = { '$ref': '#/definitions/id_host' }
+
     edge_schema['required'] = list(edge_schema['properties'].keys())
 
 
