@@ -24,7 +24,7 @@ def apply(data, address, value, delim_cfg_addr = '.'):
 
 
 # =============================================================================
-class SubstitutionTable():
+class SubstitutionTable():  # pylint: disable=R0903
     """
     Provide a nice syntax for conditional substitution logic.
 

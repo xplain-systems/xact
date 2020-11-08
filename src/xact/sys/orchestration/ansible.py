@@ -205,15 +205,18 @@ def _call_ansible(hostname, list_tasks):
 
     print("UP ***********")
     for host, result in results_callback.host_ok.items():
-        print('{0} >>> {1}'.format(host, result._result['stdout']))  # pylint: ignore=W0212
+        print('{0} >>> {1}'.format(
+                host, result._result['stdout']))  # pylint: disable=W0212
 
     print("FAILED *******")
     for host, result in results_callback.host_failed.items():
-        print('{0} >>> {1}'.format(host, result._result['msg']))  # pylint: ignore=W0212
+        print('{0} >>> {1}'.format(
+                host, result._result['msg']))  # pylint: disable=W0212
 
     print("DOWN *********")
     for host, result in results_callback.host_unreachable.items():
-        print('{0} >>> {1}'.format(host, result._result['msg']))  # pylint: ignore=W0212
+        print('{0} >>> {1}'.format(
+                host, result._result['msg']))  # pylint: disable=W0212
 
 
 # =============================================================================
@@ -247,7 +250,7 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
         Handle on_unreachable events.
 
         """
-        host = result._host  # pylint: ignore=W0212
+        host = result._host  # pylint: disable=W0212
         self.host_unreachable[host.get_name()] = result
 
     # -------------------------------------------------------------------------
@@ -258,9 +261,10 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
         Also, store the result in an instance attribute for retrieval later
 
         """
-        host = result._host  # pylint: ignore=W0212
+        host = result._host  # pylint: disable=W0212
         self.host_ok[host.get_name()] = result
-        print(json.dumps({host.name: result._result}, indent=4))  # pylint: ignore=W0212
+        print(json.dumps({host.name: result._result},  # pylint: disable=W0212
+                         indent=4))
 
     # -------------------------------------------------------------------------
     def v2_runner_on_failed(self, result, ignore_errors = False):
@@ -268,5 +272,5 @@ class ResultsCollectorJSONCallback(ansible.plugins.callback.CallbackBase):
         Handle on_failed events.
 
         """
-        host = result._host  # pylint: ignore=W0212
+        host = result._host  # pylint: disable=W0212
         self.host_failed[host.get_name()] = result
