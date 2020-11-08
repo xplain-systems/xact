@@ -145,11 +145,13 @@ def _initializer(id_type, list_node):
 
     # -------------------------------------------------------------------------
     def _initialize_all_fields(data_structure,
-                               initializer_list = default_initializer_list):
+                               initializer_list = None):
         """
         Initialize all known entries in the specified data structure.
 
         """
+        if initializer_list is None:
+            initializer_list = default_initializer_list
         path_dict = xact.util.PathDict(data_structure)
         for initializer_function in initializer_list:
             initializer_function(path_dict)
