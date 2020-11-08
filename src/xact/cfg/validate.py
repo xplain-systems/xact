@@ -245,18 +245,41 @@ def _denormalized_cfg_schema():
     Return a schema for denormalized config data.
 
     """
-    schema = copy.deepcopy(_normalized_cfg_schema())
-
+    schema        = copy.deepcopy(_normalized_cfg_schema())
     schema['$id'] = 'http://xplain.systems/schemas/cfg_denorm_v1.json'
+    _denormalize_host_section(schema)
+    _denormalize_node_section(schema)
+    _denormalize_edge_section(schema)
+    return schema
 
+# -----------------------------------------------------------------------------
+def _denormalize_host_section(schema):
+    """
+    Modify schema to add denormalized fields in the host config section.
+
+    """
     host_schema = schema['properties']['host']['additionalProperties']
     host_schema['properties']['is_inter_host_edge_owner'] = {'type': 'boolean'}
     host_schema['required'].append('is_inter_host_edge_owner')
 
+
+# -----------------------------------------------------------------------------
+def _denormalize_node_section(schema):
+    """
+    Modify schema to add denormalized fields in the node config section.
+
+    """
     node_schema = schema['properties']['node']['additionalProperties']
     node_schema['properties']['host'] = {'type': 'string'}
     node_schema['required'].append('host')
 
+
+# -----------------------------------------------------------------------------
+def _denormalize_edge_section(schema):
+    """
+    Modify schema to add denormalized fields in the edge config section.
+
+    """
     edge_schema = schema['properties']['edge']['items']
     edge_props  = edge_schema['properties']
     edge_props['id_edge']         = { '$ref': '#/definitions/id_edge'  }
@@ -273,8 +296,6 @@ def _denormalized_cfg_schema():
     edge_props['idx_edge']        = { 'oneOf': [ { 'type': 'number' },
                                                  { 'type': 'null'   } ]}
     edge_schema['required'] = list(edge_schema['properties'].keys())
-
-    return schema
 
 
 # -----------------------------------------------------------------------------
