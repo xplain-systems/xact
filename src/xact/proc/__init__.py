@@ -44,7 +44,7 @@ def _configure(cfg, id_process, id_process_host, map_queues):
                    id_host    = id_process_host,
                    id_process = id_process)
     map_node = _instantiate_nodes(cfg, id_process)
-    _config_edges(cfg, id_process, id_process_host, map_node, map_queues)
+    _config_edges(cfg, id_process, map_node, map_queues)
     list_node = _get_list_node_in_runorder(cfg, id_process, map_node)
     return list_node
 
@@ -63,7 +63,7 @@ def _set_process_title():
     obj_process  = multiprocessing.current_process()
     name_process = obj_process.name
     if setproctitle is not None:
-        setproctitle.setproctitle(name_process)
+        setproctitle.setproctitle(name_process)  # pylint: disable=I1101
     else:
         pass
     return name_process
@@ -102,7 +102,7 @@ def _instantiate_nodes(cfg, id_process):
 
 
 # -----------------------------------------------------------------------------
-def _config_edges(cfg, id_process, id_process_host, map_node, map_queues):
+def _config_edges(cfg, id_process, map_node, map_queues):
     """
     Configure the edges in the data flow graph.
 
