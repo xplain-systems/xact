@@ -315,14 +315,19 @@ def topological_sort(map_forward, map_backward = None):
         for id_node in _list_downstream_neighbors(set_prev, map_forward):
             map_indegree[id_node] -= 1
 
-        # Remove next rank from graph.
+        # Find the next rank - terminate
+        # if it does not exist.
+        #
         set_next = _nodes_at_count_zero(map_indegree)
+        if not set_next:
+            break
+
+        # If the next rank does exist,
+        # remove it from the graph and
+        # add it to the list of ranks.
+        #
         _del_items(map_indegree, set_next)
-        if set_next:
-            list_set_ranks.append(set_next)
-            continue
-        else:
-            break  # Terminate
+        list_set_ranks.append(set_next)
 
     return list_set_ranks
 
