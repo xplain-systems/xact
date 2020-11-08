@@ -403,7 +403,13 @@ class PathDict(collections.UserDict):  # pylint: disable=R0901
 
         """
         reference = self.data
-        key       = _ensure_list(key, delim = self.delim)
+
+        # If we want to disable string
+        # to list conversion, we can
+        # set delim to None.
+        #
+        if self.delim is not None:
+            key = _ensure_list(key, delim = self.delim)
 
         reference = self.data
         for name in key[:-1]:
