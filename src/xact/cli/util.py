@@ -54,7 +54,7 @@ class OrderedGroup(click.Group):
 
 
 # -----------------------------------------------------------------------------
-def run_test(cfg,
+def run_test(cfg,  # pylint: disable=R0913
              expected_exit_code = 0,
              do_expect_stdout   = False,
              do_expect_stderr   = False,

@@ -157,7 +157,7 @@ def grp_host():
     type     = click.STRING,
     nargs    = -1,
     envvar   = _envvar('CFG_OVERRIDE'))
-def start(path_cfg       = None,
+def start(path_cfg       = None,  # pylint: disable=R0913
           cfg            = None,
           makeready      = False,
           distribute     = True,

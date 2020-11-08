@@ -26,7 +26,7 @@ from xact.cfg.exception import CfgError
 
 # -----------------------------------------------------------------------------
 @loguru.logger.catch(exclude = CfgError)
-def prepare(path_cfg       = None,
+def prepare(path_cfg       = None,  # pylint: disable=R0913
             string_cfg     = None,
             do_make_ready  = False,
             is_distributed = True,

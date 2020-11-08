@@ -100,7 +100,7 @@ def remove_process(cfg, id_process):
 
 
 # -----------------------------------------------------------------------------
-def add_node(cfg,
+def add_node(cfg,  # pylint: disable=R0913
              id_node,
              id_process    = None,
              req_host_cfg  = None,
@@ -163,7 +163,12 @@ def remove_node(cfg, id_node):
 
 
 # -----------------------------------------------------------------------------
-def add_edge(cfg, id_src, src_ref, id_dst, dst_ref, data):
+def add_edge(cfg,  # pylint: disable=R0913
+             id_src,
+             src_ref,
+             id_dst,
+             dst_ref,
+             data):
     """
     Mutate the config structure to add a new edge.
 
@@ -211,7 +216,7 @@ def remove_data(cfg, id_data):
 
 
 # -----------------------------------------------------------------------------
-def add_pipeline(cfg,
+def add_pipeline(cfg,  # pylint: disable=R0913
                  iter_id_node,
                  spec_id_process,
                  spec_req_host_cfg,
