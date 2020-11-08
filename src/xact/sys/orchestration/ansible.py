@@ -200,7 +200,8 @@ def _call_ansible(hostname, list_tasks):
         if loader:
             loader.cleanup_all_tmp_files()
 
-    shutil.rmtree(ansible.constants.DEFAULT_LOCAL_TMP, True)
+    shutil.rmtree(
+        ansible.constants.DEFAULT_LOCAL_TMP, True)   # pylint: disable=E1101
 
     print("UP ***********")
     for host, result in results_callback.host_ok.items():
