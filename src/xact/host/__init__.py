@@ -37,9 +37,9 @@ def start(cfg):
     Start all compute nodes for the local host.
 
     """
-    id_host = _setup_host(cfg)
+    _setup_host(cfg)
     xact.log.logger.info('Host start')
-    return _start_all_hosted_processes(cfg, id_host)
+    return _start_all_hosted_processes(cfg)
 
 
 # -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ def _setup_host(cfg):
 
 
 # -----------------------------------------------------------------------------
-def _start_all_hosted_processes(cfg, id_host):
+def _start_all_hosted_processes(cfg):
     """
     Start all processes on the local host.
 
