@@ -2,7 +2,7 @@
 """
 Package of functions that support the operation of the system as a whole.
 
-This module contains functions to start, stop,
+This package contains functions to start, stop,
 pause/unpause and single-step an xact system.
 
 """
