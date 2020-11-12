@@ -133,6 +133,15 @@ def _from_yaml_file(filepath_cfg, file_cfg):  # pylint: disable=W0613
     Return confiuguration data loaded from the specified YAML file path.
 
     """
+    return from_yaml_string(str_yaml = file_cfg.read())
+
+
+# -----------------------------------------------------------------------------
+def from_yaml_string(str_yaml):
+    """
+    Return confiuguration data loaded from the specified YAML format string.
+
+    """
     try:
         import yaml  # pylint: disable=C0415
         loader = yaml.SafeLoader
@@ -141,7 +150,7 @@ def _from_yaml_file(filepath_cfg, file_cfg):  # pylint: disable=W0613
                              lambda l, n: str(n.value),
                              Loader = loader)
 
-        return yaml.load(file_cfg.read(), Loader = loader)
+        return yaml.load(str_yaml, Loader = loader)
     except yaml.YAMLError as err:
         if hasattr(err, 'problem_mark'):
             mark = err.problem_mark
