@@ -96,7 +96,7 @@ def _instantiate_nodes(cfg, id_process):
             cfg['runtime']['id']['id_process'] = id_process
             cfg['runtime']['id']['id_node']    = id_node
             node = xact.node.Node(cfg, id_node)
-            _point(node, ['state_type'], map_alloc[cfg_node['state_type']]())
+            _point(node, ['state'], map_alloc[cfg_node['state_type']]())
             map_node[id_node] = node
     return map_node
 
@@ -115,8 +115,8 @@ def _config_edges(cfg, id_process, map_node, map_queues):
 
         id_node_src = cfg_edge['id_node_src']
         id_node_dst = cfg_edge['id_node_dst']
-        relpath_src = tuple(cfg_edge['relpath_src'])
-        relpath_dst = tuple(cfg_edge['relpath_dst'])
+        relpath_src = tuple(cfg_edge['relpath_src'])  # i.e outputs.output-name
+        relpath_dst = tuple(cfg_edge['relpath_dst'])  # i.e inputs.input-name
         memory      = map_alloc[cfg_edge['data']]()
 
         # Intra process comms uses shared memory
@@ -128,17 +128,18 @@ def _config_edges(cfg, id_process, map_node, map_queues):
         else:
 
             queue = map_queues[cfg_edge['id_edge']]
-
             is_src_end = (id_node_src in map_node)
             if is_src_end:
                 node = map_node[id_node_src]
                 _point(node, relpath_src, memory)
-                node.output_queues[relpath_src[1:]] = queue
+                relpath_queue_src = relpath_src[1:]
+                node.output_queues[relpath_queue_src] = queue
 
             else:  # is_dst_end
                 node = map_node[id_node_dst]
                 _point(node, relpath_dst, memory)
-                node.input_queues[relpath_dst[1:]] = queue
+                relpath_queue_dst = relpath_dst[1:]
+                node.input_queues[relpath_queue_dst] = queue
 
 
 # -----------------------------------------------------------------------------
