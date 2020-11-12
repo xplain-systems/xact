@@ -111,7 +111,7 @@ def _add_host_owner(cfg, cfg_edge):
     """
     id_node_owner = cfg_edge['owner']
     id_host_owner = cfg['node'][id_node_owner]['host']
-    cfg_edge['id_host_owner']   = id_host_owner
+    cfg_edge['id_host_owner'] = id_host_owner
 
     return id_host_owner
 
