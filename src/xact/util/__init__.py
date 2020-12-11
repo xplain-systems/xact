@@ -12,6 +12,30 @@ import string
 
 
 # -----------------------------------------------------------------------------
+def clear_outputs(outputs,
+                  list_name_output,
+                  list_field_to_clear,
+                  has_ena = True):
+    """
+`   Clear the specified fields in the specified outputs.
+
+    """
+    map_ctors = {
+        'list': list,
+        'map':  dict,
+        'set':  set,
+    }
+    for id_out in list_name_output:
+        if has_ena:
+            outputs[id_out]['ena'] = False
+        for id_field in list_field_to_clear:
+            if id_field not in outputs[id_out]:
+                outputs[id_out][id_field] = map_ctors[id_field]()
+            else:
+                outputs[id_out][id_field].clear()
+
+
+# -----------------------------------------------------------------------------
 def format_all_strings(map_data):
     """
     Return the specified data structure with formatted string fields.
