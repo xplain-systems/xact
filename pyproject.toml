@@ -5,7 +5,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name          = "xact"
-version       = "0.0.3dev"
+version       = "0.0.3dev0"
 description   = "Model based design for developers"
 keywords      = ["modelling",
                  "simulation",
