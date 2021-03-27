@@ -18,10 +18,13 @@ def hexdigest(data):
     Return a string hash of the specified data.
 
     """
-    string_yaml_encoded = yaml.dump(data)
-    bytes_yaml_encoded  = string_yaml_encoded.encode('utf-8')
-    str_digest          = hashlib.sha512(bytes_yaml_encoded).hexdigest()
-    return str_digest
+    if isinstance(data, bytes):
+        bytes_buffer = data
+    elif isinstance(data, str):
+        bytes_buffer = data.encode('utf-8')
+    else:
+        bytes_buffer = yaml.dump(data).encode('utf-8')
+    return hashlib.sha512(bytes_buffer).hexdigest()
 
 
 # -----------------------------------------------------------------------------

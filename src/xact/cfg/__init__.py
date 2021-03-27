@@ -45,10 +45,14 @@ def prepare(path_cfg       = None,  # pylint: disable=R0913
     cfg = dict()
 
     if has_cfg_files:
-        cfg = merge_dicts(cfg, xact.cfg.load.from_path(path_cfg))
+        cfg_from_path = xact.cfg.load.from_path(path_cfg)
+        if cfg_from_path:
+            cfg = merge_dicts(cfg, cfg_from_path)
 
     if has_cfg_string:
-        cfg = merge_dicts(cfg, xact.util.serialization.deserialize(string_cfg))
+        cfg_from_string = xact.util.serialization.deserialize(string_cfg)
+        if cfg_from_string:
+            cfg = merge_dicts(cfg, cfg_from_string)
 
     cfg = xact.cfg.override.apply(cfg            = cfg,
                                   tup_overrides  = tup_overrides,
