@@ -191,7 +191,7 @@ def start(path_cfg       = None,  # pylint: disable=R0913
         else:
             try:
                 sys.exit(xact.sys.start(cfg))
-            except xact.sys.exception.NonRecoverableError as err:
+            except xact.signal.NonRecoverableError as err:
 
                 # A NonRecoverableError exception
                 # will be thrown when we need to

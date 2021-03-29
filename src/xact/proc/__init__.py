@@ -17,7 +17,7 @@ except ModuleNotFoundError:
 import xact.gen.python
 import xact.node
 import xact.log
-import xact.sys.exception
+import xact.signal
 
 
 # -----------------------------------------------------------------------------
@@ -29,8 +29,8 @@ def start(cfg, id_process, id_process_host, map_queues):
     list_node = _configure(cfg, id_process, id_process_host, map_queues)
     try:
         return _run_main_loop_with_retry(list_node, id_process)
-    except xact.sys.exception.RunComplete:
-        return 0
+    except xact.signal.Halt as halt:
+        return halt.return_code
     raise RuntimeError('Termination condition not recognized.')
 
 
@@ -267,16 +267,16 @@ def _run_main_loop_with_retry(list_node, id_process):
     idx_try = 0
     while True:
         xact.log.logger.info(
-                        'Reset and run main loop for {proc} (Attempt {idx})',
+                        'Reset and run {proc} (Attempt {idx})',
                         proc = id_process,
                         idx  = idx_try)
 
         try:
             reset(list_node)
             _run_main_loop(list_node)
-        except xact.sys.exception.RecoverableError:
+        except xact.signal.ResetAndRetry:
             xact.log.logger.info(
-                            'Recoverable error for {proc} on attempt {idx}',
+                            'Reset and retry {proc}',
                             proc = id_process,
                             idx  = idx_try)
             idx_try += 1
@@ -289,8 +289,13 @@ def reset(list_node):
     Reset all of the nodes in the list.
 
     """
+    list_signals = []
     for node in list_node:
-        node.reset()
+        signal = node.reset()
+        if signal is not None:
+            list_signals.append(signal)
+
+    _handle_signals(list_signals)
 
 
 # -----------------------------------------------------------------------------
@@ -309,20 +314,32 @@ def step(list_node):
     Run a single simulation step.
 
     """
-    raised = []
-
-    # for node in list_node:
-    #     node.pre_step()
+    list_signals = []
 
     for node in list_node:
-        try:
-            node.step()
-        except xact.sys.exception.RunComplete as err:
-            raised.append(err)
+        signal = node.step()
+        if signal is not None:
+            list_signals.append(signal)
 
-    # for node in list_node:
-    #     node.post_step()
+    _handle_signals(list_signals)
 
-    if raised:
-        err = raised[0]
-        raise err
+
+# -----------------------------------------------------------------------------
+def _handle_signals(list_signals):
+    """
+    Handle signals.
+
+    """
+    if not list_signals:
+        return
+
+    # Signals that sould be raised (in priority order).
+    priority_order = (
+        'NonRecoverableError',
+        'Halt',
+        'ResetAndRetry')
+
+    for name in priority_order:
+        for signal in list_signals:
+            if type(signal).__name__ == name:
+                raise signal

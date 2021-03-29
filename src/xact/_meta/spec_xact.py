@@ -5,6 +5,10 @@ Functional specification for xact.
 """
 
 
+import os
+import select
+import tempfile
+
 import click.testing
 import pytest
 
@@ -32,6 +36,29 @@ class SpecifyXact:
         response = runner.invoke(xact.cli.command.grp_main, args)
         assert response.output == 'RUN COMPLETED SUCCESSFULLY\n'
         assert response.exit_code == 0
+
+    # -------------------------------------------------------------------------
+    def it_halts_both_processes(self, dual_process_halt_test_config):
+        """
+        xact.cli.command.grp_main halts_two_processes.
+
+        """
+        import xact.cli.command         # pylint: disable=C0415
+        import xact.util.serialization  # pylint: disable=C0415
+
+
+        filepath = os.path.join(tempfile.gettempdir(), 'tmp.txt')
+        cfg      = dual_process_halt_test_config
+        cfg['node']['rx']['config']['filepath'] = filepath
+        cfg['host']['localhost']['dirpath_venv'] = os.environ['VIRTUAL_ENV']
+        runner   = click.testing.CliRunner()
+        args     = ['system', 'start',
+                      '--cfg', xact.util.serialization.serialize(cfg)]
+        response = runner.invoke(xact.cli.command.grp_main, args)
+        assert response.output == ''
+        assert response.exit_code == 0
+        with open(filepath, 'rt') as file:
+            assert file.read() == 'RUN COMPLETED SUCCESSFULLY'
 
 
 # -----------------------------------------------------------------------------

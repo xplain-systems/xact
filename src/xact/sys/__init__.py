@@ -163,7 +163,7 @@ def _run_locally(cfg):
     cfg = xact.cfg.denormalize(cfg)
 
     for cfg_edge in cfg['edge']:
-        cfg_edge['ipc_type'] = 'intra_process'
+        cfg_edge['ipc_type']        = 'intra_process'
         cfg_edge['list_id_process'] = [id_process_local]
 
     cfg['runtime']['id']['id_host']    = id_host_local
