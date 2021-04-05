@@ -107,8 +107,15 @@ def _load_functionality(cfg_func):
         if 'step' in module.__dict__:
             fcn_step = module.step
 
+    if 'py_dill_reset' in cfg_func:
+        fcn_reset = xact.util.function_from_dill(cfg_func['py_dill_reset'])
+
+    if 'py_dill_step' in cfg_func:
+        fcn_step = xact.util.function_from_dill(cfg_func['py_dill_step'])
+
     if 'py_src_reset' in cfg_func:
         fcn_reset = xact.util.function_from_source(cfg_func['py_src_reset'])
+
     if 'py_src_step' in cfg_func:
         fcn_step = xact.util.function_from_source(cfg_func['py_src_step'])
 

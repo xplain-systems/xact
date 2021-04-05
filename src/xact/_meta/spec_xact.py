@@ -5,12 +5,49 @@ Functional specification for xact.
 """
 
 
-import os
-import select
-import tempfile
-
 import click.testing
 import pytest
+
+
+# -----------------------------------------------------------------------------
+def count_to_ten(inputs, state, outputs):  # pylint: disable=W0613
+    """
+    Simple node that counts to ten.
+
+    """
+    if 'count' not in state:
+        state['count'] = 0
+    else:
+        state['count'] += 1
+    outputs['output']['count'] = state['count']
+    if state['count'] >= 10:
+        import xact.signal  # pylint: disable=C0415
+        return xact.signal.Halt(0)
+
+
+# -----------------------------------------------------------------------------
+def message_on_ten(inputs, state, outputs):  # pylint: disable=W0613
+    """
+    Step function for node B.
+
+    """
+    import xact.test.util
+    if inputs['input']['count'] >= 10:
+        xact.test.util.send(message = 'RUN COMPLETED SUCCESSFULLY', port = 5555)
+        import xact.signal  # pylint: disable=C0415
+        return xact.signal.Halt(0)
+
+
+# -----------------------------------------------------------------------------
+def fun(inputs, state, outputs):  # pylint: disable=W0613
+    """
+    Step function for node B.
+
+    """
+    import xact.test.util
+    print('HELLO')
+
+
 
 
 # =============================================================================
@@ -21,67 +58,31 @@ class SpecifyXact:
     """
 
     # -------------------------------------------------------------------------
-    def it_runs_a_simple_system(self, simple_test_config):
-        """
-        xact.cli.command.grp_main runs a simple xact system.
-
-        """
-        import xact.cli.command         # pylint: disable=C0415
-        import xact.util.serialization  # pylint: disable=C0415
-
-        cfg    = simple_test_config
-        runner = click.testing.CliRunner()
-        args   = ['system', 'start', '--no-distribute',
-                    '--cfg', xact.util.serialization.serialize(cfg)]
-        response = runner.invoke(xact.cli.command.grp_main, args)
-        assert response.output == 'RUN COMPLETED SUCCESSFULLY\n'
-        assert response.exit_code == 0
-
-    # -------------------------------------------------------------------------
-    def it_halts_both_processes(self, dual_process_halt_test_config):
+    def it_runs_on_a_single_process(self):
         """
         xact.cli.command.grp_main halts_two_processes.
 
         """
-        import xact.cli.command         # pylint: disable=C0415
-        import xact.util.serialization  # pylint: disable=C0415
+        import xact.test.util
+        xact.test.util.run(
+                    cfg = xact.test.util.pipeline(
+                                        proc_a = {'node_a': count_to_ten,
+                                                  'node_b': message_on_ten}),
+                    expected_output = { 5555: 'RUN COMPLETED SUCCESSFULLY' },
+                    multiprocess    = False)
 
+    # -------------------------------------------------------------------------
+    # def it_runs_across_multiple_processes(self):
+    #     """
+    #     xact.cli.command.grp_main halts_two_processes.
 
-        filepath = os.path.join(tempfile.gettempdir(), 'tmp.txt')
-        cfg      = dual_process_halt_test_config
-        cfg['node']['rx']['config']['filepath'] = filepath
-        cfg['host']['localhost']['dirpath_venv'] = os.environ['VIRTUAL_ENV']
-        runner   = click.testing.CliRunner()
-        args     = ['system', 'start',
-                      '--cfg', xact.util.serialization.serialize(cfg)]
-        response = runner.invoke(xact.cli.command.grp_main, args)
-        assert response.output == ''
-        assert response.exit_code == 0
-        with open(filepath, 'rt') as file:
-            assert file.read() == 'RUN COMPLETED SUCCESSFULLY'
-
-
-# -----------------------------------------------------------------------------
-@pytest.fixture
-def expected_help_text_main():
-    """
-    Return the expected help text for xact.cli.command.grp_main.
-
-    """
-    return (
-        'Usage: main [OPTIONS] COMMAND [ARGS]...\n\n'
-        '  Xact command line interface.\n\n'
-        '  The xact command line interface provides the\n'
-        '  user with the ability to start, stop, pause\n'
-        '  and step an xact system.\n\n'
-        '  An xact system is composed of one or more\n'
-        '  process-hosts, each of which contains one or\n'
-        '  more processes, each of which contains one or\n'
-        '  more compute nodes.\n\n'
-        'Options:\n'
-        '  --help  Show this message and exit.\n\n'
-        'Commands:\n'
-    )
+    #     """
+    #     import xact.test.util
+    #     xact.test.util.run(
+    #                 cfg = xact.test.util.pipeline(
+    #                                     proc_a = {'node_a': count_to_ten},
+    #                                     proc_b = {'node_b': message_on_ten}),
+    #                 expected_output = { 5555: 'RUN COMPLETED SUCCESSFULLY' })
 
 
 # =============================================================================
@@ -128,3 +129,26 @@ class SpecifyGrpMain:
 
         assert response.exit_code == 0
         assert response_text.startswith(expected_text)
+
+
+# -----------------------------------------------------------------------------
+@pytest.fixture
+def expected_help_text_main():
+    """
+    Return the expected help text for xact.cli.command.grp_main.
+
+    """
+    return (
+        'Usage: main [OPTIONS] COMMAND [ARGS]...\n\n'
+        '  Xact command line interface.\n\n'
+        '  The xact command line interface provides the\n'
+        '  user with the ability to start, stop, pause\n'
+        '  and step an xact system.\n\n'
+        '  An xact system is composed of one or more\n'
+        '  process-hosts, each of which contains one or\n'
+        '  more processes, each of which contains one or\n'
+        '  more compute nodes.\n\n'
+        'Options:\n'
+        '  --help  Show this message and exit.\n\n'
+        'Commands:\n'
+    )

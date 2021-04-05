@@ -10,6 +10,8 @@ import collections.abc
 import itertools
 import string
 
+import dill
+
 
 # -----------------------------------------------------------------------------
 def clear_outputs(outputs,
@@ -555,3 +557,12 @@ def function_from_source(string_source):
             list_functions.append(value)
     assert len(list_functions) == 1
     return list_functions[0]
+
+
+# -------------------------------------------------------------------------
+def function_from_dill(pickled_function):
+    """
+    Return the function found in the specified pickle.
+
+    """
+    return dill.loads(pickled_function)
