@@ -66,7 +66,7 @@ def run_test(cfg,  # pylint: disable=R0913
     """
     runner   = click.testing.CliRunner(mix_stderr = False)
     response = runner.invoke(xact.cli.command.grp_main,
-                             ['system', 'start', '--no-distribute',
+                             ['system', 'start', '--local',
                               '--cfg', xact.util.serialization.serialize(cfg)])
 
     isok_exit_code = response.exit_code == expected_exit_code

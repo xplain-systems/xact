@@ -32,12 +32,11 @@ def start(cfg):
     cfg['runtime']['id']['ts_run'] = time.strftime('%Y%m%d%H%M%S',
                                                    time.gmtime())
 
-    if not cfg['runtime']['opt']['is_distributed']:
+    if cfg['runtime']['opt']['is_local']:
         return _run_locally(cfg)
 
     if cfg['runtime']['opt']['do_make_ready']:
         xact.sys.orchestration.ensure_ready_to_run(cfg)
-        # return 0
 
     for id_host in _list_id_host(cfg):
         _command(cfg, id_host, 'start-host')
@@ -51,11 +50,11 @@ def stop(cfg):
     Stop the system.
 
     """
-    if cfg['runtime']['opt']['is_distributed']:
-        for id_host in _list_id_host(cfg):
-            _command(cfg, id_host, 'stop-host')
-    else:
-        xact.host.stop(cfg)
+    if cfg['runtime']['opt']['is_local']:
+        return xact.host.stop(cfg)
+
+    for id_host in _list_id_host(cfg):
+        _command(cfg, id_host, 'stop-host')
 
 
 # -----------------------------------------------------------------------------
@@ -64,11 +63,11 @@ def pause(cfg):
     Pause the system.
 
     """
-    if cfg['runtime']['opt']['is_distributed']:
-        for id_host in _list_id_host(cfg):
-            _command(cfg, id_host, 'pause-host')
-    else:
+    if cfg['runtime']['opt']['is_local']:
         raise RuntimeError('Not implemented.')
+
+    for id_host in _list_id_host(cfg):
+        _command(cfg, id_host, 'pause-host')
 
 
 # -----------------------------------------------------------------------------
@@ -77,11 +76,11 @@ def step(cfg):
     Single step the system.
 
     """
-    if cfg['runtime']['opt']['is_distributed']:
-        for id_host in _list_id_host(cfg):
-            _command(cfg, id_host, 'step-host')
-    else:
+    if cfg['runtime']['opt']['is_local']:
         raise RuntimeError('Not implemented.')
+
+    for id_host in _list_id_host(cfg):
+        _command(cfg, id_host, 'step-host')
 
 
 # -----------------------------------------------------------------------------

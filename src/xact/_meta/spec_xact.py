@@ -9,10 +9,13 @@ import click.testing
 import pytest
 
 
+TEST_PORT = 5555
+
+
 # -----------------------------------------------------------------------------
 def count_to_ten(inputs, state, outputs):  # pylint: disable=W0613
     """
-    Simple node that counts to ten.
+    Step function for a simple test node that counts to ten.
 
     """
     if 'count' not in state:
@@ -28,26 +31,15 @@ def count_to_ten(inputs, state, outputs):  # pylint: disable=W0613
 # -----------------------------------------------------------------------------
 def message_on_ten(inputs, state, outputs):  # pylint: disable=W0613
     """
-    Step function for node B.
+    Step function for a test node that prints a message after ten steps.
 
     """
     import xact.test.util
     if inputs['input']['count'] >= 10:
-        xact.test.util.send(message = 'RUN COMPLETED SUCCESSFULLY', port = 5555)
+        xact.test.util.send(message = 'RUN COMPLETED SUCCESSFULLY',
+                            port    = TEST_PORT)
         import xact.signal  # pylint: disable=C0415
         return xact.signal.Halt(0)
-
-
-# -----------------------------------------------------------------------------
-def fun(inputs, state, outputs):  # pylint: disable=W0613
-    """
-    Step function for node B.
-
-    """
-    import xact.test.util
-    print('HELLO')
-
-
 
 
 # =============================================================================
@@ -65,24 +57,27 @@ class SpecifyXact:
         """
         import xact.test.util
         xact.test.util.run(
-                    cfg = xact.test.util.pipeline(
-                                        proc_a = {'node_a': count_to_ten,
-                                                  'node_b': message_on_ten}),
-                    expected_output = { 5555: 'RUN COMPLETED SUCCESSFULLY' },
-                    multiprocess    = False)
+                env = xact.test.util.env(filepath = __file__),
+                cfg = xact.test.util.pipeline(
+                                    proc_a = {'node_a': count_to_ten,
+                                              'node_b': message_on_ten}),
+                expected_output = {TEST_PORT: 'RUN COMPLETED SUCCESSFULLY'},
+                is_local        = True)
 
     # -------------------------------------------------------------------------
-    # def it_runs_across_multiple_processes(self):
-    #     """
-    #     xact.cli.command.grp_main halts_two_processes.
+    def it_runs_across_multiple_processes(self):
+        """
+        xact.cli.command.grp_main halts_two_processes.
 
-    #     """
-    #     import xact.test.util
-    #     xact.test.util.run(
-    #                 cfg = xact.test.util.pipeline(
-    #                                     proc_a = {'node_a': count_to_ten},
-    #                                     proc_b = {'node_b': message_on_ten}),
-    #                 expected_output = { 5555: 'RUN COMPLETED SUCCESSFULLY' })
+        """
+        import xact.test.util
+        xact.test.util.run(
+                env = xact.test.util.env(filepath = __file__),
+                cfg = xact.test.util.pipeline(
+                                    proc_a = {'node_a': count_to_ten},
+                                    proc_b = {'node_b': message_on_ten}),
+                expected_output = {TEST_PORT: 'RUN COMPLETED SUCCESSFULLY'},
+                is_local        = False)
 
 
 # =============================================================================

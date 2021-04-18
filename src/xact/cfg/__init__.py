@@ -29,7 +29,7 @@ from xact.cfg.exception import CfgError
 def prepare(path_cfg       = None,  # pylint: disable=R0913
             string_cfg     = None,
             do_make_ready  = False,
-            is_distributed = True,
+            is_local       = False,
             delim_cfg_addr = '.',
             tup_overrides  = None):
     """
@@ -65,8 +65,8 @@ def prepare(path_cfg       = None,  # pylint: disable=R0913
     cfg['runtime']['id']    = dict()
     cfg['runtime']['state'] = 'start'
 
-    cfg['runtime']['opt']['do_make_ready']  = do_make_ready
-    cfg['runtime']['opt']['is_distributed'] = is_distributed
+    cfg['runtime']['opt']['do_make_ready'] = do_make_ready
+    cfg['runtime']['opt']['is_local']      = is_local
 
     cfg['runtime']['id']['id_system']  = cfg['system']['id_system']
     cfg['runtime']['id']['id_cfg']     = id_cfg

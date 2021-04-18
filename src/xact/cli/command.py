@@ -134,11 +134,11 @@ def grp_host():
     default  = False,
     envvar   = _envvar('MAKEREADY'))
 @click.option(
-    '--distribute/--no-distribute',
-    help     = 'Distribute compute nodes across processes and hosts.',
+    '--local/--no-local',
+    help     = 'Run locally.',
     required = False,
-    default  = True,
-    envvar   = _envvar('DISTRIBUTE'))
+    default  = False,
+    envvar   = _envvar('LOCAL'))
 @click.option(
     '-s', '--cfg-addr-delim', 'delim_cfg_addr',
     help     = 'The character to use as a delimiter in config override addresses.',  # noqa pylint: disable=C0301
@@ -157,7 +157,7 @@ def grp_host():
 def start(path_cfg       = None,  # pylint: disable=R0913
           cfg            = None,
           makeready      = False,
-          distribute     = True,
+          local          = False,
           delim_cfg_addr = '.',
           cfg_override   = None):
     """
@@ -182,7 +182,7 @@ def start(path_cfg       = None,  # pylint: disable=R0913
             cfg = xact.cfg.prepare(path_cfg       = path_cfg,
                                    string_cfg     = cfg,
                                    do_make_ready  = makeready,
-                                   is_distributed = distribute,
+                                   is_local       = local,
                                    delim_cfg_addr = delim_cfg_addr,
                                    tup_overrides  = cfg_override)
         except xact.cfg.exception.CfgError as err:

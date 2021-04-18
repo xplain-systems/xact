@@ -194,12 +194,12 @@ def _normalized_cfg_schema():
                     'opt':  {
                         'type': 'object',
                         'properties': {
-                            'do_make_ready':  { 'type': 'boolean' },
-                            'is_distributed': { 'type': 'boolean' }
+                            'do_make_ready': { 'type': 'boolean' },
+                            'is_local':      { 'type': 'boolean' }
                         },
                         'required': [
                             'do_make_ready',
-                            'is_distributed' ],
+                            'is_local' ],
                         'additionalProperties':  False
                     },
                     'id':  {

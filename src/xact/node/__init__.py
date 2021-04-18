@@ -100,7 +100,7 @@ def _load_functionality(cfg_func):
             module = importlib.import_module(cfg_func['py_module'])
 
         if module is None:
-            raise xact.signal.NonRecoverableError()
+            raise xact.signal.NonRecoverableError(cause = 'Module not found.')
 
         if 'reset' in module.__dict__:
             fcn_reset = module.reset
@@ -111,7 +111,10 @@ def _load_functionality(cfg_func):
         fcn_reset = xact.util.function_from_dill(cfg_func['py_dill_reset'])
 
     if 'py_dill_step' in cfg_func:
-        fcn_step = xact.util.function_from_dill(cfg_func['py_dill_step'])
+        try:
+            fcn_step = xact.util.function_from_dill(cfg_func['py_dill_step'])
+        except Exception as err:
+            xact.test.util.send(message = str(err), port = 5555)
 
     if 'py_src_reset' in cfg_func:
         fcn_reset = xact.util.function_from_source(cfg_func['py_src_reset'])

@@ -9,6 +9,8 @@ import collections
 import contextlib
 import inspect
 import os
+import os.path
+import sys
 
 import xact.cli.command
 import xact.util.serialization
@@ -16,6 +18,21 @@ import xact.util.serialization
 import click.testing
 import dill
 import zmq
+
+
+
+
+# -----------------------------------------------------------------------------
+def env(filepath):
+    """
+    Return an environment dict with the specified filepath on PYTHONPATH.
+
+    """
+    relpath = filepath if filepath else sys.argv[0]
+    dirpath = os.path.dirname(os.path.realpath(relpath))
+    env     = {'PYTHONPATH': os.pathsep.join(
+                                    (os.environ['PYTHONPATH'], dirpath))}
+    return env
 
 
 # -----------------------------------------------------------------------------
@@ -60,8 +77,10 @@ def pipeline(**kwargs):
                 'state_type': 'python_dict',
                 'functionality':  {
                     'requirement':   'some_requirement',
-                    'py_src_reset':  inspect.getsource(_noop_reset),
-                    'py_src_step':   inspect.getsource(fcn_step)
+                    'py_dill_reset':  dill.dumps(_noop_reset),
+                    'py_dill_step':   dill.dumps(fcn_step),
+                    # 'py_src_reset':  inspect.getsource(_noop_reset),
+                    # 'py_src_step':   inspect.getsource(fcn_step)
                 }
             }
 
@@ -104,7 +123,7 @@ def _noop_reset(runtime, cfg, inputs, state, outputs):  # pylint: disable=W0613
 
 
 # -----------------------------------------------------------------------------
-def run(cfg, expected_output, multiprocess = True):
+def run(cfg, expected_output, is_local = False, env = None):
     """
     Run the specified system config.
 
@@ -116,16 +135,20 @@ def run(cfg, expected_output, multiprocess = True):
         cfg['host']['localhost']['dirpath_venv'] = os.environ['VIRTUAL_ENV']
 
     with _reply_sockets_context(iter_port = expected_output.keys()) as sock:
-        response = click.testing.CliRunner().invoke(
-                            xact.cli.command.grp_main,
-                            ['system', 'start',
-                             '--cfg', xact.util.serialization.serialize(cfg)])
+
+        arg_local = '--local' if is_local else '--no-local'
+        str_cfg   = xact.util.serialization.serialize(cfg)
+        args      = ['system', 'start', arg_local, '--cfg', str_cfg]
+        runner    = click.testing.CliRunner(env = env)
+        response  = runner.invoke(xact.cli.command.grp_main, args)
 
         assert response.output    == ''
         assert response.exit_code == 0
 
-        for key, value in expected_output.items():
-            assert sock[key].recv().decode('utf-8') == value
+        for key, expected_msg in expected_output.items():
+            received_msg = sock[key].recv().decode('utf-8')
+            assert received_msg == expected_msg, \
+                   'Unexpected message: {msg}'.format(msg = received_msg)
 
 
 # -----------------------------------------------------------------------------
