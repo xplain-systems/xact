@@ -92,36 +92,65 @@ def _load_functionality(cfg_func):
     fcn_step  = None
 
     if 'py_module' in cfg_func:
+        (fcn_reset, fcn_step) = _load_from_module(spec_module = cfg_func['py_module'])
 
-        # Try to import the specified module.
-        # Log any syntax errors.
-        module = None
-        with xact.log.logger.catch():
-            module = importlib.import_module(cfg_func['py_module'])
+    elif 'py_dill_reset' in cfg_func and 'py_dill_step' in cfg_func:
+        (fcn_reset, fcn_step) = _load_from_dill(cfg_func)
 
-        if module is None:
-            raise xact.signal.NonRecoverableError(cause = 'Module not found.')
+    elif 'py_src_reset' in cfg_func and 'py_src_step' in cfg_func:
+        (fcn_reset, fcn_step) = _load_from_source(cfg_func)
 
-        if 'reset' in module.__dict__:
-            fcn_reset = module.reset
-        if 'step' in module.__dict__:
-            fcn_step = module.step
+    return (fcn_reset, fcn_step)
 
-    if 'py_dill_reset' in cfg_func:
-        fcn_reset = xact.util.function_from_dill(cfg_func['py_dill_reset'])
 
-    if 'py_dill_step' in cfg_func:
-        try:
-            fcn_step = xact.util.function_from_dill(cfg_func['py_dill_step'])
-        except Exception as err:
-            xact.test.util.send(message = str(err), port = 5555)
+# -----------------------------------------------------------------------------
+def _load_from_module(spec_module):
+    """
+    Try to import the specified module.
+    Log any syntax errors.
 
-    if 'py_src_reset' in cfg_func:
-        fcn_reset = xact.util.function_from_source(cfg_func['py_src_reset'])
+    """
+    module = None
+    with xact.log.logger.catch():
+        module = importlib.import_module(spec_module)
 
-    if 'py_src_step' in cfg_func:
-        fcn_step = xact.util.function_from_source(cfg_func['py_src_step'])
+    if module is None:
+        raise xact.signal.NonRecoverableError(cause = 'Module not found.')
 
+    is_coro = 'coro' in module.__dict__
+    is_step = 'reset' in module.__dict__ and 'step' in module.__dict__
+
+    assert is_coro or is_step
+
+    if is_coro:
+        fcn_reset = functools.partial(_coro_reset, module.coro)
+        fcn_step  = _coro_step
+    else:  # is_step
+        fcn_reset = module.reset
+        fcn_step  = module.step
+
+    return (fcn_reset, fcn_step)
+
+
+# -----------------------------------------------------------------------------
+def _load_from_dill(cfg_func):
+    """
+    Load functionality from dill pickles.
+
+    """
+    fcn_reset = xact.util.function_from_dill(cfg_func['py_dill_reset'])
+    fcn_step  = xact.util.function_from_dill(cfg_func['py_dill_step'])
+    return (fcn_reset, fcn_step)
+
+
+# -----------------------------------------------------------------------------
+def _load_from_source(cfg_func):
+    """
+    Load functionality from source strings.
+
+    """
+    fcn_reset = xact.util.function_from_dill(cfg_func['py_dill_reset'])
+    fcn_step  = xact.util.function_from_dill(cfg_func['py_dill_step'])
     return (fcn_reset, fcn_step)
 
 
