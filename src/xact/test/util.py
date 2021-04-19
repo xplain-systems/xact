@@ -142,8 +142,10 @@ def run(cfg, expected_output, is_local = False, env = None):
         runner    = click.testing.CliRunner(env = env)
         response  = runner.invoke(xact.cli.command.grp_main, args)
 
-        assert response.output    == ''
-        assert response.exit_code == 0
+        assert response.output    == '', 'Unexpected output: "{txt}"'.format(
+                                                    txt = response.output)
+        assert response.exit_code == 0, 'Unexpected exit code: "{id}"'.format(
+                                                    id = response.exit_code)
 
         for key, expected_msg in expected_output.items():
             received_msg = sock[key].recv().decode('utf-8')

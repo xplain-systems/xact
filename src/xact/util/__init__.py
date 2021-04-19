@@ -395,59 +395,6 @@ def _list_downstream_neighbors(set_id_node, map_forward):
     return list_neighbors
 
 
-# =============================================================================
-class PathDict(collections.UserDict):  # pylint: disable=R0901
-    """
-    Custom dictionary class supporting path-tuple based access.
-
-    """
-
-    # -------------------------------------------------------------------------
-    def __init__(self, *args, **kwargs):
-        """
-        Return a PathDict instance.
-
-        """
-        self.delim = '.'
-        super().__init__(*args, **kwargs)
-
-    # -------------------------------------------------------------------------
-    def __getitem__(self, key):
-        """
-        Return a reference to the specified item in data.
-
-        """
-        reference = self.data
-        for name in _ensure_list(key, delim = self.delim):
-            reference = reference[name]
-        return reference
-
-    # -------------------------------------------------------------------------
-    def __setitem__(self, key, value):
-        """
-        Return a reference to the specified item in data.
-
-        """
-        reference = self.data
-
-        # If we want to disable string
-        # to list conversion, we can
-        # set delim to None.
-        #
-        if self.delim is not None:
-            key = _ensure_list(key, delim = self.delim)
-
-        reference = self.data
-        for name in key[:-1]:
-            if name not in reference:
-                reference[name] = dict()
-            reference = reference[name]
-        if key:
-            reference[key[-1]] = value
-        else:
-            reference = value
-
-
 # -------------------------------------------------------------------------
 def _ensure_list(key, delim):
     """
@@ -566,3 +513,106 @@ def function_from_dill(pickled_function):
 
     """
     return dill.loads(pickled_function)
+
+
+# =============================================================================
+class PathDict(collections.UserDict):  # pylint: disable=R0901
+    """
+    Custom dictionary class supporting path-tuple based access.
+
+    """
+
+    # -------------------------------------------------------------------------
+    def __init__(self, *args, **kwargs):
+        """
+        Return a PathDict instance.
+
+        """
+        self.delim = '.'
+        super().__init__(*args, **kwargs)
+
+    # -------------------------------------------------------------------------
+    def __getitem__(self, key):
+        """
+        Return a reference to the specified item in data.
+
+        """
+        reference = self.data
+        for name in _ensure_list(key, delim = self.delim):
+            reference = reference[name]
+        return reference
+
+    # -------------------------------------------------------------------------
+    def __setitem__(self, key, value):
+        """
+        Return a reference to the specified item in data.
+
+        """
+        reference = self.data
+
+        # If we want to disable string
+        # to list conversion, we can
+        # set delim to None.
+        #
+        if self.delim is not None:
+            key = _ensure_list(key, delim = self.delim)
+
+        reference = self.data
+        for name in key[:-1]:
+            if name not in reference:
+                reference[name] = dict()
+            reference = reference[name]
+        if key:
+            reference[key[-1]] = value
+        else:
+            reference = value
+
+
+# =============================================================================
+class RestrictedWriteDict(collections.UserDict):  # pylint: disable=R0901
+    """
+    Custom dictionary class supporting restrictions on write operations.
+
+    A common mistake is to assign to output data
+    structures directly, accidentally replacing
+    them with a new container. This breaks shared
+    reference in-memory communication, and can be
+    a difficult bug to fix, as it causes
+    in-process communication between python nodes
+    to fail silently.
+
+        outputs['X'] = {...}         # NO!
+        outputs['X'].update({...})   # YES!
+
+    This class is a quality-of-life fix for this
+    problem. It raises a runtime error immediately
+    if a component unwittingly attempts to replace
+    a field value.
+
+    """
+
+    # -------------------------------------------------------------------------
+    def _xact_framework_internal_setitem(self, key, value):
+        """
+        Set a dict item, bypassing restrictions.
+
+        This should only be called by the xact
+        framework internally.
+
+        Due to the way container sharing is used
+        for intra-process communication, errors
+        may be introduced if it is called
+        directly by the step function.
+
+        """
+        super().__setitem__(key, value)
+
+    # -------------------------------------------------------------------------
+    def __setitem__(self, key, value):
+        """
+        Raise RuntimeError to prevent inadvertent overwrites of edge containers.
+
+        """
+        raise RuntimeError('Ensure you are updating output (or input) '
+                           'container content rather than changing the '
+                           'identity of the containers themselves.')

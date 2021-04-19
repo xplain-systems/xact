@@ -29,9 +29,9 @@ class Node():  # pylint: disable=R0902
         self.id_node       = id_node
         self.runtime       = cfg['runtime']
         self.config        = dict()
-        self.inputs        = dict()
+        self.inputs        = xact.util.RestrictedWriteDict()
         self.state         = dict()
-        self.outputs       = dict()
+        self.outputs       = xact.util.RestrictedWriteDict()
         self.input_queues  = dict()
         self.output_queues = dict()
 
@@ -225,7 +225,11 @@ def _put_ref(ref, path, item):
     """
     for name in path[:-1]:
         ref = ref[name]
-    ref[path[-1]] = item
+
+    if isinstance(ref, xact.util.RestrictedWriteDict):
+        ref._xact_framework_internal_setitem(path[-1], item)
+    else:
+        ref[path[-1]] = item
 
 
 # -----------------------------------------------------------------------------

@@ -15,9 +15,10 @@ except ModuleNotFoundError:
     setproctitle = None  # pylint: disable=C0103
 
 import xact.gen.python
-import xact.node
 import xact.log
+import xact.node
 import xact.signal
+import xact.util
 
 
 # -----------------------------------------------------------------------------
@@ -151,7 +152,11 @@ def _point(node, path, memory):
     ref = node.__dict__
     for name in path[:-1]:
         ref = ref[name]
-    ref[path[-1]] = memory
+
+    if isinstance(ref, xact.util.RestrictedWriteDict):
+        ref._xact_framework_internal_setitem(path[-1], memory)
+    else:
+        ref[path[-1]] = memory
 
 
 # -----------------------------------------------------------------------------
