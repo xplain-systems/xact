@@ -173,7 +173,7 @@ def run(cfg, expected_output, is_local = False, env = None):
 
 
 # -----------------------------------------------------------------------------
-def send(message, port):
+def send(message, port = TEST_PORT):
     """
     Send the specified message on the specified port.
 

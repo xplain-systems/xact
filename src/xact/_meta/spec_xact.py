@@ -33,8 +33,7 @@ def message_on_ten(inputs, state, outputs):  # pylint: disable=W0613
     """
     import xact.test.util
     if inputs['input']['count'] >= 10:
-        xact.test.util.send(message = 'TEST OK',
-                            port    = xact.test.util.TEST_PORT)
+        xact.test.util.send(message = 'TEST OK')
         import xact.signal  # pylint: disable=C0415
         raise xact.signal.Halt(0)
 
@@ -74,8 +73,7 @@ def coro_message_on_ten(runtime, cfg, inputs, state, outputs):  # pylint: disabl
         inputs = yield (outputs, signal)
 
         if inputs['input']['count'] >= 10:
-            xact.test.util.send(message = 'TEST OK',
-                                port    = xact.test.util.TEST_PORT)
+            xact.test.util.send(message = 'TEST OK')
             signal = xact.signal.Halt(0)
 
 

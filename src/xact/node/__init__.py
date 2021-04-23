@@ -173,17 +173,18 @@ def _is_step(map_func):
 # -----------------------------------------------------------------------------
 def _coro_reset(coro, runtime, config, inputs, state, outputs):
     """
-    Reset the coroutine.
+    Create the coroutine and run it to the first yield point.
 
     """
     state['__xact_coro__'] = coro(runtime, config, inputs, state, outputs)
-    state['__xact_coro__'].send(None)
+    (outputs, signal) = state['__xact_coro__'].send(None)
+    return signal
 
 
 # -----------------------------------------------------------------------------
 def _coro_step(inputs, state, outputs):
     """
-    Single step the coroutine.
+    Single step the coroutine, running it to the next yield point.
 
     """
     (outputs, signal) = state['__xact_coro__'].send(inputs)
