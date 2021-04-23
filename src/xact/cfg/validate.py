@@ -85,19 +85,34 @@ def _normalized_cfg_schema():
             'id_data_type':    { '$ref': '#/definitions/lowercase_name' },
             'ipc_type':        { '$ref': '#/definitions/lowercase_name' },
             'path_part':       { '$ref': '#/definitions/lowercase_dot_path' },
-            'py_src':          { 'type': 'string' },
             'spec_functionality': {
                 'type': 'object',
                 'properties': {
                     'py_module': {
                         '$ref': '#/definitions/entry_point_obj_ref'
                     },
-                    'py_src_reset': {
-                        '$ref': '#/definitions/py_src'
-                    },
-                    'py_src_step': {
-                        '$ref': '#/definitions/py_src'
-                    }
+                    'py_src': {
+                        'type': 'object',
+                        'properties': {
+                            'reset': {
+                                'type': 'string'
+                            },
+                            'step': {
+                                'type': 'string'
+                            }
+                        }
+                    } # ,
+                    # 'py_dill': {
+                    #     'type': 'object',
+                    #     'properties': {
+                    #         'reset': {
+                    #             'type': 'string'
+                    #         },
+                    #         'step': {
+                    #             'type': 'string'
+                    #         }
+                    #     }
+                    # }
                 },
                 'required': [],
             }

@@ -5,6 +5,7 @@ Package of functions that support the operation of individual compute nodes.
 """
 
 
+import functools
 import importlib
 import sys
 
@@ -92,13 +93,18 @@ def _load_functionality(cfg_func):
     fcn_step  = None
 
     if 'py_module' in cfg_func:
-        (fcn_reset, fcn_step) = _load_from_module(spec_module = cfg_func['py_module'])
+        (fcn_reset, fcn_step) = _load_from_module(
+                                        spec_module = cfg_func['py_module'])
 
-    elif 'py_dill_reset' in cfg_func and 'py_dill_step' in cfg_func:
-        (fcn_reset, fcn_step) = _load_from_dill(cfg_func)
+    elif 'py_dill' in cfg_func:
+        (fcn_reset, fcn_step) = _load_serialized(
+                                    spec     = cfg_func['py_dill'],
+                                    unpacker = xact.util.function_from_dill)
 
-    elif 'py_src_reset' in cfg_func and 'py_src_step' in cfg_func:
-        (fcn_reset, fcn_step) = _load_from_source(cfg_func)
+    elif 'py_src' in cfg_func:
+        (fcn_reset, fcn_step) = _load_serialized(
+                                    spec     = cfg_func['py_src'],
+                                    unpacker = xact.util.function_from_source)
 
     return (fcn_reset, fcn_step)
 
@@ -110,48 +116,78 @@ def _load_from_module(spec_module):
     Log any syntax errors.
 
     """
+    module  = _ensure_imported(spec_module)
+
+    if _is_step(map_func = module.__dict__):
+        fcn_reset = module.reset
+        fcn_step  = module.step
+    else:  # is_coro
+        fcn_reset = functools.partial(_coro_reset, module.coro)
+        fcn_step  = _coro_step
+
+    return (fcn_reset, fcn_step)
+
+
+# -----------------------------------------------------------------------------
+def _load_serialized(spec, unpacker):
+    """
+    Load functionality from serialized objects.
+
+    """
+    if _is_step(map_func = spec):
+        fcn_reset = unpacker(spec['reset'])
+        fcn_step  = unpacker(spec['step'])
+    else:  # is_coro
+        fcn_reset = functools.partial(_coro_reset, unpacker(spec['coro']))
+        fcn_step  = _coro_step
+
+    return (fcn_reset, fcn_step)
+
+
+# -----------------------------------------------------------------------------
+def _ensure_imported(spec_module):
+    """
+    Import the specified module or throw a NonRecoverableError
+
+    """
     module = None
     with xact.log.logger.catch():
         module = importlib.import_module(spec_module)
-
     if module is None:
         raise xact.signal.NonRecoverableError(cause = 'Module not found.')
+    return module
 
-    is_coro = 'coro' in module.__dict__
-    is_step = 'reset' in module.__dict__ and 'step' in module.__dict__
 
+# -----------------------------------------------------------------------------
+def _is_step(map_func):
+    """
+    Return true iff map_func has a reset and step function defined.
+
+    """
+    is_coro = 'coro'  in map_func
+    is_step = 'reset' in map_func and 'step' in map_func
     assert is_coro or is_step
-
-    if is_coro:
-        fcn_reset = functools.partial(_coro_reset, module.coro)
-        fcn_step  = _coro_step
-    else:  # is_step
-        fcn_reset = module.reset
-        fcn_step  = module.step
-
-    return (fcn_reset, fcn_step)
+    return is_step
 
 
 # -----------------------------------------------------------------------------
-def _load_from_dill(cfg_func):
+def _coro_reset(coro, runtime, config, inputs, state, outputs):
     """
-    Load functionality from dill pickles.
+    Reset the coroutine.
 
     """
-    fcn_reset = xact.util.function_from_dill(cfg_func['py_dill_reset'])
-    fcn_step  = xact.util.function_from_dill(cfg_func['py_dill_step'])
-    return (fcn_reset, fcn_step)
+    state['__xact_coro__'] = coro(runtime, config, inputs, state, outputs)
+    state['__xact_coro__'].send(None)
 
 
 # -----------------------------------------------------------------------------
-def _load_from_source(cfg_func):
+def _coro_step(inputs, state, outputs):
     """
-    Load functionality from source strings.
+    Single step the coroutine.
 
     """
-    fcn_reset = xact.util.function_from_dill(cfg_func['py_dill_reset'])
-    fcn_step  = xact.util.function_from_dill(cfg_func['py_dill_step'])
-    return (fcn_reset, fcn_step)
+    (outputs, signal) = state['__xact_coro__'].send(inputs)
+    return signal
 
 
 # -----------------------------------------------------------------------------

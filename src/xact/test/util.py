@@ -20,6 +20,7 @@ import dill
 import zmq
 
 
+TEST_PORT = 5555
 
 
 # -----------------------------------------------------------------------------
@@ -36,7 +37,7 @@ def env(filepath):
 
 
 # -----------------------------------------------------------------------------
-def pipeline(**kwargs):
+def simple_pipeline(repr, iface, **kwargs):
     """
     Return test configuration for a simple pipeline to run on localhost.
 
@@ -70,17 +71,35 @@ def pipeline(**kwargs):
     for name_process, cfg_process in kwargs.items():
         cfg['process'][name_process] = {'host': 'localhost'}
 
-        for (name_node, fcn_step) in cfg_process.items():
+        for (name_node, function) in cfg_process.items():
+
+            if repr == 'py_dill':
+                packer = dill.dumps
+            elif repr == 'py_src':
+                packer = inspect.getsource
+            else:
+                raise RuntimeError(
+                            'Unrecognized representation: "{repr}"'.format(
+                                                                repr = repr))
+            if iface == 'step':
+                spec_functionality = {
+                        'reset':  packer(_noop_reset),
+                        'step':   packer(function) }
+            elif iface == 'coro':
+                spec_functionality = {
+                        'coro':   packer(function) }
+            else:
+                raise RuntimeError(
+                            'Unrecognized interface: "{iface}"'.format(
+                                                                iface = iface))
+
             list_name_node.append(name_node)
             cfg['node'][name_node] = {
-                'process':    name_process,
-                'state_type': 'python_dict',
+                'process':       name_process,
+                'state_type':    'python_dict',
                 'functionality':  {
-                    'requirement':   'some_requirement',
-                    'py_dill_reset':  dill.dumps(_noop_reset),
-                    'py_dill_step':   dill.dumps(fcn_step),
-                    # 'py_src_reset':  inspect.getsource(_noop_reset),
-                    # 'py_src_step':   inspect.getsource(fcn_step)
+                    'requirement':  'some_requirement',
+                    repr:           spec_functionality
                 }
             }
 
