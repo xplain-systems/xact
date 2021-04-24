@@ -73,12 +73,13 @@ def _normalized_cfg_schema():
                                      'pattern': '^[A-Za-z0-9_.:]*$' },
             'id_edge':             { 'type':    'string',
                                      'pattern': '^[a-z0-9_./-]*$' },
+            'edge_direction':      { 'type':    'string',
+                                     'pattern': '^feedforward|feedback$' },
             'id_system':       { '$ref': '#/definitions/lowercase_name' },
             'id_host':         { '$ref': '#/definitions/lowercase_name' },
             'id_run':          { '$ref': '#/definitions/hex_string'     },
             'ts_run':          { '$ref': '#/definitions/numeric_string' },
             'id_cfg':          { '$ref': '#/definitions/hex_string'     },
-            'id_state':        { '$ref': '#/definitions/lowercase_name' },
             'id_process':      { '$ref': '#/definitions/lowercase_name' },
             'id_node':         { '$ref': '#/definitions/lowercase_name' },
             'id_req_host_cfg': { '$ref': '#/definitions/lowercase_name' },
@@ -180,10 +181,11 @@ def _normalized_cfg_schema():
                 'items': {
                     'type': 'object',
                     'properties': {
-                        'owner': { '$ref': '#/definitions/id_node'      },
-                        'data':  { '$ref': '#/definitions/id_data_type' },
-                        'src':   { '$ref': '#/definitions/path_part'    },
-                        'dst':   { '$ref': '#/definitions/path_part'    }
+                        'owner': { '$ref': '#/definitions/id_node'        },
+                        'data':  { '$ref': '#/definitions/id_data_type'   },
+                        'src':   { '$ref': '#/definitions/path_part'      },
+                        'dst':   { '$ref': '#/definitions/path_part'      },
+                        'dirn':  { '$ref': '#/definitions/edge_direction' }
                     },
                     'required': [
                         'owner',
@@ -235,12 +237,14 @@ def _normalized_cfg_schema():
                             'id_cfg' ],
                         'additionalProperties':  False
                     },
-                    'state': { '$ref': '#/definitions/id_state'  }
+                    'proc': {
+                        'type': 'object'
+                    }
                 },
                 'required': [
                     'opt',
                     'id',
-                    'state' ],
+                    'proc' ],
                 'additionalProperties':  False
             }
         },
@@ -328,7 +332,8 @@ def _denormalize_edge_section(schema):
     edge_props['id_host_src'] = { '$ref': '#/definitions/id_host' }
     edge_props['id_host_dst'] = { '$ref': '#/definitions/id_host' }
 
-    edge_schema['required'] = list(edge_schema['properties'].keys())
+    set_required = set(edge_schema['properties'].keys()) - set(('dirn',))
+    edge_schema['required'] = list(set_required)
 
 
 # -----------------------------------------------------------------------------

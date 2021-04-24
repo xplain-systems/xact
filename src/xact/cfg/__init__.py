@@ -60,10 +60,10 @@ def prepare(path_cfg       = None,  # pylint: disable=R0913
 
     id_cfg = xact.util.serialization.hexdigest(cfg)[0:8]
 
-    cfg['runtime']          = dict()
-    cfg['runtime']['opt']   = dict()
-    cfg['runtime']['id']    = dict()
-    cfg['runtime']['state'] = 'start'
+    cfg['runtime']         = dict()
+    cfg['runtime']['opt']  = dict()
+    cfg['runtime']['id']   = dict()
+    cfg['runtime']['proc'] = dict()
 
     cfg['runtime']['opt']['do_make_ready'] = do_make_ready
     cfg['runtime']['opt']['is_local']      = is_local
@@ -72,7 +72,6 @@ def prepare(path_cfg       = None,  # pylint: disable=R0913
     cfg['runtime']['id']['id_cfg']     = id_cfg
     cfg['runtime']['id']['id_host']    = 'tbd'
     cfg['runtime']['id']['id_process'] = 'tbd'
-    cfg['runtime']['id']['id_node']    = 'tbd'
     cfg['runtime']['id']['ts_run']     = '00000000000000'
     cfg['runtime']['id']['id_run']     = '00000000'
 
