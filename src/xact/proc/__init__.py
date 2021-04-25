@@ -223,13 +223,18 @@ def _local_acyclic_data_flow(iter_cfg_edge, id_process):
     map_backward = collections.defaultdict(set)
 
     for cfg_edge in iter_cfg_edge:
+        is_feedforward   = cfg_edge['dirn'] == 'feedforward'
         is_intra_process = cfg_edge['ipc_type'] == 'intra_process'
         is_local_process = id_process in cfg_edge['list_id_process']
         if is_intra_process and is_local_process:
             id_node_src = cfg_edge['id_node_src']
             id_node_dst = cfg_edge['id_node_dst']
-            map_forward[id_node_src].add(id_node_dst)
-            map_backward[id_node_dst].add(id_node_src)
+            if is_feedforward:
+                map_forward[id_node_src].add(id_node_dst)
+                map_backward[id_node_dst].add(id_node_src)
+            else:  # is_feedback
+                map_backward[id_node_src].add(id_node_dst)
+                map_forward[id_node_dst].add(id_node_src)
 
     return (map_forward, map_backward)
 

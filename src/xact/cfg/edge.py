@@ -45,6 +45,9 @@ def _denormalize_edges(cfg):
         (path_src, id_process_src, id_host_src) = _add_src_info(cfg, cfg_edge)
         (path_dst, id_process_dst, id_host_dst) = _add_dst_info(cfg, cfg_edge)
 
+        if 'dirn' not in cfg_edge:
+            cfg_edge['dirn'] = 'feedforward'
+
         cfg_edge['id_edge']         = '-'.join((path_src, path_dst))
         cfg_edge['list_id_process'] = [id_process_src, id_process_dst]
         cfg_edge['list_id_host']    = [id_host_src, id_host_dst]
