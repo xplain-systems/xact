@@ -32,7 +32,10 @@ def start(cfg, id_process, id_process_host, map_queues):
     cfg['runtime']['proc']['list_node']   = _configure(cfg, map_queues)
     cfg['runtime']['proc']['list_signal'] = []
     try:
-        return _run_main_loop_with_retry(runtime = cfg['runtime'])
+        return _run_main_loop_with_retry(
+                        id_process  = cfg['runtime']['id']['id_process'],
+                        list_node   = cfg['runtime']['proc']['list_node'],
+                        list_signal = cfg['runtime']['proc']['list_signal'])
     except xact.signal.Halt as halt:
         return halt.return_code
     raise RuntimeError('Termination condition not recognized.')
@@ -44,12 +47,20 @@ def _configure(cfg, map_queues):
     Configure the process and return the list of nodes to be executed.
 
     """
+    id_process    = cfg['runtime']['id']['id_process']
+    map_cfg_node  = cfg['node']
+    iter_cfg_edge = cfg['edge']
     xact.log.setup(cfg,
                    id_host    = cfg['runtime']['id']['id_host'],
                    id_process = cfg['runtime']['id']['id_process'])
     map_node = _instantiate_nodes(cfg)
-    _config_edges(cfg, map_node, map_queues)
-    list_node = _get_list_node_in_runorder(cfg, map_node)
+    _config_edges(cfg,
+                  map_node,
+                  map_queues)
+    list_node = _get_list_node_in_runorder(id_process,
+                                           map_cfg_node,
+                                           iter_cfg_edge,
+                                           map_node)
     return list_node
 
 
@@ -162,21 +173,21 @@ def _point(node, path, memory):
 
 
 # -----------------------------------------------------------------------------
-def _get_list_node_in_runorder(cfg, map_node):
+def _get_list_node_in_runorder(id_process,
+                               map_cfg_node,
+                               iter_cfg_edge,
+                               map_node):
     """
     Return a list of node objects sorted by order of execution.
 
     """
-    list_id_node = _get_list_id_node_in_runorder(cfg)
-    list_node    = list()
-    for id_node in list_id_node:
-        node = map_node[id_node]
-        list_node.append(node)
-    return list_node
+    return list(map_node[id_node] for id_node in
+                    _get_list_id_node_in_runorder(
+                                    id_process, map_cfg_node, iter_cfg_edge))
 
 
 # -----------------------------------------------------------------------------
-def _get_list_id_node_in_runorder(cfg):
+def _get_list_id_node_in_runorder(id_process, map_cfg_node, iter_cfg_edge):
     """
     Return a list of node ids sorted by order of execution.
 
@@ -197,14 +208,15 @@ def _get_list_id_node_in_runorder(cfg):
     manner.
 
     """
-    id_process = cfg['runtime']['id']['id_process']
     (map_forward, map_backward) = _local_acyclic_data_flow(
-                                                iter_cfg_edge = cfg['edge'],
-                                                id_process    = id_process)
+                                            iter_cfg_edge = iter_cfg_edge,
+                                            id_process    = id_process)
     list_tranches  = xact.util.topological_sort(map_forward, map_backward)
     list_id_node   = list(_specify_detailed_execution_order(list_tranches))
     list_id_node.extend(sorted(_get_list_id_node_unscheduled(
-                                            cfg, list_id_node, id_process)))
+                                                        map_cfg_node,
+                                                        list_id_node,
+                                                        id_process)))
     return list_id_node
 
 
@@ -256,14 +268,14 @@ def _specify_detailed_execution_order(list_tranches):
 
 
 # -----------------------------------------------------------------------------
-def _get_list_id_node_unscheduled(cfg, list_id_node, id_process):
+def _get_list_id_node_unscheduled(map_cfg_node, list_id_node, id_process):
     """
     Retirm a list of unscheduled node ids in the specified process.
 
     """
     set_id_node              = set(list_id_node)
     list_id_node_unscheduled = list()
-    for (id_node, cfg_node) in cfg['node'].items():
+    for (id_node, cfg_node) in map_cfg_node.items():
         is_in_process = id_process == cfg_node['process']
         is_scheduled  = (id_node in set_id_node)
         if is_in_process and (not is_scheduled):
@@ -272,7 +284,7 @@ def _get_list_id_node_unscheduled(cfg, list_id_node, id_process):
 
 
 # -----------------------------------------------------------------------------
-def _run_main_loop_with_retry(runtime):
+def _run_main_loop_with_retry(id_process, list_node, list_signal):
     """
     Repeatedly step the specified nodes in order, resetting upon exception.
 
@@ -280,68 +292,65 @@ def _run_main_loop_with_retry(runtime):
     idx_try = 0
     while True:
         xact.log.logger.info(
-                        'Reset and run {proc} (Attempt {idx})',
-                        proc = runtime['id']['id_process'],
-                        idx  = idx_try)
+                    'Reset and run {proc} (Attempt {idx})', proc = id_process,
+                                                            idx  = idx_try)
 
         try:
-            reset(runtime)
-            _run_main_loop(runtime)
+            reset(list_node, list_signal)
+            _run_main_loop(list_node, list_signal)
         except xact.signal.ResetAndRetry:
-            xact.log.logger.info(
-                            'Reset and retry {proc}',
-                            proc = runtime['id']['id_process'],
-                            idx  = idx_try)
+            xact.log.logger.info('Reset and retry {proc}', proc = id_process,
+                                                           idx  = idx_try)
             idx_try += 1
             continue
 
 
 # -----------------------------------------------------------------------------
-def reset(runtime):
+def reset(list_node, list_signal):
     """
     Reset all of the nodes in the list.
 
     """
-    runtime['proc']['list_signal'].clear()
-    for node in runtime['proc']['list_node']:
+    list_signal.clear()
+    for node in list_node:
         signal = node.reset()
         if signal is not None:
-            runtime['proc']['list_signal'].append(signal)
+            list_signal.append(signal)
 
-    _handle_signals(runtime)
+    _handle_signals(list_signal)
 
 
 # -----------------------------------------------------------------------------
-def _run_main_loop(runtime):
+def _run_main_loop(list_node, list_signal):
     """
     Repeatedly step the specified nodes in order.
 
     """
     while True:
-        step(runtime)
+        step(list_node, list_signal)
 
 
 # -----------------------------------------------------------------------------
-def step(runtime):
+def step(list_node, list_signal):
     """
     Run a single simulation step.
 
     """
-    runtime['proc']['list_signal'].clear()
-    for node in runtime['proc']['list_node']:
+    list_signal.clear()
+    for node in list_node:
         signal = node.step()
         if signal is not None:
-            runtime['proc']['list_signal'].append(signal)
-    _handle_signals(runtime)
+            list_signal.append(signal)
+    _handle_signals(list_signal)
 
 
 # -----------------------------------------------------------------------------
-def _handle_signals(runtime):
+def _handle_signals(list_signal):
     """
     Handle signals.
 
     """
-    if not runtime['proc']['list_signal']:
+    if not list_signal:
         return
 
     # Signals that sould be raised (in priority order).
@@ -351,6 +360,6 @@ def _handle_signals(runtime):
         'ResetAndRetry')
 
     for name in priority_order:
-        for signal in runtime['proc']['list_signal']:
+        for signal in list_signal:
             if type(signal).__name__ == name:
                 raise signal
