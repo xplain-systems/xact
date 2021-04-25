@@ -15,7 +15,7 @@ logger = loguru.logger
 
 
 # -----------------------------------------------------------------------------
-def setup(cfg = None, id_host = 'localhost', id_process = 'main_process'):
+def setup(cfg_host = None, id_host = 'localhost', id_process = 'main_process'):
     """
     Configure the module level logger object.
 
@@ -23,8 +23,7 @@ def setup(cfg = None, id_host = 'localhost', id_process = 'main_process'):
     log_level   = 'WARNING'
     dirpath_log = None
 
-    if cfg is not None and id_host in cfg['host']:
-        cfg_host = cfg['host'][id_host]
+    if cfg_host is not None:
         if 'log_level' in cfg_host:
             log_level   = cfg_host['log_level']
         if 'dirpath_log' in cfg_host:

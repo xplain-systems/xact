@@ -27,36 +27,54 @@ def start(cfg, id_process, id_process_host, map_queues):
     Start the main loop in the local process and process host.
 
     """
-    cfg['runtime']['id']['id_process']    = id_process
-    cfg['runtime']['id']['id_host']       = id_process_host
-    cfg['runtime']['proc']['list_node']   = _configure(cfg, map_queues)
-    cfg['runtime']['proc']['list_signal'] = []
+    xact.log.setup(cfg_host   = cfg['host'].get(id_process_host, None),
+                   id_host    = id_process_host,
+                   id_process = id_process)
+
+    map_cfg_node                   = cfg['node']
+    iter_cfg_edge                  = cfg['edge']
+    map_cfg_data                   = cfg['data']
+    runtime                        = cfg['runtime']
+    runtime['id']['id_process']    = id_process
+    runtime['id']['id_host']       = id_process_host
+    runtime['proc']['list_signal'] = []
+    runtime['proc']['list_node']   = _configure(id_process,
+                                                map_cfg_node,
+                                                iter_cfg_edge,
+                                                map_queues,
+                                                map_cfg_data,
+                                                runtime)
     try:
         return _run_main_loop_with_retry(
-                        id_process  = cfg['runtime']['id']['id_process'],
-                        list_node   = cfg['runtime']['proc']['list_node'],
-                        list_signal = cfg['runtime']['proc']['list_signal'])
+                        id_process  = id_process,
+                        list_node   = runtime['proc']['list_node'],
+                        list_signal = runtime['proc']['list_signal'])
     except xact.signal.Halt as halt:
         return halt.return_code
     raise RuntimeError('Termination condition not recognized.')
 
 
 # -----------------------------------------------------------------------------
-def _configure(cfg, map_queues):
+def _configure(id_process,
+               map_cfg_node,
+               iter_cfg_edge,
+               map_queues,
+               map_cfg_data,
+               runtime):
     """
     Configure the process and return the list of nodes to be executed.
 
     """
-    id_process    = cfg['runtime']['id']['id_process']
-    map_cfg_node  = cfg['node']
-    iter_cfg_edge = cfg['edge']
-    xact.log.setup(cfg,
-                   id_host    = cfg['runtime']['id']['id_host'],
-                   id_process = cfg['runtime']['id']['id_process'])
-    map_node = _instantiate_nodes(cfg)
-    _config_edges(cfg,
+    map_alloc = xact.gen.python.map_allocator(map_cfg_data)
+    map_node  = _instantiate_nodes(id_process,
+                                   map_cfg_node,
+                                   map_alloc,
+                                   runtime)
+    _config_edges(id_process,
+                  iter_cfg_edge,
                   map_node,
-                  map_queues)
+                  map_queues,
+                  map_alloc)
     list_node = _get_list_node_in_runorder(id_process,
                                            map_cfg_node,
                                            iter_cfg_edge,
@@ -85,44 +103,27 @@ def _set_process_title():
 
 
 # -----------------------------------------------------------------------------
-def processes_on_host(cfg, id_host):
-    """
-    Return the set of all processes on the specified host.
-
-    """
-    set_id_process   = set()
-    dict_cfg_process = cfg['process']
-    for id_process in dict_cfg_process.keys():
-        if dict_cfg_process[id_process]['host'] == id_host:
-            set_id_process.add(id_process)
-    return set_id_process
-
-
-# -----------------------------------------------------------------------------
-def _instantiate_nodes(cfg):
+def _instantiate_nodes(id_process, map_cfg_node, map_alloc, runtime):
     """
     Return a map from id_node to an instantiated node object.
 
     """
-    map_alloc = xact.gen.python.map_allocator(cfg['data'])
     map_node  = dict()
-    for (id_node, cfg_node) in cfg['node'].items():
-        if cfg_node['process'] == cfg['runtime']['id']['id_process']:
-            node = xact.node.Node(cfg, id_node)
+    for (id_node, cfg_node) in map_cfg_node.items():
+        if cfg_node['process'] == id_process:
+            node = xact.node.Node(id_node, cfg_node, runtime)
             _point(node, ['state'], map_alloc[cfg_node['state_type']]())
             map_node[id_node] = node
     return map_node
 
 
 # -----------------------------------------------------------------------------
-def _config_edges(cfg, map_node, map_queues):
+def _config_edges(id_process, iter_cfg_edge, map_node, map_queues, map_alloc):
     """
     Configure the edges in the data flow graph.
 
     """
-    map_alloc  = xact.gen.python.map_allocator(cfg['data'])
-    id_process = cfg['runtime']['id']['id_process']
-    for cfg_edge in cfg['edge']:
+    for cfg_edge in iter_cfg_edge:
 
         if id_process not in cfg_edge['list_id_process']:
             continue

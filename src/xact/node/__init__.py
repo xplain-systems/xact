@@ -22,13 +22,13 @@ class Node():  # pylint: disable=R0902
     """
 
     # -------------------------------------------------------------------------
-    def __init__(self, cfg, id_node):
+    def __init__(self, id_node, cfg_node, runtime):
         """
         Return an instance of a Node object.
 
         """
         self.id_node       = id_node
-        self.runtime       = cfg['runtime']
+        self.runtime       = runtime
         self.config        = dict()
         self.inputs        = xact.util.RestrictedWriteDict()
         self.state         = dict()
@@ -36,7 +36,6 @@ class Node():  # pylint: disable=R0902
         self.input_queues  = dict()
         self.output_queues = dict()
 
-        cfg_node = cfg['node'][id_node]
         try:
             self.config = cfg_node['config']
         except KeyError:
