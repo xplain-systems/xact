@@ -37,7 +37,7 @@ def env(filepath):
 
 
 # -----------------------------------------------------------------------------
-def simple_pipeline(repr, iface, **kwargs):
+def simple_pipeline(repr, iface, is_closed_loop, **kwargs):
     """
     Return test configuration for a simple pipeline to run on localhost.
 
@@ -105,6 +105,17 @@ def simple_pipeline(repr, iface, **kwargs):
 
     # Generate edges in a pipeline.
     for (name_src, name_dst) in _sliding_window(list_name_node, len_window = 2):
+        cfg['edge'].append({
+                'owner': name_src,
+                'data':  'python_dict',
+                'src':   name_src + '.outputs.output',
+                'dst':   name_dst + '.inputs.input'
+            })
+
+    # Complete the feedback loop
+    if is_closed_loop:
+        name_src = list_name_node[-1]
+        name_dst = list_name_node[0]
         cfg['edge'].append({
                 'owner': name_src,
                 'data':  'python_dict',

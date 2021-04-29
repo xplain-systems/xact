@@ -9,74 +9,6 @@ import click.testing
 import pytest
 
 
-# -----------------------------------------------------------------------------
-def count_to_ten(inputs, state, outputs):  # pylint: disable=W0613
-    """
-    Step function for a simple test node that counts to ten.
-
-    """
-    if 'count' not in state:
-        state['count'] = 0
-    else:
-        state['count'] += 1
-    outputs['output']['count'] = state['count']
-    if state['count'] >= 10:
-        import xact.signal  # pylint: disable=C0415
-        return xact.signal.Halt(0)
-
-
-# -----------------------------------------------------------------------------
-def message_on_ten(inputs, state, outputs):  # pylint: disable=W0613
-    """
-    Step function for a test node that prints a message after ten steps.
-
-    """
-    import xact.test.util
-    if inputs['input']['count'] >= 10:
-        xact.test.util.send(message = 'TEST OK')
-        import xact.signal  # pylint: disable=C0415
-        raise xact.signal.Halt(0)
-
-
-# -----------------------------------------------------------------------------
-def coro_count_to_ten(runtime, cfg, inputs, state, outputs):  # pylint: disable=W0613
-    """
-    Coroutine for a simple test node that counts to ten.
-
-    """
-    import xact.signal
-
-    count  = -1
-    signal = None
-
-    while True:
-        inputs = yield (outputs, signal)
-
-        count += 1
-        outputs['output']['count'] = count
-        if count >= 10:
-            signal = xact.signal.Halt(0)
-
-
-# -----------------------------------------------------------------------------
-def coro_message_on_ten(runtime, cfg, inputs, state, outputs):  # pylint: disable=W0613
-    """
-    Step function for a test node that prints a message after ten steps.
-
-    """
-    import xact.signal
-    import xact.test.util
-
-    signal = None
-
-    while True:
-        inputs = yield (outputs, signal)
-
-        if inputs['input']['count'] >= 10:
-            xact.test.util.send(message = 'TEST OK')
-            signal = xact.signal.Halt(0)
-
-
 # =============================================================================
 class SpecifyXact:
     """
@@ -85,71 +17,94 @@ class SpecifyXact:
     """
 
     # -------------------------------------------------------------------------
-    def it_runs_on_a_single_process(self):
+    def it_supports_single_process_execution(self):
         """
-        xact.cli.command.grp_main halts_two_processes.
+        xact.cli.command.grp_main supports single process execution.
 
         """
         import xact.test.util
         xact.test.util.run(
                 env = xact.test.util.env(filepath = __file__),
                 cfg = xact.test.util.simple_pipeline(
-                                repr   = 'py_dill',
-                                iface  = 'step',
-                                proc_a = {'node_a': count_to_ten,
-                                          'node_b': message_on_ten}),
+                            repr           = 'py_dill',
+                            iface          = 'step',
+                            is_closed_loop = False,
+                            proc_a         = {'node_a': simple_counter,
+                                              'node_b': simple_messager}),
                 expected_output = {xact.test.util.TEST_PORT: 'TEST OK'},
                 is_local        = True)
 
     # -------------------------------------------------------------------------
-    def it_runs_across_multiple_processes(self):
+    def it_supports_multiprocess_execution(self):
         """
-        xact.cli.command.grp_main halts_two_processes.
+        xact.cli.command.grp_main supports multiprocess execution.
 
         """
         import xact.test.util
         xact.test.util.run(
                 env = xact.test.util.env(filepath = __file__),
                 cfg = xact.test.util.simple_pipeline(
-                                repr   = 'py_dill',
-                                iface  = 'step',
-                                proc_a = {'node_a': count_to_ten},
-                                proc_b = {'node_b': message_on_ten}),
+                            repr           = 'py_dill',
+                            iface          = 'step',
+                            is_closed_loop = False,
+                            proc_a         = {'node_a': simple_counter},
+                            proc_b         = {'node_b': simple_messager}),
                 expected_output = {xact.test.util.TEST_PORT: 'TEST OK'},
                 is_local        = False)
 
 
     # -------------------------------------------------------------------------
-    def it_runs_functions_specified_as_source_strings(self):
+    def it_supports_functions_specified_as_source_strings(self):
         """
-        xact.cli.command.grp_main halts_two_processes.
+        xact.cli.command.grp_main supports nodes specified as source strings.
 
         """
         import xact.test.util
         xact.test.util.run(
                 env = xact.test.util.env(filepath = __file__),
                 cfg = xact.test.util.simple_pipeline(
-                                repr   = 'py_src',
-                                iface  = 'step',
-                                proc_a = {'node_a': count_to_ten,
-                                          'node_b': message_on_ten}),
+                            repr           = 'py_src',
+                            iface          = 'step',
+                            is_closed_loop = False,
+                            proc_a         = {'node_a': simple_counter,
+                                              'node_b': simple_messager}),
                 expected_output = {xact.test.util.TEST_PORT: 'TEST OK'},
                 is_local        = True)
 
     # -------------------------------------------------------------------------
-    def it_runs_coroutines(self):
+    def it_supports_coroutines(self):
         """
-        xact.cli.command.grp_main halts_two_processes.
+        xact.cli.command.grp_main supports nodes specified as coroutines.
 
         """
         import xact.test.util
         xact.test.util.run(
                 env = xact.test.util.env(filepath = __file__),
                 cfg = xact.test.util.simple_pipeline(
-                                repr   = 'py_dill',
-                                iface  = 'coro',
-                                proc_a = {'node_a': coro_count_to_ten,
-                                          'node_b': coro_message_on_ten}),
+                            repr           = 'py_dill',
+                            iface          = 'coro',
+                            is_closed_loop = False,
+                            proc_a         = {'node_a': coro_counter,
+                                              'node_b': coro_messager}),
+                expected_output = {xact.test.util.TEST_PORT: 'TEST OK'},
+                is_local        = True)
+
+
+    # -------------------------------------------------------------------------
+    def it_supports_feedback_loops(self):
+        """
+        xact.cli.command.grp_main supports nodes arranged in a feedback loop.
+
+        """
+        import xact.test.util
+        xact.test.util.run(
+                env = xact.test.util.env(filepath = __file__),
+                cfg = xact.test.util.simple_pipeline(
+                            repr           = 'py_dill',
+                            iface          = 'coro',
+                            is_closed_loop = True,
+                            proc_a         = {'node_a': feedback_counter,
+                                              'node_b': feedback_decisioner}),
                 expected_output = {xact.test.util.TEST_PORT: 'TEST OK'},
                 is_local        = True)
 
@@ -221,3 +176,104 @@ def expected_help_text_main():
         '  --help  Show this message and exit.\n\n'
         'Commands:\n'
     )
+
+
+# -----------------------------------------------------------------------------
+def simple_counter(inputs, state, outputs):  # pylint: disable=W0613
+    """
+    Step function for a simple test node that counts to ten.
+
+    """
+    if 'count' not in state:
+        state['count'] = 0
+    else:
+        state['count'] += 1
+    outputs['output']['count'] = state['count']
+    if state['count'] >= 10:
+        import xact.signal  # pylint: disable=C0415
+        return xact.signal.Halt(0)
+
+
+# -----------------------------------------------------------------------------
+def simple_messager(inputs, state, outputs):  # pylint: disable=W0613
+    """
+    Step function for a test node that prints a message after ten steps.
+
+    """
+    import xact.test.util
+    if inputs['input']['count'] >= 10:
+        xact.test.util.send(message = 'TEST OK')
+        import xact.signal  # pylint: disable=C0415
+        raise xact.signal.Halt(0)
+
+
+# -----------------------------------------------------------------------------
+def coro_counter(runtime, cfg, inputs, state, outputs):  # pylint: disable=W0613
+    """
+    Coroutine for a simple test node that counts to ten.
+
+    """
+    import xact.signal
+
+    count  = -1
+    signal = None
+
+    while True:
+        inputs = yield (outputs, signal)
+
+        count += 1
+        outputs['output']['count'] = count
+        if count >= 10:
+            signal = xact.signal.Halt(0)
+
+
+# -----------------------------------------------------------------------------
+def coro_messager(runtime, cfg, inputs, state, outputs):  # pylint: disable=W0613
+    """
+    Coroutine for a test node that prints a message after ten steps.
+
+    """
+    import xact.signal
+    import xact.test.util
+
+    signal = None
+
+    while True:
+        inputs = yield (outputs, signal)
+
+        if inputs['input']['count'] >= 10:
+            xact.test.util.send(message = 'TEST OK')
+            signal = xact.signal.Halt(0)
+
+
+# -----------------------------------------------------------------------------
+def feedback_counter(runtime, cfg, inputs, state, outputs):  # pylint: disable=W0613
+    """
+    Coroutine for a simple test node that counts to ten.
+
+    """
+    count = 0
+    while True:
+        outputs['output']['count'] = count
+        inputs = yield (outputs, None)
+        count += 1
+
+        if inputs['input']['do_halt']:
+            import xact.test.util
+            xact.test.util.send(message = 'TEST OK')
+            import xact.signal
+            yield (outputs, xact.signal.Halt(0))
+
+
+# -----------------------------------------------------------------------------
+def feedback_decisioner(runtime, cfg, inputs, state, outputs):  # pylint: disable=W0613
+    """
+    Coroutine for a test node that decides to halt after ten steps.
+
+    """
+    outputs['output']['do_halt'] = False
+    signal = None
+    while True:
+        inputs = yield (outputs, signal)
+        if inputs['input']['count'] >= 10:
+            outputs['output']['do_halt'] = True
