@@ -27,7 +27,9 @@ def start(cfg, id_process, id_process_host, map_queues):
     Start the main loop in the local process and process host.
 
     """
+    id_system = cfg['system']['id_system']
     xact.log.setup(cfg_host   = cfg['host'].get(id_process_host, None),
+                   id_system  = id_system,
                    id_host    = id_process_host,
                    id_process = id_process)
 
@@ -35,6 +37,7 @@ def start(cfg, id_process, id_process_host, map_queues):
     iter_cfg_edge                  = cfg['edge']
     map_cfg_data                   = cfg['data']
     runtime                        = cfg['runtime']
+    runtime['id']['id_system']     = id_system
     runtime['id']['id_process']    = id_process
     runtime['id']['id_host']       = id_process_host
     runtime['proc']['list_signal'] = []

@@ -15,7 +15,10 @@ logger = loguru.logger
 
 
 # -----------------------------------------------------------------------------
-def setup(cfg_host = None, id_host = 'localhost', id_process = 'main_process'):
+def setup(cfg_host   = None,
+          id_system  = 'xact',
+          id_host    = 'localhost',
+          id_process = 'main_process'):
     """
     Configure the module level logger object.
 
@@ -36,7 +39,7 @@ def setup(cfg_host = None, id_host = 'localhost', id_process = 'main_process'):
                backtrace = False)
 
     if dirpath_log is not None:
-        id_system    = cfg['system']['id_system']
+        id_system    = id_system
         filename_log = '{sys}_{proc}.log'.format(sys  = id_system,
                                                  proc = id_process)
         filepath_log = os.path.join(dirpath_log, filename_log)
