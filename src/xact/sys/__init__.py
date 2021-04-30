@@ -18,7 +18,7 @@ import uuid
 import zmq
 
 import xact.host
-import xact.sys.orchestration
+# import xact.sys.orchestration
 import xact.util.serialization
 
 
@@ -36,7 +36,8 @@ def start(cfg):
         return _run_locally(cfg)
 
     if cfg['runtime']['opt']['do_make_ready']:
-        xact.sys.orchestration.ensure_ready_to_run(cfg)
+        pass
+        # xact.sys.orchestration.ensure_ready_to_run(cfg)
 
     for id_host in _list_id_host(cfg):
         _command(cfg, id_host, 'start-host')
