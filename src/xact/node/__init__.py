@@ -186,9 +186,11 @@ def _coro_step(inputs, state, outputs):
     Single step the coroutine, running it to the next yield point.
 
     """
-    (outputs, signal) = state['__xact_coro__'].send(inputs)
-    return signal
-
+    try:
+        (outputs, signal) = state['__xact_coro__'].send(inputs)
+        return signal
+    except StopIteration:
+        return xact.signal.Halt(0)
 
 # -----------------------------------------------------------------------------
 def _call_reset(id_node, fcn_reset, runtime, config, inputs, state, outputs):
