@@ -12,6 +12,7 @@ import sys
 import xact.log
 import xact.signal
 import xact.util
+import xact.proc
 
 
 # =============================================================================
@@ -115,7 +116,7 @@ def _load_from_module(spec_module):
     Log any syntax errors.
 
     """
-    module  = _ensure_imported(spec_module)
+    module = xact.proc.ensure_imported(spec_module)
 
     if _is_step(map_func = module.__dict__):
         fcn_reset = module.reset
@@ -141,20 +142,6 @@ def _load_serialized(spec, unpacker):
         fcn_step  = _coro_step
 
     return (fcn_reset, fcn_step)
-
-
-# -----------------------------------------------------------------------------
-def _ensure_imported(spec_module):
-    """
-    Import the specified module or throw a NonRecoverableError
-
-    """
-    module = None
-    with xact.log.logger.catch():
-        module = importlib.import_module(spec_module)
-    if module is None:
-        raise xact.signal.NonRecoverableError(cause = 'Module not found.')
-    return module
 
 
 # -----------------------------------------------------------------------------

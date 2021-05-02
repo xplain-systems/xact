@@ -6,6 +6,7 @@ Package of functions that support the operation of individual processes.
 
 
 import collections
+import importlib
 import itertools
 import multiprocessing
 
@@ -58,6 +59,20 @@ def start(cfg, id_process, id_process_host, map_queues):
 
 
 # -----------------------------------------------------------------------------
+def ensure_imported(spec_module):
+    """
+    Import the specified module or throw a NonRecoverableError
+
+    """
+    module = None
+    with xact.log.logger.catch():
+        module = importlib.import_module(spec_module)
+    if module is None:
+        raise xact.signal.NonRecoverableError(cause = 'Module not found.')
+    return module
+
+
+# -----------------------------------------------------------------------------
 def _configure(id_process,
                map_cfg_node,
                iter_cfg_edge,
@@ -73,11 +88,13 @@ def _configure(id_process,
                                    map_cfg_node,
                                    map_alloc,
                                    runtime)
-    _config_edges(id_process,
-                  iter_cfg_edge,
-                  map_node,
-                  map_queues,
-                  map_alloc)
+
+    _configure_edges(id_process,
+                     iter_cfg_edge,
+                     map_node,
+                     map_queues,
+                     map_alloc)
+
     list_node = _get_list_node_in_runorder(id_process,
                                            map_cfg_node,
                                            iter_cfg_edge,
@@ -121,7 +138,11 @@ def _instantiate_nodes(id_process, map_cfg_node, map_alloc, runtime):
 
 
 # -----------------------------------------------------------------------------
-def _config_edges(id_process, iter_cfg_edge, map_node, map_queues, map_alloc):
+def _configure_edges(id_process,
+                     iter_cfg_edge,
+                     map_node,
+                     map_queues,
+                     map_alloc):
     """
     Configure the edges in the data flow graph.
 

@@ -17,6 +17,7 @@ import xact.cfg.edge
 import xact.cfg.exception
 import xact.cfg.load
 import xact.cfg.override
+import xact.cfg.queue
 import xact.cfg.validate
 import xact.util
 import xact.util.serialization
@@ -98,8 +99,9 @@ def denormalize(cfg):
     such information explicit.
 
     """
-    return xact.cfg.edge.denormalize(
-                xact.cfg.data.denormalize(cfg))
+    return  xact.cfg.queue.denormalize(
+                xact.cfg.edge.denormalize(
+                    xact.cfg.data.denormalize(cfg)))
 
 
 # -----------------------------------------------------------------------------

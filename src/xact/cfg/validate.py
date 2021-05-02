@@ -196,6 +196,9 @@ def _normalized_cfg_schema():
                     'additionalProperties':  False
                 }
             },
+            'queue': {
+                'type': 'object'
+            },
             'req_host_cfg': {
                 'type': 'object'
             },
@@ -269,6 +272,7 @@ def _denormalized_cfg_schema():
     _denormalize_host_section(schema)
     _denormalize_node_section(schema)
     _denormalize_edge_section(schema)
+    schema['required'].append('queue')
     return schema
 
 
