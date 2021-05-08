@@ -22,6 +22,8 @@
 # -----------------------------------------------------------------------------
 # Blacklist
 
+*.sublime-project
+*.sublime-workspace
 *.pyc
 *.pytest_cache*
 *__pycache__*
